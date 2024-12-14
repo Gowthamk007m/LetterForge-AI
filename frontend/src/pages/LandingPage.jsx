@@ -16,25 +16,25 @@ export default function LandingPage() {
       default:
         return (
           <>
-            <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-gray-900 to-gray-800">
+            <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black ">
               <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center space-y-4 text-center">
                   <div className="space-y-2">
-                    <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-                      Craft Perfect Cover Letters and Job Descriptions
+                    <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
+                    Experience The Future With AI
                     </h1>
                     <p className="mx-auto max-w-[700px] text-gray-400 md:text-xl">
                       RightNow AI uses advanced AI to help you create compelling cover letters and precise job descriptions in minutes.
                     </p>
                   </div>
                   <div className="space-x-4">
-                    <Button className="bg-blue-500 text-white hover:bg-blue-600 transition-colors">Get Started</Button>
-                    <Button variant="outline" className="text-blue-400 border-blue-400 hover:bg-blue-400/10 transition-colors">Learn More</Button>
+                    <a className=" text-white font-bold underline underline-offset-8 hover:underline-offset-4 cursor-pointer">Get Started</a>
+                    <Button variant="outline" className=" from-gray-700 rounded-none  to-white  border-none text-black">Learn More</Button>
                   </div>
                 </div>
               </div>
             </section>
-            <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-800">
+            <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-black to-gray-900">
               <div className="container px-4 md:px-6">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">Our AI Tools</h2>
                 <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3">
@@ -114,17 +114,17 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-900 text-gray-100">
-      <header className="px-4 lg:px-6 h-14 flex items-center border-b border-gray-800">
-        <Link 
+    <div className="flex flex-col min-h-screen  text-gray-100  ">
+      <header className="px-4 lg:px-6 h-14 bg-gray-950 flex items-center border-b border-gray-700 ">
+        {/* <Link 
           className="flex items-center justify-center cursor-pointer" 
           href="#"
           onClick={() => setCurrentView('home')}
         >
           <FileText className="h-6 w-6 text-blue-400" />
           <span className="ml-2 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">RightNow AI</span>
-        </Link>
-        <nav className="ml-auto flex items-center gap-4 sm:gap-6">
+        </Link> */}
+        <nav className="ml-auto flex items-center gap-4 sm:gap-6 ">
           <button 
             className="text-sm font-medium hover:text-blue-400 transition-colors cursor-pointer" 
             onClick={() => setCurrentView('home')}
@@ -146,7 +146,7 @@ export default function LandingPage() {
           <button className="text-sm font-medium hover:text-blue-400 transition-colors cursor-pointer">
             Contact
           </button>
-          <LoginModal />
+          {/* <LoginModal /> */}
         </nav>
       </header>
       <main className="flex-1">
@@ -155,12 +155,12 @@ export default function LandingPage() {
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t border-gray-800">
         <p className="text-xs text-gray-400">© 2023 RightNow AI. All rights reserved.</p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <Link className="text-xs hover:text-blue-400 transition-colors" href="#">
+          {/* <Link className="text-xs hover:text-blue-400 transition-colors" href="#">
             Terms of Service
           </Link>
           <Link className="text-xs hover:text-blue-400 transition-colors" href="#">
             Privacy
-          </Link>
+          </Link> */}
         </nav>
       </footer>
     </div>
