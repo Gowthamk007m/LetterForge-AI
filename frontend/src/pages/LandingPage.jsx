@@ -38,19 +38,19 @@ export default function LandingPage() {
 
             <section className="w-full py-12 md:py-24 lg:py-32 bg-black snap-start h-screen flex items-center">
               <div className="container px-4 md:px-6">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">Our AI Tools</h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4 lg:mb-12 lg:text-6xl bg-clip-text text-transparent bg-gradient-to-t from-white to-gray-500">Our AI Tools</h2>
                 <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3">
-                  <div className="flex flex-col items-center space-y-3 p-6 bg-gray-900 rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-500/20">
+                  <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-1 lg:p-6 bg-gradient-to-b from-gray-500 to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
                     <FileText className="h-12 w-12 text-white" />
                     <h3 className="text-xl font-bold text-white">CoverLetter Pro</h3>
                     <p className="text-center text-gray-400">Generates tailored cover letters that highlight your skills and experience.</p>
                   </div>
-                  <div className="flex flex-col items-center space-y-3 p-6 bg-gray-900 rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-500/20">
+                  <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-1 lg:p-6   bg-gradient-to-b from-gray-500 to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
                     <Briefcase className="h-12 w-12 text-white" />
                     <h3 className="text-xl font-bold text-white">JobDesc Wizard</h3>
                     <p className="text-center text-gray-400">Creates detailed and attractive job descriptions for any role.</p>
                   </div>
-                  <div className="flex flex-col items-center space-y-3 p-6 bg-gray-900 rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-500/20">
+                  <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-1 lg:p-6   bg-gradient-to-b from-gray-500 to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
                     <PenTool className="h-12 w-12 text-white" />
                     <h3 className="text-xl font-bold text-white">ResumeEnhancer</h3>
                     <p className="text-center text-gray-400">Optimizes your resume to match job requirements and stand out.</p>
