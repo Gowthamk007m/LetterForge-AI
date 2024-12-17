@@ -270,14 +270,17 @@ export default function MultiStepCoverLetterForm() {
           </div>
 
           {/* Right Side - Form */}
+          {isLoading ? (
+          <div className="  p-6 md:p-10 space-y-6">
+            <AtomComponent/>
+            </div>
+            ):
           <div className="bg-gray-950 rounded-lg border border-gray-700 p-6 md:p-10 space-y-6">
-          {isLoading ? (<AtomComponent/>)
-:
             <form onSubmit={handleSubmit} className="space-y-4">
               {renderStep()}
             </form>
-}
           </div>
+}
         </div>
       </div>
     </div>
