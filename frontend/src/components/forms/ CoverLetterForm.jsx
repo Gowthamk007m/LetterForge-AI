@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { FileText, ChevronRight, ChevronLeft, Check } from "lucide-react"
-import { AtomComponent } from '../ui/Loader'
+import { BookLoaderComponent } from '../ui/Loader'
 
 export default function MultiStepCoverLetterForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -272,7 +272,7 @@ export default function MultiStepCoverLetterForm() {
           {/* Right Side - Form */}
           {isLoading ? (
           <div className="  p-6 md:p-10 space-y-6">
-            <AtomComponent/>
+            <BookLoaderComponent/>
             </div>
             ):
           <div className="bg-gray-950 rounded-lg border border-gray-700 p-6 md:p-10 space-y-6">

@@ -2,7 +2,7 @@
 import React from 'react';
 import BookLoader from '../loaders/BookLoader';
 
-export const AtomComponent = () => {
+export const BookLoaderComponent = () => {
   return (
     <>
    <BookLoader   
