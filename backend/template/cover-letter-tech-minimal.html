@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech-Minimal Cover Letter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --text-primary: #121212;
+            --text-secondary: #666666;
+            --accent-color: #0070f3;
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .cover-letter-container {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 40px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--text-primary);
+        }
+
+        .personal-header h1 {
+            font-size: 2.2em;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 5px;
+        }
+
+        .personal-header h2 {
+            font-size: 1em;
+            font-weight: 300;
+            color: var(--text-secondary);
+        }
+
+        .contact-info {
+            text-align: right;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        .job-details {
+            background-color: #f4f4f4;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .professional-highlights {
+            background-color: #f9f9f9;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .professional-highlights::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-color), transparent);
+        }
+
+        .professional-highlights h3 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .professional-highlights h3::before {
+            content: '//';
+            color: var(--accent-color);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .skill-tag {
+            background-color: rgba(0,112,243,0.1);
+            color: var(--accent-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .achievements-list {
+            list-style-type: none;
+        }
+
+        .achievements-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+
+        .achievements-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .contact-info {
+                text-align: center;
+                margin-top: 10px;
+            }
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cover-letter-container">
+        <div class="header">
+            <div class="personal-header">
+                <h1>Alex Chen</h1>
+                <h2>Senior Software Engineer</h2>
+            </div>
+            <div class="contact-info">
+                <p>alex.chen@email.com</p>
+                <p>(555) 456-7890</p>
+                <p>San Francisco, CA</p>
+            </div>
+        </div>
+
+        <p>[Current Date]</p>
+
+        <div class="job-details">
+            <h3>Application: Lead Software Engineer</h3>
+            <p>Innovative Tech Solutions, San Francisco</p>
+        </div>
+
+        <p>Dear Hiring Manager,</p>
+
+        <p>I am writing to express my strong interest in the Lead Software Engineer position at Innovative Tech Solutions. With a robust background in software development and a passion for creating elegant, efficient solutions, I am excited about the opportunity to contribute to your innovative team.</p>
+
+        <div class="professional-highlights">
+            <h3>Professional Highlights</h3>
+
+            <div class="skills-grid">
+                <span class="skill-tag">Cloud Architecture</span>
+                <span class="skill-tag">DevOps</span>
+                <span class="skill-tag">Microservices</span>
+                <span class="skill-tag">Machine Learning</span>
+                <span class="skill-tag">System Design</span>
+            </div>
+
+            <h4>Current Role</h4>
+            <p>Senior Software Architect, TechInnovate Solutions</p>
+
+            <h4>Notable Achievements</h4>
+            <ul class="achievements-list">
+                <li>Redesigned core infrastructure, reducing system latency by 40%</li>
+                <li>Led development of scalable microservices architecture</li>
+                <li>Implemented advanced machine learning pipelines for predictive analytics</li>
+            </ul>
+        </div>
+
+        <p>My approach combines technical expertise with strategic thinking, enabling me to develop innovative solutions that drive meaningful technological advancements.</p>
+
+        <p>Thank you for considering my application. I look forward to the opportunity to discuss how I can contribute to Innovative Tech Solutions' continued success.</p>
+
+        <div class="signature">
+            <p>Sincerely,</p>
+            <p>Alex Chen</p>
+        </div>
+    </div>
+</body>
+</html>
