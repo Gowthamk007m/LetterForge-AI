@@ -12,12 +12,13 @@ from .models import CoverLetterInput
 from .serializers import CoverLetterInputSerializer
 import json
 
-
+from django.views.generic import TemplateView
 
 from backend.settings import OPENAI_API_KEY
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 from weasyprint import HTML,CSS
+from django.template.loader import render_to_string
 
 
 from rest_framework.views import APIView
@@ -26,7 +27,11 @@ from rest_framework import status
 
 # Create your views here.
 def home(request):
-    html = HTML('template/cover-letter-template-modern.html')
+    cover_letter_data=CoverLetterInput.objects.get(id=2)
+    skills_list = cover_letter_data.skills.split(", ")  
+    achievements_list = cover_letter_data.achievements.split("\n")
+    context={"cover_letter":cover_letter_data,"skills_list":skills_list,"achievements":achievements_list}
+    
 
     # Define CSS with A4 size and ensure content fits
     css = CSS(string='''
@@ -41,27 +46,26 @@ def home(request):
         }
     ''')
 
+    html_string = render_to_string('template/cover-letter-minimalist-professional.html')
     # Generate the PDF
     pdf_file_path = 'template/weasyprint-website.pdf'
-    html.write_pdf(pdf_file_path, stylesheets=[css])
-    return render(request, 'cover-letter-template-modern.html')
+    html = HTML(string=html_string)
+    html.write_pdf(pdf_file_path)
+
+    return render(request,html)
 
 
 from django.http import JsonResponse
 from datetime import date
 def save_cover_letter(ai_data):
-    # Simulating incoming data (replace this with your actual data source)
-  
     coverletter = ai_data
     print("cover",coverletter)
-    # Parse the JSON content
+
     try:
-        # Remove the backticks and load the JSON content
-        # date_now = datetime.now().strftime("%Y-%m-%d")
         print("hee")
 
         json_data = json.loads(coverletter['cover_letter'].strip("```json").strip("```"))
-        # Save data to the model
+
         cover_letter = CoverLetterInput(
             name=json_data.get('name'),
             email=json_data.get('email'),
@@ -86,7 +90,15 @@ def save_cover_letter(ai_data):
         return JsonResponse({'status': 'error', 'message': str(e)})
 
 
-
+class HmtllView(TemplateView):
+    template_name = 'cover-letter-minimalist-professional.html'
+    def get(self, request):
+        cover_letter_data=CoverLetterInput.objects.get(id=2)
+            
+        skills_list = cover_letter_data.skills.split(", ")  
+        achievements_list = cover_letter_data.achievements.split("\n")
+        context={"cover_letter":cover_letter_data,"skills_list":skills_list,"achievements":achievements_list}
+        return render(request, self.template_name,context)
 
 class GenerateCoverLetterView(APIView):
     def post(self, request):

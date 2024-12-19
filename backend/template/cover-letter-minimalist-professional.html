@@ -171,56 +171,54 @@
     <div class="cover-letter-container">
         <div class="header">
             <div class="personal-header">
-                <h1>Elena Rodriguez</h1>
-                <h2>Strategic Product Management Professional</h2>
+                <h1>{{cover_letter.name}}</h1>
+                <h2>{{cover_letter.designation}}</h2>
             </div>
             <div class="contact-info">
-                <p>elena.rodriguez@email.com</p>
-                <p>(555) 987-6543</p>
-                <p>Seattle, WA</p>
+                <p>{{cover_letter.email}}</p>
+                <p>{{cover_letter.phone}}</p>
+                <p>{{cover_letter.location}}</p>
             </div>
         </div>
 
-        <p>[Current Date]</p>
+        <p>{{cover_letter.date}}</p>
 
         <div class="job-details">
-            <h3>Application: Senior Product Manager</h3>
-            <p>Innovative Technology Solutions, Seattle</p>
+            <h3>Application: {{cover_letter.jobTitle}}</h3>
+            <p>{{cover_letter.company}}</p>
         </div>
 
         <p>Dear Hiring Manager,</p>
 
-        <p>I am writing to express my strong interest in the Senior Product Manager position at Innovative Technology Solutions. With a proven track record of driving strategic product development and fostering cross-functional collaboration, I am excited about the opportunity to contribute to your dynamic team.</p>
+        <p>{{cover_letter.indroduction}}</p>
 
         <div class="professional-highlights">
             <h3>Professional Highlights</h3>
 
             <div class="skills-list">
-                <span class="skill-tag">Product Strategy</span>
-                <span class="skill-tag">Agile Methodology</span>
-                <span class="skill-tag">User Experience</span>
-                <span class="skill-tag">Data Analysis</span>
-                <span class="skill-tag">Team Leadership</span>
+                {% for skill in skills_list %}
+                <span class="skill-tag">{{skill}}</span>
+                {% endfor %}
             </div>
 
             <h4>Current Role</h4>
-            <p>Senior Product Lead, Digital Innovations Corp</p>
+            <p>{{cover_letter.previousRole}}</p>
 
             <h4>Notable Achievements</h4>
             <ul class="achievements-list">
-                <li>Led product redesign resulting in 45% user engagement increase</li>
-                <li>Implemented data-driven feature optimization reducing customer support tickets by 30%</li>
-                <li>Successfully launched 3 major product lines ahead of schedule</li>
+                {% for achievement in achievements %}
+                <li>{{achievement}}</li>
+                {% endfor %}
             </ul>
         </div>
 
-        <p>My approach combines strategic insight with a deep understanding of user needs, allowing me to develop innovative solutions that drive meaningful business impact. I am confident that my skills align perfectly with Innovative Technology Solutions' vision and goals.</p>
-
+        <p> {{cover_letter.approach}}</p>
+<br>
         <p>Thank you for considering my application. I look forward to the opportunity to discuss how I can contribute to your team's success.</p>
 
         <div class="signature">
             <p>Sincerely,</p>
-            <p>Elena Rodriguez</p>
+            <p>{{cover_letter.name}}</p>
         </div>
     </div>
 </body>
