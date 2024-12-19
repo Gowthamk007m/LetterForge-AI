@@ -7,6 +7,8 @@ from openai import OpenAI
 
 
 from rest_framework import status
+
+from .models import CoverLetterInput
 from .serializers import CoverLetterInputSerializer
 import json
 
@@ -43,6 +45,45 @@ def home(request):
     pdf_file_path = 'template/weasyprint-website.pdf'
     html.write_pdf(pdf_file_path, stylesheets=[css])
     return render(request, 'cover-letter-template-modern.html')
+
+
+from django.http import JsonResponse
+from datetime import date
+def save_cover_letter(ai_data):
+    # Simulating incoming data (replace this with your actual data source)
+  
+    coverletter = ai_data
+    print("cover",coverletter)
+    # Parse the JSON content
+    try:
+        # Remove the backticks and load the JSON content
+        # date_now = datetime.now().strftime("%Y-%m-%d")
+        print("hee")
+
+        json_data = json.loads(coverletter['cover_letter'].strip("```json").strip("```"))
+        # Save data to the model
+        cover_letter = CoverLetterInput(
+            name=json_data.get('name'),
+            email=json_data.get('email'),
+            phone=json_data.get('phone'),
+            location=json_data.get('location'),
+            date=date.today(),  # Set the current date
+            designation=json_data.get('designation'),
+            jobTitle=json_data.get('job_title'),
+            company=json_data.get('company'),
+            indroduction=json_data.get('introduction'),
+            skills=", ".join(json_data.get('skills', [])),  # Convert list to comma-separated string
+            previousRole=json_data.get('previousRole'),
+            previousCompany=json_data.get('previousCompany'),
+            achievements="\n".join(json_data.get('achievements', [])),  # Convert list to newline-separated string
+            approach=json_data.get('approach'),
+        )
+        cover_letter.save()
+        
+        return JsonResponse({'status': 'success', 'message': 'Cover letter saved successfully!'})
+
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)})
 
 
 
@@ -85,12 +126,20 @@ class GenerateCoverLetterView(APIView):
 
             # Extract the AI-generated content
             cover_letter = response.choices[0].message.content
-            print(cover_letter)
-            render_html(cover_letter)
+  
+
+            data={"cover_letter": cover_letter}
+
+            save_cover_letter(data)
+            print("data",data)
+            # render_html(cover_letter)
             return Response({"cover_letter": cover_letter}, status=status.HTTP_200_OK)
 
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
 
 
 # def render_html(ai_data):
