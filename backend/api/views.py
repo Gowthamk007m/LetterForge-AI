@@ -17,6 +17,7 @@ from django.views.generic import TemplateView
 from backend.settings import OPENAI_API_KEY
 client = OpenAI(api_key=OPENAI_API_KEY)
 
+
 from weasyprint import HTML,CSS
 from django.template.loader import render_to_string
 
