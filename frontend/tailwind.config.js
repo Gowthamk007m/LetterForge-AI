@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
   darkMode: ["class"],
   content: [
@@ -75,5 +76,8 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require('tailwindcss-animate'), // Correctly require the plugin
+    require('tailwind-scrollbar-hide'), // Correctly require the plugin
+  ],
 }

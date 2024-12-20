@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Professional Cover Letter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-text: #1a1a1a;
+            --secondary-text: #505050;
+            --background: #ffffff;
+            --accent: #000000;
+            --highlight: #f4f4f4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--primary-text);
+            background-color: var(--background);
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .cover-letter-container {
+            background-color: var(--background);
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .personal-header h1 {
+            font-size: 2.2em;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .personal-header h2 {
+            font-size: 1em;
+            font-weight: 300;
+            color: var(--secondary-text);
+        }
+
+        .contact-info {
+            text-align: right;
+            font-size: 0.9em;
+            color: var(--secondary-text);
+        }
+
+        .job-details {
+            background-color: var(--highlight);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .professional-highlights {
+            background-color: var(--highlight);
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .professional-highlights::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--accent);
+        }
+
+        .professional-highlights h3 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .professional-highlights h3::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .skill-tag {
+            background-color: var(--accent);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .achievements-list {
+            list-style-type: none;
+        }
+
+        .achievements-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+
+        .achievements-list li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-info {
+                text-align: center;
+                margin-top: 10px;
+            }
+        }
+
+        @media print {
+            body {
+                padding: 0;
+            }
+            .cover-letter-container {
+                border: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cover-letter-container">
+        <div class="header">
+            <div class="personal-header">
+                <h1>{{cover_letter.name}}</h1>
+                <h2>{{cover_letter.designation}}</h2>
+            </div>
+            <div class="contact-info">
+                <p>{{cover_letter.email}}</p>
+                <p>{{cover_letter.phone}}</p>
+                <p>{{cover_letter.location}}</p>
+            </div>
+        </div>
+
+        <p>{{cover_letter.date}}</p>
+
+        <div class="job-details">
+            <h3>Application: {{cover_letter.jobTitle}}</h3>
+            <p>{{cover_letter.company}}</p>
+        </div>
+
+        <p>Dear Hiring Manager,</p>
+
+        <p>{{cover_letter.indroduction}}</p>
+
+        <div class="professional-highlights">
+            <h3>Professional Highlights</h3>
+
+            <div class="skills-list">
+                {% for skill in skills_list %}
+                <span class="skill-tag">{{skill}}</span>
+                {% endfor %}
+            </div>
+
+            <h4>Current Role</h4>
+            <p>{{cover_letter.previousRole}}</p>
+
+            <h4>Notable Achievements</h4>
+            <ul class="achievements-list">
+                {% for achievement in achievements %}
+                <li>{{achievement}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <p> {{cover_letter.approach}}</p>
+<br>
+        <p>Thank you for considering my application. I look forward to the opportunity to discuss how I can contribute to your team's success.</p>
+
+        <div class="signature">
+            <p>Sincerely,</p>
+            <p>{{cover_letter.name}}</p>
+        </div>
+    </div>
+</body>
+</html>
