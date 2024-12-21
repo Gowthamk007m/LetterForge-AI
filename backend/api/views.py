@@ -1,30 +1,20 @@
-import datetime
 
-from django.shortcuts import redirect, render
-from openai import OpenAI
-from django.template import Template, Context
-from openai import OpenAI
-from django.http import HttpResponse
-
-from rest_framework import status
-
+from django.template.loader import render_to_string
+from rest_framework.response import Response
+from backend.settings import OPENAI_API_KEY
+from rest_framework.views import APIView
+from django.shortcuts import redirect
 from .models import CoverLetterInput
-from .serializers import CoverLetterInputSerializer
+from django.http import HttpResponse
+from rest_framework import status
+from rest_framework import status
+from weasyprint import HTML,CSS
+from openai import OpenAI
+from openai import OpenAI
+import datetime
 import json
 
-from django.views.generic import TemplateView
-
-from backend.settings import OPENAI_API_KEY
 client = OpenAI(api_key=OPENAI_API_KEY)
-
-
-from weasyprint import HTML,CSS
-from django.template.loader import render_to_string
-
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 
 # Create your views here.
 def download_cover_letter(request, id):
@@ -32,15 +22,12 @@ def download_cover_letter(request, id):
     skills_list = cover_letter_data.skills.split(", ")  
     achievements_list = cover_letter_data.achievements.split("\n")
     context={"cover_letter":cover_letter_data,"skills_list":skills_list,"achievements":achievements_list}
-    
 
     css = CSS(string='''
         @page {
             size: A4;
-            
             margin: 1cm;
-            margin-top: 0cm;  
-            
+            margin-top: 0cm;
         }
         body {
             font-size: 14px;
@@ -51,15 +38,12 @@ def download_cover_letter(request, id):
     ''')
 
     name=cover_letter_data.name
-    html_string = render_to_string('cover-letter-minimalist-professional.html', context)
-    
+    html_string = render_to_string('cover-letter-creative-design.html', context)
     html = HTML(string=html_string)
     pdf_content = html.write_pdf(stylesheets=[css])
     
     response = HttpResponse(pdf_content, content_type='application/pdf')
     response['Content-Disposition'] = f'inline; filename="{cover_letter_data.name} Coverletter.pdf"'
-
-
     return response
 
 
@@ -69,7 +53,6 @@ def save_cover_letter(ai_data):
     coverletter = ai_data
 
     try:
-
         json_data = json.loads(coverletter['cover_letter'].strip("```json").strip("```"))
 
         cover_letter = CoverLetterInput(
@@ -82,7 +65,7 @@ def save_cover_letter(ai_data):
             jobTitle=json_data.get('job_title'),
             company=json_data.get('company'),
             introduction=json_data.get('introduction'),
-            skills=",".join(json_data.get('skills', [])),
+            skills=", ".join(json_data.get('skills', [])),
             previousRole=json_data.get('previousRole'),
             previousCompany=json_data.get('previousCompany'),
             achievements="\n".join(json_data.get('achievements', [])), 
@@ -90,8 +73,6 @@ def save_cover_letter(ai_data):
         )
         cover_letter.save()
         
-        
-
         return cover_letter 
 
         
@@ -100,16 +81,6 @@ def save_cover_letter(ai_data):
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
 
-
-# class HmtllView(TemplateView):
-#     template_name = 'cover-letter-minimalist-professional.html'
-#     def get(self, request):
-#         cover_letter_data=CoverLetterInput.objects.get(id=2)
-            
-#         skills_list = cover_letter_data.skills.split(", ")  
-#         achievements_list = cover_letter_data.achievements.split("\n")
-#         context={"cover_letter":cover_letter_data,"skills_list":skills_list,"achievements":achievements_list}
-#         return render(request, self.template_name,context)
 
 class GenerateCoverLetterView(APIView):
     def post(self, request):
@@ -168,38 +139,3 @@ class GenerateCoverLetterView(APIView):
 
 
 
-# def render_html(ai_data):
-
-#     return render(request, 'cover-letter-template-modern.html')
-
-
-# def parse_ai_response(ai_response_text):
-#     try:
-#         # Load the AI response as a JSON object
-#         response = ai_response_text
-#         date = datetime.now().strftime("%Y-%m-%d")
-#         # Extract each section of the response
-#         parsed_response = {   
-#                 "name": response.get("name"),
-#                 "email": response.get("email"),
-#                 "phone": response.get("phone"),
-#                 "location": response.get("location"),
-#                 "date": date,
-#                 "designation": response.get("designation"),
-#                 "job_title": response.get("job_title"),
-#                 "company": response.get("company"),
-#                 "introduction": response.get("introduction"),
-#                 "skills": response.get("skills"),
-#                 "previousRole": response.get("previousRole"),
-#                 "previousCompany": response.get("previousCompany"),
-#                 "achievements": response.get("achievements"),
-#         }
-        
-#         print(parsed_response)
-#         return parsed_response
-
-#     except json.JSONDecodeError as e:
-#         print("Error parsing AI response:", e)
-#         return None
-
-# parse_ai_response(data)
