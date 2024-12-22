@@ -52,7 +52,6 @@ def save_cover_letter(ai_data):
 
     try:
         json_data = json.loads(coverletter['cover_letter'].strip("```json").strip("```"))
-
         cover_letter = CoverLetterInput(
             name=json_data.get('name'),
             email=json_data.get('email'),
@@ -70,11 +69,7 @@ def save_cover_letter(ai_data):
             approach=json_data.get('approach'),
         )
         cover_letter.save()
-        
         return cover_letter 
-
-        
-        return JsonResponse({'status': 'success', 'message': 'Cover letter saved successfully!'})
 
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
@@ -93,7 +88,6 @@ class GenerateCoverLetterView(APIView):
         previos_company = request.data.get('previousCompany')  
         skills = request.data.get('skills')  
         achievements = request.data.get('achievements') 
-
 
         try:
             prompt = f"""
@@ -116,7 +110,6 @@ class GenerateCoverLetterView(APIView):
                 {"role": "system", "content": "You are an assistant skilled in writing professional cover letters. deliver your cover letter in JSON format with the following structure with following keys: make 'name','email','phone','location','desgination','job_title','company','introduction','skills','previousRole','previousCompany','achievements' also make introduction a sentance of at leat 150 characters.also in a key ,approach, write a 200 characters sentance show case your approach to the company and work, also make the key acheivements a list of at achievments, complete the achievments to a full line each"},
                 {"role": "user", "content": prompt}])
 
-            # Extract the AI-generated content
             cover_letter = response.choices[0].message.content
   
 
@@ -126,10 +119,6 @@ class GenerateCoverLetterView(APIView):
 
             return redirect('download_cover_letter', id=saved_cover_letter.id)
         
-            print("data",data)
-            # render_html(cover_letter)
-            return Response({"cover_letter": cover_letter}, status=status.HTTP_200_OK)
-
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
