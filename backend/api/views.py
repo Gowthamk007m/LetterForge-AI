@@ -37,7 +37,6 @@ def download_cover_letter(request, id):
         }
     ''')
 
-    name=cover_letter_data.name
     html_string = render_to_string('cover-letter-creative-design.html', context)
     html = HTML(string=html_string)
     pdf_content = html.write_pdf(stylesheets=[css])
@@ -111,10 +110,7 @@ class GenerateCoverLetterView(APIView):
                 {"role": "user", "content": prompt}])
 
             cover_letter = response.choices[0].message.content
-  
-
             data={"cover_letter": cover_letter}
-
             saved_cover_letter=save_cover_letter(data)
 
             return redirect('download_cover_letter', id=saved_cover_letter.id)
