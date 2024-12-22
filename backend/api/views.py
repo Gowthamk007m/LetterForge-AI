@@ -6,13 +6,13 @@ from rest_framework.views import APIView
 from django.shortcuts import redirect
 from .models import CoverLetterInput
 from django.http import HttpResponse
-from rest_framework import status
+from django.http import JsonResponse
 from rest_framework import status
 from weasyprint import HTML,CSS
 from openai import OpenAI
-from openai import OpenAI
-import datetime
+from datetime import date
 import json
+
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -47,8 +47,6 @@ def download_cover_letter(request, id):
     return response
 
 
-from django.http import JsonResponse
-from datetime import date
 def save_cover_letter(ai_data):
     coverletter = ai_data
 
