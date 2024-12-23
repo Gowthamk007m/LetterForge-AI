@@ -179,35 +179,31 @@
                 <div class="contact-info">
                     <p>{{cover_letter.email}}</p>
                     <p>{{cover_letter.phone}}</p>
-                    <p>San Francisco, CA</p>
+                    <p>{{cover_letter.location}}</p>
                 </div>
             </div>
 
-            <p>[Current Date]</p>
+            <p>{{cover_letter.date}}</p>
 
             <div class="job-details">
-                <h3>Application: Creative Director</h3>
-                <p>Innovative Design Studio, San Francisco</p>
+                <h3>Application: {{cover_letter.jobTitle}}</h3>
             </div>
 
             <p>Dear Hiring Manager,</p>
 
-            <p>I am excited to apply for the Creative Director position at Innovative Design Studio. With a proven track record of transforming creative visions into compelling narratives, I am eager to bring my unique blend of strategic thinking and artistic innovation to your team.</p>
+            <p>{{cover_letter.introduction}}</p>
 
             <div class="professional-highlights">
                 <h3>Professional Highlights</h3>
 
                 <h4>Current Role</h4>
-                <p>Senior Creative Lead, Digital Innovations Group</p>
+                <p>{{cover_letter.previousRole}}</p>
 
                 <h4>Core Skills</h4>
                 <div class="skills-grid">
-                    <div class="skill-tag">Strategic Planning</div>
-                    <div class="skill-tag">Brand Development</div>
-                    <div class="skill-tag">Creative Direction</div>
-                    <div class="skill-tag">Design Thinking</div>
-                    <div class="skill-tag">Team Leadership</div>
-                    <div class="skill-tag">Innovation Strategy</div>
+                    {% for skill in skills_list %}
+                    <div class="skill-tag">{{skill}}</div>
+                    {% endfor %}
                 </div>
 
                 <h4>Notable Achievements</h4>
