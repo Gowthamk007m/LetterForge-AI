@@ -1,4 +1,5 @@
 
+import random
 from django.template.loader import render_to_string
 from rest_framework.response import Response
 from backend.settings import OPENAI_API_KEY
@@ -37,9 +38,23 @@ def download_cover_letter(request, id):
         }
     ''')
 
-    html_string = render_to_string('cover-letter-creative-design.html', context)
+    all_templates = {
+        'creative-design': 'cover-letter-creative-design.html',
+        'modern': 'cover-letter-template-modern.html',
+        'vintage': 'cover-letter-vintage.html',
+        'minimalist': 'cover-letter-minimalist-professional.html',
+        'tech-minimal': 'cover-letter-tech-minimal.html'
+    }
+
+    def get_random_template():
+        return random.choice(list(all_templates.keys()))
+
+
+    html_string = render_to_string(all_templates[get_random_template()], context)
     html = HTML(string=html_string)
     pdf_content = html.write_pdf(stylesheets=[css])
+
+
     
     response = HttpResponse(pdf_content, content_type='application/pdf')
     response['Content-Disposition'] = f'inline; filename="{cover_letter_data.name} Coverletter.pdf"'
