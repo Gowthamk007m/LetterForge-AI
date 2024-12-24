@@ -109,16 +109,17 @@
         .skills-grid {
             display: flex;
             flex-wrap: wrap;
-            /* grid-template-columns: repeat(2, 1fr); */
-            gap: 10px;
             margin-top: 5px;
+            gap:10%;
         }
 
         .skill-tag {
             background-color: var(--accent-color);
             color: white;
             padding: 5px 10px;
-            border-radius: 20px;
+            border-radius: 10px;
+            margin-left: 2px;
+            margin-bottom: 2px;
             font-size: 0.8em;
             text-align: center;
         }
@@ -203,7 +204,7 @@
                 <h4>Core Skills</h4>
                 <div class="skills-grid">
                     {% for skill in skills_list %}
-                    <div>  {{skill}}</div>
+                    <div class="skill-tag">  {{skill}} </div>
                     {% endfor %}
                 </div>
 
