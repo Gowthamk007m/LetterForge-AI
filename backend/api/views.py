@@ -40,9 +40,9 @@ def download_cover_letter(request, id):
     all_templates = {
         # 'creative-design': 'cover-letter-creative-design.html',
         # 'modern': 'cover-letter-template-modern.html',
-        'vintage': 'cover-letter-vintage.html',
+        # 'vintage': 'cover-letter-vintage.html',
         # 'minimalist': 'cover-letter-minimalist-professional.html',
-        # 'tech-minimal': 'cover-letter-tech-minimal.html'
+        'tech-minimal': 'cover-letter-tech-minimal.html'
     }
 
     def get_random_template():
