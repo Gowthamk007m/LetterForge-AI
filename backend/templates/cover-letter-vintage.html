@@ -1,232 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vintage Professional Cover Letter</title>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        :root {
-            --primary-color: #3d3d3d;
-            --secondary-color: #6c6c6c;
-            --background: #f7f3e8;
-            --paper-color: #fffaf0;
-            --accent-color: #8b4513;
-        }
+      :root {
+        --primary-color: #3d3d3d;
+        --secondary-color: #6c6c6c;
+        --background: #f7f3e8;
+        --paper-color: #fffaf0;
+        --accent-color: #8b4513;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: 'Lato', sans-serif;
-            line-height: 1.7;
-            background-color: var(--background);
-            color: var(--primary-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 30px 15px;
-        }
+      body {
+        font-family: "Lato", sans-serif;
+        line-height: 1.7;
+        background-color: var(--background);
+        color: var(--primary-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 25px;
+      }
 
+      .cover-letter-container {
+        background-color: var(--paper-color);
+        max-width: 800px;
+        width: 100%;
+        padding: 25px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+          inset 0 0 30px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e0d6c0;
+        position: relative;
+      }
+
+      .cover-letter-container::before,
+      .cover-letter-container::after {
+        content: "";
+        position: absolute;
+        background: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 10px,
+          rgba(158, 114, 82, 0.05) 30px,
+          rgba(240, 237, 235, 0.05) 5px
+        );
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 15px;
+        margin-bottom: 30px;
+      }
+
+      .personal-header h1 {
+        font-family: "Merriweather", serif;
+        font-size: 2.3em;
+        color: var(--accent-color);
+        margin-bottom: 5px;
+      }
+
+      .personal-header h2 {
+        font-size: 1em;
+        color: var(--secondary-color);
+        font-weight: 300;
+      }
+
+      .contact-info {
+        text-align: right;
+        font-size: 0.9em;
+        color: var(--secondary-color);
+      }
+
+      .job-details {
+        background-color: rgba(139, 69, 19, 0.05);
+        padding: 15px;
+        margin: 20px 0;
+        border-left: 4px solid var(--accent-color);
+      }
+
+      .professional-highlights {
+        background-color: rgba(139, 69, 19, 0.03);
+        padding: 25px;
+        margin-bottom: 20px;
+        border: 1px solid rgba(139, 69, 19, 0.1);
+      }
+
+      .professional-highlights h3 {
+        font-family: "Merriweather", serif;
+        color: var(--accent-color);
+        margin-bottom: 15px;
+        position: relative;
+        padding-left: 30px;
+      }
+
+      .professional-highlights h3::before {
+        content: "✦";
+        position: absolute;
+        left: 0;
+        color: var(--accent-color);
+      }
+
+      .skills-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .skill-tag {
+        background-color: rgba(139, 69, 19, 0.1);
+        color: var(--accent-color);
+        padding: 3px 10px;
+        border-radius: 3px;
+        font-size: 0.8em;
+        border: 1px solid rgba(139, 69, 19, 0.2);
+      }
+
+      .achievements-list {
+        list-style-type: none;
+      }
+
+      .achievements-list li {
+        position: relative;
+        padding-left: 25px;
+        margin-bottom: 10px;
+      }
+
+      .achievements-list li::before {
+        content: "❧";
+        position: absolute;
+        left: 0;
+        color: var(--accent-color);
+      }
+
+      .signature {
+        text-align: right;
+        margin-top: 30px;
+        font-style: italic;
+      }
+
+      @media (max-width: 768px) {
         .cover-letter-container {
-            background-color: var(--paper-color);
-            max-width: 800px;
-            width: 100%;
-            padding: 50px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1), 
-                        inset 0 0 30px rgba(0,0,0,0.05);
-            border: 1px solid #e0d6c0;
-            position: relative;
+          padding: 0px;
         }
-
-        .cover-letter-container::before,
-        .cover-letter-container::after {
-            content: '';
-            position: absolute;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(158, 114, 82, 0.05) 30px,
-                rgba(240, 237, 235, 0.05) 5px
-            );
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-        }
-
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 15px;
-            margin-bottom: 30px;
+          flex-direction: column;
+          text-align: center;
         }
-
-        .personal-header h1 {
-            font-family: 'Merriweather', serif;
-            font-size: 2.3em;
-            color: var(--accent-color);
-            margin-bottom: 5px;
-        }
-
-        .personal-header h2 {
-            font-size: 1em;
-            color: var(--secondary-color);
-            font-weight: 300;
-        }
-
         .contact-info {
-            text-align: right;
-            font-size: 0.9em;
-            color: var(--secondary-color);
+          text-align: center;
+          margin-top: 10px;
         }
-
-        .job-details {
-            background-color: rgba(139,69,19,0.05);
-            padding: 15px;
-            margin: 20px 0;
-            border-left: 4px solid var(--accent-color);
-        }
-
-        .professional-highlights {
-            background-color: rgba(139,69,19,0.03);
-            padding: 25px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(139,69,19,0.1);
-        }
-
-        .professional-highlights h3 {
-            font-family: 'Merriweather', serif;
-            color: var(--accent-color);
-            margin-bottom: 15px;
-            position: relative;
-            padding-left: 30px;
-        }
-
-        .professional-highlights h3::before {
-            content: '✦';
-            position: absolute;
-            left: 0;
-            color: var(--accent-color);
-        }
-
-        .skills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .skill-tag {
-            background-color: rgba(139,69,19,0.1);
-            color: var(--accent-color);
-            padding: 3px 10px;
-            border-radius: 3px;
-            font-size: 0.8em;
-            border: 1px solid rgba(139,69,19,0.2);
-        }
-
-        .achievements-list {
-            list-style-type: none;
-        }
-
-        .achievements-list li {
-            position: relative;
-            padding-left: 25px;
-            margin-bottom: 10px;
-        }
-
-        .achievements-list li::before {
-            content: '❧';
-            position: absolute;
-            left: 0;
-            color: var(--accent-color);
-        }
-
-        .signature {
-            text-align: right;
-            margin-top: 30px;
-            font-style: italic;
-        }
-
-        @media (max-width: 768px) {
-            .cover-letter-container {
-                padding: 30px;
-            }
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-            .contact-info {
-                text-align: center;
-                margin-top: 10px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="cover-letter-container">
-        <div class="header">
-            <div class="personal-header">
-                <h1>William Hartley</h1>
-                <h2>Strategic Communications Expert</h2>
-            </div>
-            <div class="contact-info">
-                <p>william.hartley@email.com</p>
-                <p>(555) 234-5678</p>
-                <p>Boston, MA</p>
-            </div>
+      <div class="header">
+        <div class="personal-header">
+          <h1>{{ cover_letter.name }}</h1>
+          <h2>{{ cover_letter.designation }}</h2>
+        </div>
+        <div class="contact-info">
+          <p>{{ cover_letter.email }}</p>
+          <p>{{ cover_letter.phone }}</p>
+          <p>{{ cover_letter.location }}</p>
+        </div>
+      </div>
+      <p>{{ cover_letter.date }}</p>
+
+      <div class="job-details">
+        <h3>Application: {{ cover_letter.jobTitle }}</h3>
+        <p>{{ cover_letter.company }}, {{ cover_letter.location }}</p>
+      </div>
+
+      <p>Dear Hiring Manager,</p>
+
+      <p>{{ cover_letter.introduction }}</p>
+
+      <div class="professional-highlights">
+        <h3>Professional Highlights</h3>
+
+        <div class="skills-grid">
+          {% for skill in skills_list %}
+          <span class="skill-tag">{{ skill }}</span>
+          {% endfor %}
         </div>
 
-        <p>[Current Date]</p>
+        <h4>Current Role</h4>
+        <p>
+          {{ cover_letter.previousRole }}, {{ cover_letter.previousCompany }}
+        </p>
 
-        <div class="job-details">
-            <h3>Application: Communications Director</h3>
-            <p>Global Media Innovations, Boston</p>
-        </div>
+        <h4>Notable Achievements</h4>
+        <ul class="achievements-list">
+          {% for achievement in achievements %}
+          <li>{{ achievement }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <p>{{ cover_letter.approach }}</p>
+      <br />
+      <p>
+        Thank you for considering my application. I look forward to the
+        opportunity to discuss how I can contribute to Global Media Innovations'
+        continued success.
+      </p>
 
-        <p>Dear Hiring Manager,</p>
-
-        <p>I am writing to express my profound interest in the Communications Director position at Global Media Innovations. With a comprehensive background in strategic communications and a passion for crafting compelling narratives, I am excited about the opportunity to contribute to your esteemed organization.</p>
-
-        <div class="professional-highlights">
-            <h3>Professional Highlights</h3>
-
-            <div class="skills-grid">
-                <span class="skill-tag">Strategic Planning</span>
-                <span class="skill-tag">Media Relations</span>
-                <span class="skill-tag">Brand Storytelling</span>
-                <span class="skill-tag">Crisis Management</span>
-                <span class="skill-tag">Digital Communications</span>
-            </div>
-
-            <h4>Current Role</h4>
-            <p>Senior Communications Strategist, Pinnacle Media Group</p>
-
-            <h4>Notable Achievements</h4>
-            <ul class="achievements-list">
-                <li>Developed comprehensive communication strategy increasing brand visibility by 60%</li>
-                <li>Managed high-profile media campaigns for Fortune 500 clients</li>
-                <li>Implemented innovative digital communication frameworks</li>
-            </ul>
-        </div>
-
-        <p>My approach combines strategic insight with creative storytelling, enabling me to develop communication strategies that resonate deeply and drive meaningful engagement.</p>
-
-        <p>Thank you for considering my application. I look forward to the opportunity to discuss how I can contribute to Global Media Innovations' continued success.</p>
-
-        <div class="signature">
-            <p>Sincerely,</p>
-            <p>William Hartley</p>
-        </div>
+      <div class="signature">
+        <p>Sincerely,</p>
+        <p>{{ cover_letter.name }}</p>
+      </div>
     </div>
-</body>
+  </body>
 </html>
