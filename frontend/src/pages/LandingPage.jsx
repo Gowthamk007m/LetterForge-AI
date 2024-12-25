@@ -23,7 +23,7 @@ export default function LandingPage() {
                 Experience The Future With AI
               </h1>
               <p className="mx-auto max-w-[700px] text-gray-400 md:text-xl">
-                RightNow AI uses advanced AI to help you create compelling cover
+                LetterForge AI uses advanced AI to help you create compelling cover
                 letters and precise job descriptions in minutes.
               </p>
             </div>
@@ -116,7 +116,7 @@ export default function LandingPage() {
                 Ready to Boost Your Career?
               </h2>
               <p className="mx-auto max-w-[600px] text-gray-400 md:text-xl">
-                Join RightNow AI today and create impressive cover letters and
+                Join LetterForge AI today and create impressive cover letters and
                 job descriptions in minutes.
               </p>
             </div>
