@@ -1,5 +1,3 @@
-
-import random
 from django.template.loader import render_to_string
 from rest_framework.response import Response
 from backend.settings import OPENAI_API_KEY
@@ -12,6 +10,7 @@ from rest_framework import status
 from weasyprint import HTML,CSS
 from openai import OpenAI
 from datetime import date
+import random
 import json
 
 
@@ -39,11 +38,11 @@ def download_cover_letter(request, id):
     ''')
 
     all_templates = {
-        'creative-design': 'cover-letter-creative-design.html',
-        'modern': 'cover-letter-template-modern.html',
+        # 'creative-design': 'cover-letter-creative-design.html',
+        # 'modern': 'cover-letter-template-modern.html',
         'vintage': 'cover-letter-vintage.html',
-        'minimalist': 'cover-letter-minimalist-professional.html',
-        'tech-minimal': 'cover-letter-tech-minimal.html'
+        # 'minimalist': 'cover-letter-minimalist-professional.html',
+        # 'tech-minimal': 'cover-letter-tech-minimal.html'
     }
 
     def get_random_template():
