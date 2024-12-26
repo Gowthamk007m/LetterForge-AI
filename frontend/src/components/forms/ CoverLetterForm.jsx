@@ -86,7 +86,7 @@ export default function MultiStepCoverLetterForm() {
                 <Input 
                   id="name" 
                   placeholder="Enter your full name" 
-                  className="bg-gradient-to-t from-gray-800 to-gray-950 border-gray-700 text-white placeholder-gray-500"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
                   value={formData.name}
                   onChange={handleInputChange}
                 />
@@ -97,7 +97,7 @@ export default function MultiStepCoverLetterForm() {
                   id="email" 
                   type="email" 
                   placeholder="Enter your email" 
-                  className="bg-gradient-to-t from-gray-800 to-gray-950 border-gray-700 text-white placeholder-gray-500"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
                   value={formData.email}
                   onChange={handleInputChange}
                 />
@@ -108,7 +108,7 @@ export default function MultiStepCoverLetterForm() {
                   id="phone" 
                   type="tel" 
                   placeholder="Enter your phone number" 
-                  className="bg-gradient-to-t from-gray-800 to-gray-950 border-gray-700 text-white placeholder-gray-500"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
                   value={formData.phone}
                   onChange={handleInputChange}
                 />
@@ -135,7 +135,7 @@ export default function MultiStepCoverLetterForm() {
               <Input 
                 id="jobTitle" 
                 placeholder="Enter the job title" 
-                className="bg-gradient-to-t from-gray-800 to-gray-950 border-gray-700 text-white placeholder-gray-500"
+                className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
                 value={formData.jobTitle}
                 onChange={handleInputChange}
               />
@@ -145,7 +145,7 @@ export default function MultiStepCoverLetterForm() {
               <Input 
                 id="company" 
                 placeholder="Enter the company name" 
-                className="bg-gradient-to-t from-gray-800 to-gray-950 border-gray-700 text-white placeholder-gray-500"
+                className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
                 value={formData.company}
                 onChange={handleInputChange}
               />
@@ -155,7 +155,7 @@ export default function MultiStepCoverLetterForm() {
               <Textarea
                 id="jobDescription"
                 placeholder="Paste the job description here"
-                className="min-h-[120px] bg-gradient-to-t from-gray-800 to-gray-950 border-gray-700 text-white placeholder-gray-500"
+                className="min-h-[120px] bg-gray-950 border-gray-700 text-white placeholder-gray-500"
                 value={formData.jobDescription}
                 onChange={handleInputChange}
               />
@@ -189,7 +189,7 @@ export default function MultiStepCoverLetterForm() {
               <Input 
                 id="currentRole" 
                 placeholder="Enter your current job title" 
-                className="bg-gradient-to-t from-gray-800 to-gray-950 border-gray-700 text-white placeholder-gray-500"
+                className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
                 value={formData.currentRole}
                 onChange={handleInputChange}
               />
@@ -199,7 +199,7 @@ export default function MultiStepCoverLetterForm() {
               <Textarea
                 id="skills"
                 placeholder="Highlight your key skills and experiences"
-                className="min-h-[100px] bg-gradient-to-t from-gray-800 to-gray-950 border-gray-700 text-white placeholder-gray-500"
+                className="min-h-[100px] bg-gray-950 border-gray-700 text-white placeholder-gray-500"
                 value={formData.skills}
                 onChange={handleInputChange}
               />
@@ -209,7 +209,7 @@ export default function MultiStepCoverLetterForm() {
               <Textarea
                 id="achievements"
                 placeholder="Describe your notable professional achievements"
-                className="min-h-[100px] bg-gradient-to-t from-gray-800 to-gray-950 border-gray-700 text-white placeholder-gray-500"
+                className="min-h-[100px] bg-gray-950 border-gray-700 text-white placeholder-gray-500"
                 value={formData.achievements}
                 onChange={handleInputChange}
               />
