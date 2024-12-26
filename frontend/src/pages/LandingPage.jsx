@@ -13,6 +13,8 @@ import {
 
 export default function LandingPage() {
 
+  
+
   return (
     <div className="snap-y snap-mandatory h-screen overflow-y-scroll scrollbar-hide">
       <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black snap-start h-screen flex items-center">
@@ -64,7 +66,7 @@ export default function LandingPage() {
                 </p>
               </div>
             </Link>
-            <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-1 lg:p-6   bg-gradient-to-b from-[#2b2575] to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
+            <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-1 lg:p-6   bg-gradient-to-b from-[#2b2549] to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
               <Briefcase className="h-12 w-12 text-white" />
               <h3 className="text-xl font-bold text-white">JobDesc Wizard</h3>
               {/* <p className="text-center text-gray-400">
@@ -74,7 +76,7 @@ export default function LandingPage() {
                 Coming soon ...
               </p> 
             </div>
-            <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-1 lg:p-6   bg-gradient-to-b from-[#2b2575] to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
+            <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-1 lg:p-6   bg-gradient-to-b from-[#4f709a] to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
               <PenTool className="h-12 w-12 text-white" />
               <h3 className="text-xl font-bold text-white">ResumeEnhancer</h3>
               {/* <p className="text-center text-gray-400">
