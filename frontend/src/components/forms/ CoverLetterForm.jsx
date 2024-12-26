@@ -244,7 +244,7 @@ export default function MultiStepCoverLetterForm() {
       <div className="container px-4 md:px-6">
         <div className="grid gap-5 px-0 md:grid-cols-2">
           {/* Left Side - Description */}
-          <div className="space-y-6 self-center relative top-3 lg:top-0">
+          <div className="space-y-6  relative mt-12 lg:top-0">
             <div className="flex items-center space-x-4">
               <FileText className="h-12 w-12 text-white" />
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
@@ -275,7 +275,7 @@ export default function MultiStepCoverLetterForm() {
             <BookLoaderComponent/>
             </div>
             ):
-          <div className="bg-gray-950 rounded-lg border border-gray-700 p-6 md:p-10 space-y-6">
+          <div className="bg-gradient-to-b from-gray-950 to-gray-900 rounded-lg border border-gray-700 p-6 md:p-10 space-y-6">
             <form onSubmit={handleSubmit} className="space-y-4">
               {renderStep()}
             </form>
