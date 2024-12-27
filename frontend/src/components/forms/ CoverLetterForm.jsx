@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { FileText, ChevronRight, ChevronLeft, Check } from "lucide-react"
 import { BookLoaderComponent } from '../ui/Loader'
+import { s } from 'vite/dist/node/types.d-aGj9QkWt'
 
 export default function MultiStepCoverLetterForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -12,17 +13,14 @@ export default function MultiStepCoverLetterForm() {
   const [generatedContent, setGeneratedContent] = useState(null); // Track generated content
   
   const [formData, setFormData] = useState({
-    // Personal Details
     name: '',
     email: '',
     phone: '',
     
-    // Job Details
     jobTitle: '',
     company: '',
     jobDescription: '',
     
-    // Professional Details
     currentRole: '',
     skills: '',
     achievements: ''
@@ -37,7 +35,6 @@ export default function MultiStepCoverLetterForm() {
   };
 
   const nextStep = () => {
-    // Add validation logic here
     setCurrentStep(Math.min(currentStep + 1, 3));
   };
 
@@ -61,15 +58,13 @@ export default function MultiStepCoverLetterForm() {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      setGeneratedContent(data); 
+      setGeneratedContent(data);
+      setIsLoading(false); 
+      console.log('Cover letter generated:', data);
+      
     } catch (error) {
-      console.error('Error generating cover letter:', error);
-    } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 10000);
-
-    }
+      console.error('Error generating cover letter:', error); 
+    } 
   };
 
   const renderStep = () => {
@@ -268,6 +263,7 @@ export default function MultiStepCoverLetterForm() {
           </div>
 
           {/* Right Side - Form */}
+          
           {isLoading ? (
           <div className="  p-6 md:p-10 space-y-6">
             <BookLoaderComponent/>
