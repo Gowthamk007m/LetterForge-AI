@@ -56,7 +56,7 @@ export default function MultiStepCoverLetterForm() {
   const handleGenerate = async () => {
     setIsLoading(true); // Start loader
     try {
-      const response = await fetch('/api/generate', { // Replace with your API
+      const response = await fetch('/api/generate-cover-letter/', { // Replace with your API
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -69,7 +69,7 @@ export default function MultiStepCoverLetterForm() {
     // Stop loader with 10 sec timer
       setTimeout(() => {
         setIsLoading(false);
-      }, 100000);
+      }, 10000);
 
     }
   };
