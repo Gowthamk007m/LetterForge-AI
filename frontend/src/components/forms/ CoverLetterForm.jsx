@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { FileText, ChevronRight, ChevronLeft, Check } from "lucide-react"
 import { BookLoaderComponent } from '../ui/Loader'
-import { s } from 'vite/dist/node/types.d-aGj9QkWt'
 
 export default function MultiStepCoverLetterForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -263,7 +262,6 @@ export default function MultiStepCoverLetterForm() {
           </div>
 
           {/* Right Side - Form */}
-          
           {isLoading ? (
           <div className="  p-6 md:p-10 space-y-6">
             <BookLoaderComponent/>

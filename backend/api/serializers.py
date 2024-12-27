@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import CoverLetterInput
+from .models import Userinput
 
-class CoverLetterInputSerializer(serializers.ModelSerializer):
+class UserinputSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CoverLetterInput
+        model = Userinput
         fields = '__all__'

@@ -1,5 +1,6 @@
 from django.template.loader import render_to_string
 from rest_framework.response import Response
+from .serializers import UserinputSerializer
 from backend.settings import OPENAI_API_KEY
 from rest_framework.views import APIView
 from django.shortcuts import redirect
@@ -12,6 +13,7 @@ from openai import OpenAI
 from datetime import date
 import random
 import json
+
 
 
 client = OpenAI(api_key=OPENAI_API_KEY)
@@ -136,3 +138,12 @@ class GenerateCoverLetterView(APIView):
 
 
 
+
+
+class UserinputCreateView(APIView):
+    def post(self, request):
+        serializer = UserinputSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Data saved successfully!'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
