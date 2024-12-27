@@ -69,7 +69,7 @@ export default function MultiStepCoverLetterForm() {
     // Stop loader with 10 sec timer
       setTimeout(() => {
         setIsLoading(false);
-      }, 10000);
+      }, 100000);
 
     }
   };
