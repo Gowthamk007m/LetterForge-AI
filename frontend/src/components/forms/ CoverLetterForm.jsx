@@ -48,25 +48,23 @@ export default function MultiStepCoverLetterForm() {
   const handleSubmit = (e) => {
     
     e.preventDefault();
-    // Here you can add logic to handle form submission
     console.log('Form submitted:', formData);
   };
 
 
   const handleGenerate = async () => {
-    setIsLoading(true); // Start loader
+    setIsLoading(true); 
     try {
-      const response = await fetch('/api/generate-cover-letter/', { // Replace with your API
+      const response = await fetch('/api/v1/generate-cover-letter/', { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      setGeneratedContent(data); // Store generated content
+      setGeneratedContent(data); 
     } catch (error) {
       console.error('Error generating cover letter:', error);
     } finally {
-    // Stop loader with 10 sec timer
       setTimeout(() => {
         setIsLoading(false);
       }, 10000);
