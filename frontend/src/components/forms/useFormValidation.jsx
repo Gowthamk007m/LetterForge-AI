@@ -109,25 +109,6 @@ const useFormValidation = () => {
     setIsSubmitting(false);
   };
 
-  const nextStep = () => {
-    const currentFields = getCurrentStepFields(currentStep);
-    const stepErrors = {};
-    
-    // Validate only fields in current step
-    currentFields.forEach(field => {
-      const fieldErrors = validateForm({ [field]: formData[field] });
-      if (fieldErrors[field]) {
-        stepErrors[field] = fieldErrors[field];
-      }
-    });
-
-    if (Object.keys(stepErrors).length === 0) {
-      setCurrentStep(Math.min(currentStep + 1, 3));
-    } else {
-      setErrors(stepErrors);
-    }
-  };
-
   const getCurrentStepFields = (step) => {
     switch (step) {
       case 1:
@@ -147,8 +128,7 @@ const useFormValidation = () => {
     isSubmitting,
     handleInputChange,
     handleSubmit,
-    nextStep,
-    prevStep
+    getCurrentStepFields,
   };
 };
 
