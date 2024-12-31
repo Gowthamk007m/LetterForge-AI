@@ -41,10 +41,24 @@ export default function MultiStepCoverLetterForm() {
     setCurrentStep(Math.max(currentStep - 1, 1));
   };
 
-  const handleSubmit = (e) => {
-    
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    try {
+      const response = await fetch('/api/v1/userinput/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert('Form submitted successfully!');
+      } else {
+        console.error(data);
+        alert('Failed to submit the form.');
+      }
+    } catch (error) {
+      console.error('Error submitting the form:', error);
+    }
   };
 
 
@@ -268,7 +282,7 @@ export default function MultiStepCoverLetterForm() {
             </div>
             ):
           <div className="bg-gradient-to-b from-gray-950 to-gray-900 rounded-lg border border-gray-700 p-6 md:p-10 space-y-6">
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form className='space-y-4' onSubmit={step === 3 ? handleSubmit : (e) => e.preventDefault()}>
               {renderStep()}
             </form>
           </div>
