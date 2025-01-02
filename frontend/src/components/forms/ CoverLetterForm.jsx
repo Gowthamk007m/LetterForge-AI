@@ -10,7 +10,6 @@ export default function MultiStepCoverLetterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [generatedContent, setGeneratedContent] = useState(null);
 
-  // Form data and errors state
   const [formData, setFormData] = useState({
     name: '',
     email: '',
