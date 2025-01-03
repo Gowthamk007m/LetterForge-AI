@@ -12,19 +12,18 @@ import {
 } from "lucide-react";
 
 export default function LandingPage() {
-
   return (
     <div className="snap-y snap-mandatory h-screen overflow-y-scroll scrollbar-hide">
-      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black snap-start h-screen flex items-center">
-        <div className="container px-4 md:px-6">
+      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black snap-start h-screen flex items-start ">
+        <div className="container px-4 md:px-6 mt-16">
           <div className="flex flex-col items-center space-y-4 text-center">
-            <div className="space-y-2">
+            <div className="space-y-6  lg:space-y-2 md:space-y-2">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-7xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
                 Experience The Future With AI
               </h1>
               <p className="mx-auto max-w-[700px] text-gray-400 md:text-xl">
-                RightNow AI uses advanced AI to help you create compelling cover
-                letters and precise job descriptions in minutes.
+                LetterForge AI uses advanced AI to help you create compelling
+                cover letters and precise job descriptions in minutes.
               </p>
             </div>
             <div className="space-x-4">
@@ -47,45 +46,51 @@ export default function LandingPage() {
       </section>
 
       <section className="w-full py-12 md:py-24 lg:py-32 bg-black snap-start h-screen flex items-center">
-        <div className="container px-4 md:px-6">
+        <div className="container sm:px-4  md:px-6 mt-8">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-4 lg:mb-12 lg:text-6xl bg-clip-text text-transparent bg-gradient-to-t from-white to-gray-500">
             Our AI Tools
           </h2>
           <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3">
             <Link to="/cover-letter">
-              <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-1 lg:p-6 bg-gradient-to-b from-gray-500 to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
+              <div className="flex flex-col items-center  space-y-0 lg:space-y-3 p-4 lg:p-6 bg-gradient-to-b from-[#2b2575] to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
                 <FileText className="h-12 w-12 text-white" />
-                <h3 className="text-xl font-bold text-white">
+                <h3 className="text-lg lg:text-xl font-bold text-white">
                   CoverLetter Pro
                 </h3>
-                <p className="text-center text-gray-400">
+                <p className="text-center text-gray-400 text-sm  lg:text-base">
                   Generates tailored cover letters that highlight your skills
                   and experience.
                 </p>
               </div>
             </Link>
-            <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-1 lg:p-6   bg-gradient-to-b from-gray-500 to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
+            <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-4 lg:p-6   bg-gradient-to-b from-[#2b2549] to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
               <Briefcase className="h-12 w-12 text-white" />
-              <h3 className="text-xl font-bold text-white">JobDesc Wizard</h3>
-              <p className="text-center text-gray-400">
+              <h3 className="text-lg lg:text-xl font-bold text-white">
+                JobDesc Wizard
+              </h3>
+              {/* <p className="text-center text-gray-400">
                 Creates detailed and attractive job descriptions for any role.
-              </p>
+              </p> */}
+              <p className="text-center text-gray-400">Coming soon ...</p>
             </div>
-            <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-1 lg:p-6   bg-gradient-to-b from-gray-500 to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
+            <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-4 lg:p-6   bg-gradient-to-b from-[#4f709a] to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
               <PenTool className="h-12 w-12 text-white" />
-              <h3 className="text-xl font-bold text-white">ResumeEnhancer</h3>
-              <p className="text-center text-gray-400">
+              <h3 className="text-lg lg:text-xl font-bold text-white">
+                ResumeEnhancer
+              </h3>
+              {/* <p className="text-center text-gray-400">
                 Optimizes your resume to match job requirements and stand out.
-              </p>
+              </p> */}
+              <p className="text-center text-gray-400">Coming soon ...</p>
             </div>
           </div>
         </div>
       </section>
 
       <section className="w-full py-12 md:py-24 lg:py-32 bg-black snap-start h-screen flex items-center">
-        <div className="container px-4 md:px-6">
+        <div className="container px-4 md:px-6 mt-14">
           <div className="grid gap-10 px-10 md:gap-16 md:grid-cols-2">
-            <div className="space-y-4">
+            <div className="space-y-4 ">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
                 Land Your Dream Job Faster
               </h2>
@@ -112,12 +117,12 @@ export default function LandingPage() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-[#2b2575] to-gray-500">
                 Ready to Boost Your Career?
               </h2>
               <p className="mx-auto max-w-[600px] text-gray-400 md:text-xl">
-                Join RightNow AI today and create impressive cover letters and
-                job descriptions in minutes.
+                Join LetterForge AI today and create impressive cover letters
+                and job descriptions in minutes.
               </p>
             </div>
             <div className="w-full max-w-sm space-y-2">

@@ -2,7 +2,7 @@ import React from 'react'
 
 const Navbar = () => {
   return (
-      <header className="px-4 lg:px-6 h-14 bg-gray-950 flex items-center border-b border-gray-700 fixed top-0 left-0 right-0 z-50">
+      <header className="px-4 lg:px-6 h-14 bg-gradient-to-b from-[#2b2530] to-gray-950 flex items-center border-b border-gray-700 fixed top-0 left-0 right-0 z-50">
         <nav className="ml-auto flex items-center gap-4 sm:gap-6">
           <button 
             className="text-sm font-medium hover:text-white transition-colors cursor-pointer" 
