@@ -191,7 +191,7 @@ export default function MultiStepCoverLetterForm() {
                 {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
               </div>
               <div className="space-y-2">
-                <label htmlFor="phone" className="text-white text-sm" >Phone Number</label>
+                <label htmlFor="phone" className="text-white text-sm">Phone Number</label>
                 <Input
                   id="phone"
                   type="tel"
@@ -216,7 +216,125 @@ export default function MultiStepCoverLetterForm() {
           </div>
         );
 
-      // Similar updates for steps 2 and 3
+      case 2:
+        return (
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-white text-center">Job Details</h2>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label htmlFor="jobTitle" className="text-white text-sm">Job Title</label>
+                <Input
+                  id="jobTitle"
+                  placeholder="Enter the job title you're applying for"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
+                  value={formData.jobTitle}
+                  onChange={handleInputChange}
+                />
+                {errors.jobTitle && <p className="text-red-500 text-sm">{errors.jobTitle}</p>}
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="company" className="text-white text-sm">Company Name</label>
+                <Input
+                  id="company"
+                  placeholder="Enter the company name"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
+                  value={formData.company}
+                  onChange={handleInputChange}
+                />
+                {errors.company && <p className="text-red-500 text-sm">{errors.company}</p>}
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="jobDescription" className="text-white text-sm">Job Description</label>
+                <Textarea
+                  id="jobDescription"
+                  placeholder="Enter the job description or key requirements"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500 min-h-[100px]"
+                  value={formData.jobDescription}
+                  onChange={handleInputChange}
+                />
+                {errors.jobDescription && <p className="text-red-500 text-sm">{errors.jobDescription}</p>}
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <Button
+                type="button"
+                onClick={prevStep}
+                className="bg-gray-800 text-white hover:bg-gray-700 transition-colors flex items-center"
+              >
+                <ChevronLeft className="mr-2" /> Previous
+              </Button>
+              <Button
+                type="button"
+                onClick={nextStep}
+                className="bg-white text-black hover:bg-gray-200 transition-colors flex items-center"
+              >
+                Next Step <ChevronRight className="ml-2" />
+              </Button>
+            </div>
+          </div>
+        );
+
+      case 3:
+        return (
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-white text-center">Your Experience</h2>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label htmlFor="currentRole" className="text-white text-sm">Current Role</label>
+                <Textarea
+                  id="currentRole"
+                  placeholder="Describe your current role and responsibilities"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500 min-h-[100px]"
+                  value={formData.currentRole}
+                  onChange={handleInputChange}
+                />
+                {errors.currentRole && <p className="text-red-500 text-sm">{errors.currentRole}</p>}
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="skills" className="text-white text-sm">Key Skills</label>
+                <Input
+                  id="skills"
+                  placeholder="Enter your key skills (comma-separated)"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
+                  value={formData.skills}
+                  onChange={handleInputChange}
+                />
+                {errors.skills && <p className="text-red-500 text-sm">{errors.skills}</p>}
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="achievements" className="text-white text-sm">Key Achievements</label>
+                <Textarea
+                  id="achievements"
+                  placeholder="Describe your key achievements and accomplishments"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500 min-h-[100px]"
+                  value={formData.achievements}
+                  onChange={handleInputChange}
+                />
+                {errors.achievements && <p className="text-red-500 text-sm">{errors.achievements}</p>}
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <Button
+                type="button"
+                onClick={prevStep}
+                className="bg-gray-800 text-white hover:bg-gray-700 transition-colors flex items-center"
+              >
+                <ChevronLeft className="mr-2" /> Previous
+              </Button>
+              <Button
+                type="button"
+                onClick={handleGenerate}
+                className="bg-white text-black hover:bg-gray-200 transition-colors flex items-center"
+                disabled={isLoading}
+              >
+                Generate <Check className="ml-2" />
+              </Button>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
     }
   };
 
