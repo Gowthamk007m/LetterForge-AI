@@ -40,10 +40,10 @@ def download_cover_letter(request, id):
 
     all_templates = {
         'creative-design': 'cover-letter-creative-design.html',
-        # 'modern': 'cover-letter-template-modern.html',
-        # 'vintage': 'cover-letter-vintage.html',
-        # 'minimalist': 'cover-letter-minimalist-professional.html',
-        # 'tech-minimal': 'cover-letter-tech-minimal.html'
+        'modern': 'cover-letter-template-modern.html',
+        'vintage': 'cover-letter-vintage.html',
+        'minimalist': 'cover-letter-minimalist-professional.html',
+        'tech-minimal': 'cover-letter-tech-minimal.html'
     }
 
     def get_random_template():
@@ -86,7 +86,6 @@ def save_cover_letter(ai_data):
         return cover_letter
 
     except Exception as e:
-        # Log the error for debugging
         print(f"Error saving cover letter: {str(e)}")
         return None
 
