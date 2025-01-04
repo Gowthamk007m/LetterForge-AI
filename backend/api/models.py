@@ -20,14 +20,3 @@ class CoverLetterInput(models.Model):
     outro = models.TextField()
 
 
-class Userinput(models.Model):
-    name = models.CharField(max_length=255)
-    email = models.EmailField()
-    phone = models.CharField(max_length=20)
-    jobdetails = models.TextField()
-    company = models.CharField(max_length=255)
-    jobdescription = models.TextField()
-    currentrole = models.TextField()
-    skills = models.TextField()
-    achievements = models.TextField()
-    

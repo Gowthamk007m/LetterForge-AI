@@ -14,10 +14,12 @@ export default function MultiStepCoverLetterForm() {
     name: '',
     email: '',
     phone: '',
+    location: '',
+    designation: '',
     jobTitle: '',
     company: '',
-    jobDescription: '',
-    currentRole: '',
+    previousRole: '',
+    previousCompany: '',
     skills: '',
     achievements: ''
   });
@@ -45,6 +47,16 @@ export default function MultiStepCoverLetterForm() {
         if (numberWithoutCode.length !== 10) return 'Phone number must be 10 digits.';
         return '';
       },
+      location: (val) => {
+        if (!val.trim()) return 'Location is required.';
+        if (val.trim().length < 2) return 'Location must be at least 2 characters.';
+        return '';
+      },
+      designation: (val) => {
+        if (!val.trim()) return 'Current designation is required.';
+        if (val.trim().length < 2) return 'Designation must be at least 2 characters.';
+        return '';
+      },
       jobTitle: (val) => {
         if (!val.trim()) return 'Job title is required.';
         if (val.trim().length < 2) return 'Job title must be at least 2 characters.';
@@ -56,14 +68,14 @@ export default function MultiStepCoverLetterForm() {
         if (val.trim().length < 2) return 'Company name must be at least 2 characters.';
         return '';
       },
-      jobDescription: (val) => {
-        if (!val.trim()) return 'Job description is required.';
-        if (val.trim().length < 50) return 'Please provide a more detailed job description (minimum 50 characters).';
+      previousRole: (val) => {
+        if (!val.trim()) return 'Previous role is required.';
+        if (val.trim().length < 10) return 'Please provide more details about your previous role.';
         return '';
       },
-      currentRole: (val) => {
-        if (!val.trim()) return 'Current role is required.';
-        if (val.trim().length < 10) return 'Please provide more details about your current role.';
+      previousCompany: (val) => {
+        if (!val.trim()) return 'Previous company is required.';
+        if (val.trim().length < 2) return 'Previous company name must be at least 2 characters.';
         return '';
       },
       skills: (val) => {
@@ -81,6 +93,7 @@ export default function MultiStepCoverLetterForm() {
 
     return validators[id] ? validators[id](value) : '';
   };
+
 
   const formatPhoneNumber = (value) => {
     const cleaned = value.replace(/\D/g, '');
@@ -114,11 +127,11 @@ export default function MultiStepCoverLetterForm() {
     }));
   };
 
-  const validateStep = () => {
+   const validateStep = () => {
     const stepFields = {
-      1: ['name', 'email', 'phone'],
-      2: ['jobTitle', 'company', 'jobDescription'],
-      3: ['currentRole', 'skills', 'achievements']
+      1: ['name', 'email', 'phone', 'location', 'designation'],
+      2: ['jobTitle', 'company', 'previousRole', 'previousCompany'],
+      3: ['skills', 'achievements']
     };
     const fieldsToValidate = stepFields[currentStep];
     const newErrors = {};
@@ -203,6 +216,28 @@ export default function MultiStepCoverLetterForm() {
                 />
                 {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
               </div>
+              <div className="space-y-2">
+                <label htmlFor="location" className="text-white text-sm">Location</label>
+                <Input
+                  id="location"
+                  placeholder="Enter your current location"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
+                  value={formData.location}
+                  onChange={handleInputChange}
+                />
+                {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="designation" className="text-white text-sm">Current Designation</label>
+                <Input
+                  id="designation"
+                  placeholder="Enter your current designation"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
+                  value={formData.designation}
+                  onChange={handleInputChange}
+                />
+                {errors.designation && <p className="text-red-500 text-sm">{errors.designation}</p>}
+              </div>
             </div>
             <div className="flex justify-end">
               <Button
@@ -244,15 +279,26 @@ export default function MultiStepCoverLetterForm() {
                 {errors.company && <p className="text-red-500 text-sm">{errors.company}</p>}
               </div>
               <div className="space-y-2">
-                <label htmlFor="jobDescription" className="text-white text-sm">Job Description</label>
+                <label htmlFor="previousRole" className="text-white text-sm">Previous Role</label>
                 <Textarea
-                  id="jobDescription"
-                  placeholder="Enter the job description or key requirements"
+                  id="previousRole"
+                  placeholder="Describe your previous role and responsibilities"
                   className="bg-gray-950 border-gray-700 text-white placeholder-gray-500 min-h-[100px]"
-                  value={formData.jobDescription}
+                  value={formData.previousRole}
                   onChange={handleInputChange}
                 />
-                {errors.jobDescription && <p className="text-red-500 text-sm">{errors.jobDescription}</p>}
+                {errors.previousRole && <p className="text-red-500 text-sm">{errors.previousRole}</p>}
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="previousCompany" className="text-white text-sm">Previous Company</label>
+                <Input
+                  id="previousCompany"
+                  placeholder="Enter your previous company name"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
+                  value={formData.previousCompany}
+                  onChange={handleInputChange}
+                />
+                {errors.previousCompany && <p className="text-red-500 text-sm">{errors.previousCompany}</p>}
               </div>
             </div>
             <div className="flex justify-between">

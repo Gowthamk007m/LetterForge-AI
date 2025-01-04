@@ -1,6 +1,5 @@
 from django.template.loader import render_to_string
 from rest_framework.response import Response
-from .serializers import UserinputSerializer
 from backend.settings import OPENAI_API_KEY
 from rest_framework.views import APIView
 from django.shortcuts import redirect
@@ -81,13 +80,15 @@ def save_cover_letter(ai_data):
             previousRole=json_data.get('previousRole'),
             previousCompany=json_data.get('previousCompany'),
             achievements="\n".join(json_data.get('achievements', [])), 
-            approach=json_data.get('approach'),
+            outro=json_data.get('outro'),
         )
         cover_letter.save()
-        return cover_letter 
+        return cover_letter
 
     except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)})
+        # Log the error for debugging
+        print(f"Error saving cover letter: {str(e)}")
+        return None
 
 
 class GenerateCoverLetterView(APIView):
@@ -122,28 +123,20 @@ class GenerateCoverLetterView(APIView):
 
             response = client.chat.completions.create(model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "You are an assistant skilled in writing professional cover letters. deliver your cover letter in JSON format with the following structure with following keys: make 'name','email','phone','location','desgination','job_title','company','introduction','skills','previousRole','previousCompany','achievements' also make introduction a sentance of at leat 150 characters.also in a key ,approach, write a 200 characters sentance show case your approach to the company and work, also make the key acheivements a list of at achievments, complete the achievments to a full line each"},
+                {"role": "system", "content": "You are an assistant skilled in writing professional cover letters. deliver your cover letter in JSON format with the following structure with following keys: make 'name','email','phone','location','desgination','job_title','company','introduction','skills','previousRole','previousCompany','achievements' also make introduction a sentance of at leat 150 characters.also in a key ,outro, write a 200 characters sentance show case your approach to the company and work, also make the key acheivements a list of at achievments, complete the achievments to a full line each"},
                 {"role": "user", "content": prompt}])
 
             cover_letter = response.choices[0].message.content
-            data={"cover_letter": cover_letter}
-            saved_cover_letter=save_cover_letter(data)
+            data = {"cover_letter": cover_letter}
+            saved_cover_letter = save_cover_letter(data)
 
-            return redirect('download_cover_letter', id=saved_cover_letter.id)
+            if saved_cover_letter is None:
+                return Response({"error": "Failed to save the cover letter."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+            return redirect('api:download_cover_letter', id=saved_cover_letter.id)
         
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 
-
-
-
-
-class UserinputCreateView(APIView):
-    def post(self, request):
-        serializer = UserinputSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'message': 'Data saved successfully!'}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

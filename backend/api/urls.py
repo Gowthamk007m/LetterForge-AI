@@ -8,7 +8,6 @@ app_name = 'api'
 
 
 urlpatterns = [
-    path('<int:id>/',views.download_cover_letter,name='download_cover_letter'),
-    path('generate-cover-letter/', views.GenerateCoverLetterView.as_view(), name='generate_cover_letter'),
-    path('api/userinput/', UserinputCreateView.as_view(), name='userinput-create'),
+    path('<int:id>/',download_cover_letter,name='download_cover_letter'),
+    path('generate-cover-letter',GenerateCoverLetterView.as_view(), name='generate_cover_letter'),
 ]   
