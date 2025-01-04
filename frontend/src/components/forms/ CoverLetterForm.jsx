@@ -2,13 +2,33 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { FileText, ChevronRight, ChevronLeft, Check } from "lucide-react";
+import { FileText, ChevronRight, ChevronLeft, Check,Wand2 } from "lucide-react";
 import { BookLoaderComponent } from '../ui/Loader';
 
 export default function MultiStepCoverLetterForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [generatedContent, setGeneratedContent] = useState(null);
+
+
+  const PREFILL_DATA = {
+    name: 'John Smith',
+    email: 'john.smith@example.com',
+    phone: '9876543212',
+    location: 'New York, NY',
+    designation: 'Senior Software Engineer',
+    jobTitle: 'Lead Software Engineer',
+    company: 'Tech Innovations Inc',
+    previousRole: 'Led a team of 5 developers in developing and maintaining cloud-based applications. Implemented CI/CD pipelines and reduced deployment time by 40%. Managed sprint planning and technical debt reduction initiatives.',
+    previousCompany: 'Digital Solutions Corp',
+    skills: 'React, Node.js, AWS, Python, Team Leadership, Agile Methodologies',
+    achievements: 'Successfully delivered 3 major projects ahead of schedule, reducing infrastructure costs by 30%. Implemented automated testing framework that improved code coverage from 65% to 95%. Mentored 4 junior developers who were promoted to mid-level positions.'
+  };
+
+  const handlePrefill = () => {
+    setFormData(PREFILL_DATA);
+    setErrors({});
+  };
 
   const [formData, setFormData] = useState({
     name: '',
@@ -158,7 +178,7 @@ export default function MultiStepCoverLetterForm() {
 
     setIsLoading(true);
     try {
-      const response = await fetch('/api/v1/generate-cover-letter/', {
+      const response = await fetch('http://127.0.0.1:8000/api/v1/generate-cover-letter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -411,6 +431,13 @@ export default function MultiStepCoverLetterForm() {
               </div>
               <p className="text-sm text-gray-500">Step {currentStep} of 3</p>
             </div>
+              <Button
+                onClick={handlePrefill}
+                className="bg-gray-800 text-white hover:bg-gray-700 transition-colors flex items-center gap-2"
+              >
+                <Wand2 className="h-4 w-4" />
+                Prefill for Testing
+              </Button>
           </div>
           {isLoading ? (
             <div className="p-6 md:p-10 space-y-6">
