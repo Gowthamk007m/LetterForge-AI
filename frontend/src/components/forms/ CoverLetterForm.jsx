@@ -19,7 +19,7 @@ export default function MultiStepCoverLetterForm() {
     designation: 'Senior Software Engineer',
     jobTitle: 'Lead Software Engineer',
     company: 'Tech Innovations Inc',
-    previousRole: 'Led a team of 5 developers in developing and maintaining cloud-based applications. Implemented CI/CD pipelines and reduced deployment time by 40%. Managed sprint planning and technical debt reduction initiatives.',
+    previousRole: 'Software Engineer',
     previousCompany: 'Digital Solutions Corp',
     skills: 'React, Node.js, AWS, Python, Team Leadership, Agile Methodologies',
     achievements: 'Successfully delivered 3 major projects ahead of schedule, reducing infrastructure costs by 30%. Implemented automated testing framework that improved code coverage from 65% to 95%. Mentored 4 junior developers who were promoted to mid-level positions.'
