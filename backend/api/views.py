@@ -53,8 +53,6 @@ def download_cover_letter(request, id):
     html_string = render_to_string(all_templates[get_random_template()], context)
     html = HTML(string=html_string)
     pdf_content = html.write_pdf(stylesheets=[css])
-
-
     
     response = HttpResponse(pdf_content, content_type='application/pdf')
     response['Content-Disposition'] = f'inline; filename="{cover_letter_data.name} Coverletter.pdf"'

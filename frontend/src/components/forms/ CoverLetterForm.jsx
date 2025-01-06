@@ -22,7 +22,7 @@ export default function MultiStepCoverLetterForm() {
     previousRole: 'Software Engineer',
     previousCompany: 'Digital Solutions Corp',
     skills: 'React, Node.js, AWS, Python, Team Leadership, Agile Methodologies',
-    achievements: 'Successfully delivered 3 major projects ahead of schedule, reducing infrastructure costs by 30%. Implemented automated testing framework that improved code coverage from 65% to 95%. Mentored 4 junior developers who were promoted to mid-level positions.'
+    achievements: 'Successfully delivered 3 major projects ahead of schedule, reducing infrastructure costs by 30%. Implemented automated testing framework that improved code coverage from 65% to 95%.'
   };
 
   const handlePrefill = () => {
@@ -73,7 +73,7 @@ export default function MultiStepCoverLetterForm() {
         return '';
       },
       designation: (val) => {
-        if (!val.trim()) return 'Current designation is required.';
+        if (!val.trim()) return ' Designation is required.';
         if (val.trim().length < 2) return 'Designation must be at least 2 characters.';
         return '';
       },
@@ -107,8 +107,10 @@ export default function MultiStepCoverLetterForm() {
       achievements: (val) => {
         if (!val.trim()) return 'Achievements are required.';
         if (val.trim().length < 50) return 'Please provide more detailed achievements (minimum 50 characters).';
+        if (val.trim().length > 200) return 'Achievements must be concise (maximum 200 characters).';
         return '';
       }
+      
     };
 
     return validators[id] ? validators[id](value) : '';
@@ -248,10 +250,10 @@ export default function MultiStepCoverLetterForm() {
                 {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
               </div>
               <div className="space-y-2">
-                <label htmlFor="designation" className="text-white text-sm">Current Designation</label>
+                <label htmlFor="designation" className="text-white text-sm"> Designation</label>
                 <Input
                   id="designation"
-                  placeholder="Enter your current designation"
+                  placeholder="Enter your designation"
                   className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
                   value={formData.designation}
                   onChange={handleInputChange}
@@ -298,28 +300,7 @@ export default function MultiStepCoverLetterForm() {
                 />
                 {errors.company && <p className="text-red-500 text-sm">{errors.company}</p>}
               </div>
-              <div className="space-y-2">
-                <label htmlFor="previousRole" className="text-white text-sm">Previous Role</label>
-                <Textarea
-                  id="previousRole"
-                  placeholder="Describe your previous role and responsibilities"
-                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500 min-h-[100px]"
-                  value={formData.previousRole}
-                  onChange={handleInputChange}
-                />
-                {errors.previousRole && <p className="text-red-500 text-sm">{errors.previousRole}</p>}
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="previousCompany" className="text-white text-sm">Previous Company</label>
-                <Input
-                  id="previousCompany"
-                  placeholder="Enter your previous company name"
-                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
-                  value={formData.previousCompany}
-                  onChange={handleInputChange}
-                />
-                {errors.previousCompany && <p className="text-red-500 text-sm">{errors.previousCompany}</p>}
-              </div>
+           
             </div>
             <div className="flex justify-between">
               <Button
@@ -344,18 +325,30 @@ export default function MultiStepCoverLetterForm() {
         return (
           <div className="space-y-4">
             <h2 className="text-2xl font-bold text-white text-center">Your Experience</h2>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <label htmlFor="currentRole" className="text-white text-sm">Current Role</label>
-                <Textarea
-                  id="currentRole"
-                  placeholder="Describe your current role and responsibilities"
-                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500 min-h-[100px]"
-                  value={formData.currentRole}
+            <div className="space-y-2">
+                <label htmlFor="previousCompany" className="text-white text-sm">Previous Company</label>
+                <Input
+                  id="previousCompany"
+                  placeholder="Enter your previous company name"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
+                  value={formData.previousCompany}
                   onChange={handleInputChange}
                 />
-                {errors.currentRole && <p className="text-red-500 text-sm">{errors.currentRole}</p>}
+                {errors.previousCompany && <p className="text-red-500 text-sm">{errors.previousCompany}</p>}
               </div>
+            <div className="space-y-2">
+                <label htmlFor="previousRole" className="text-white text-sm">Previous Role</label>
+                <Textarea
+                  id="previousRole"
+                  placeholder="Describe your previous role and responsibilities"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500 min-h-[100px]"
+                  value={formData.previousRole}
+                  onChange={handleInputChange}
+                />
+                {errors.previousRole && <p className="text-red-500 text-sm">{errors.previousRole}</p>}
+              </div>
+       
+            <div className="space-y-4">
               <div className="space-y-2">
                 <label htmlFor="skills" className="text-white text-sm">Key Skills</label>
                 <Input
