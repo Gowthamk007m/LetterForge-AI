@@ -4,38 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FileText, ChevronRight, ChevronLeft, Check,Wand2,Eye } from "lucide-react";
 import { BookLoaderComponent } from '../ui/Loader';
+import PDFViewer from '@/pages/DisplayPdf';
 
-
-const PDFViewer = ({ pdfData }) => {
-  if (!pdfData) return null;
-
-  const blob = new Blob([pdfData], { type: 'application/pdf' });
-  const url = URL.createObjectURL(blob);
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg w-full max-w-4xl h-[90vh] flex flex-col">
-        <div className="p-4 border-b flex justify-between items-center">
-          <h3 className="text-lg font-semibold">Cover Letter Preview</h3>
-          <Button 
-            onClick={() => URL.revokeObjectURL(url)} 
-            variant="ghost"
-            className="bg-gray-900 text-slate-100"
-          >
-            Close
-          </Button>
-        </div>
-        <div className="flex-1 p-4">
-          <iframe
-            src={url}
-            className="w-full h-full rounded border"
-            title="Cover Letter PDF"
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export default function MultiStepCoverLetterForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -210,6 +180,7 @@ export default function MultiStepCoverLetterForm() {
   const [pdfData, setPdfData] = useState(null);
   const [showPDF, setShowPDF] = useState(false);
 
+
   const handleGenerate = async () => {
     if (!validateStep()) return;
 
@@ -221,7 +192,6 @@ export default function MultiStepCoverLetterForm() {
         body: JSON.stringify(formData),
       });
       
-      // Handle PDF response
       const pdfBlob = await response.blob();
       setPdfData(pdfBlob);
       setIsLoading(false);
@@ -231,7 +201,7 @@ export default function MultiStepCoverLetterForm() {
     }
   };
 
-  const renderPDFButton = () => {
+const renderPDFButton = () => {
     if (pdfData) {
       return (
         <div className="absolute bottom-4 right-4">
@@ -247,6 +217,7 @@ export default function MultiStepCoverLetterForm() {
     }
     return null;
   };
+
 
   const renderStep = () => {
     switch (currentStep) {
@@ -485,19 +456,36 @@ export default function MultiStepCoverLetterForm() {
                 Prefill for Testing
               </Button>
           </div>
+          
           {isLoading ? (
-            <div className="p-6 md:p-10 space-y-6">
-              <BookLoaderComponent />
-            </div>
-          ) : (
-            <div className="bg-gradient-to-b from-gray-950 to-gray-900 rounded-lg border border-gray-700 p-6 md:p-10 space-y-6">
-               <form className="space-y-4">{renderStep()}</form>
-               {renderPDFButton()}
-            </div>
-          )}
+  <div className="p-6 md:p-10 space-y-6">
+    <BookLoaderComponent />
+  </div>
+) : (
+  <div className="bg-gradient-to-b from-gray-950 to-gray-900 rounded-lg border border-gray-700 p-6 md:p-10 space-y-6 relative">
+    {pdfData ? (
+      <div className="flex flex-col items-center justify-center space-y-4 min-h-[400px]">
+        <div className="text-center space-y-2">
+          <FileText className="h-16 w-16 text-white mx-auto" />
+          <h3 className="text-xl font-semibold text-white">Cover Letter Generated!</h3>
+          <p className="text-gray-400">Your cover letter is ready to view</p>
+        </div>
+        <Button
+          onClick={() => setShowPDF(true)}
+          className="bg-white text-black hover:bg-gray-200 transition-colors flex items-center gap-2"
+        >
+          <Eye className="h-4 w-4" />
+          View Cover Letter
+        </Button>
+      </div>
+    ) : (
+      <form className="space-y-4">{renderStep()}</form>
+    )}
+  </div>
+)}
         </div>
       </div>
-      {showPDF && <PDFViewer pdfData={pdfData} />}
+      {showPDF && <PDFViewer pdfData={pdfData} onClose={() => setShowPDF(false)} />}
     </div>
   );
 }
