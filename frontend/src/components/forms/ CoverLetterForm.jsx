@@ -2,8 +2,40 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { FileText, ChevronRight, ChevronLeft, Check,Wand2 } from "lucide-react";
+import { FileText, ChevronRight, ChevronLeft, Check,Wand2,Eye } from "lucide-react";
 import { BookLoaderComponent } from '../ui/Loader';
+
+
+const PDFViewer = ({ pdfData }) => {
+  if (!pdfData) return null;
+
+  const blob = new Blob([pdfData], { type: 'application/pdf' });
+  const url = URL.createObjectURL(blob);
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-lg w-full max-w-4xl h-[90vh] flex flex-col">
+        <div className="p-4 border-b flex justify-between items-center">
+          <h3 className="text-lg font-semibold">Cover Letter Preview</h3>
+          <Button 
+            onClick={() => URL.revokeObjectURL(url)} 
+            variant="ghost"
+            className="bg-gray-900 text-slate-100"
+          >
+            Close
+          </Button>
+        </div>
+        <div className="flex-1 p-4">
+          <iframe
+            src={url}
+            className="w-full h-full rounded border"
+            title="Cover Letter PDF"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function MultiStepCoverLetterForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -175,6 +207,9 @@ export default function MultiStepCoverLetterForm() {
     setCurrentStep(Math.max(currentStep - 1, 1));
   };
 
+  const [pdfData, setPdfData] = useState(null);
+  const [showPDF, setShowPDF] = useState(false);
+
   const handleGenerate = async () => {
     if (!validateStep()) return;
 
@@ -185,14 +220,32 @@ export default function MultiStepCoverLetterForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-      const data = await response.json();
-      setGeneratedContent(data);
+      
+      // Handle PDF response
+      const pdfBlob = await response.blob();
+      setPdfData(pdfBlob);
       setIsLoading(false);
-      console.log('Cover letter generated:', data);
     } catch (error) {
       console.error('Error generating cover letter:', error);
       setIsLoading(false);
     }
+  };
+
+  const renderPDFButton = () => {
+    if (pdfData) {
+      return (
+        <div className="absolute bottom-4 right-4">
+          <Button
+            onClick={() => setShowPDF(true)}
+            className="bg-white text-black hover:bg-gray-200 transition-colors flex items-center gap-2"
+          >
+            <Eye className="h-4 w-4" />
+            View Cover Letter
+          </Button>
+        </div>
+      );
+    }
+    return null;
   };
 
   const renderStep = () => {
@@ -438,11 +491,13 @@ export default function MultiStepCoverLetterForm() {
             </div>
           ) : (
             <div className="bg-gradient-to-b from-gray-950 to-gray-900 rounded-lg border border-gray-700 p-6 md:p-10 space-y-6">
-              <form className="space-y-4">{renderStep()}</form>
+               <form className="space-y-4">{renderStep()}</form>
+               {renderPDFButton()}
             </div>
           )}
         </div>
       </div>
+      {showPDF && <PDFViewer pdfData={pdfData} />}
     </div>
   );
 }
