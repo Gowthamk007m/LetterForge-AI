@@ -2,22 +2,47 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { FileText, ChevronRight, ChevronLeft, Check } from "lucide-react";
+import { FileText, ChevronRight, ChevronLeft, Check,Wand2,Eye } from "lucide-react";
 import { BookLoaderComponent } from '../ui/Loader';
+import PDFViewer from '@/pages/DisplayPdf';
+
 
 export default function MultiStepCoverLetterForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [generatedContent, setGeneratedContent] = useState(null);
 
+
+  const PREFILL_DATA = {
+    name: 'John Smith',
+    email: 'john.smith@example.com',
+    phone: '9876543212',
+    location: 'New York, NY',
+    designation: 'Senior Software Engineer',
+    jobTitle: 'Lead Software Engineer',
+    company: 'Tech Innovations Inc',
+    previousRole: 'Software Engineer',
+    previousCompany: 'Digital Solutions Corp',
+    skills: 'React, Node.js, AWS, Python, Team Leadership, Agile Methodologies',
+    achievements: 'Successfully delivered 3 major projects ahead of schedule, reducing infrastructure costs by 30%. Implemented automated testing framework that improved code coverage from 65% to 95%.'
+  };
+
+
+  const handlePrefill = () => {
+    setFormData(PREFILL_DATA);
+    setErrors({});
+  };
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
+    location: '',
+    designation: '',
     jobTitle: '',
     company: '',
-    jobDescription: '',
-    currentRole: '',
+    previousRole: '',
+    previousCompany: '',
     skills: '',
     achievements: ''
   });
@@ -45,6 +70,16 @@ export default function MultiStepCoverLetterForm() {
         if (numberWithoutCode.length !== 10) return 'Phone number must be 10 digits.';
         return '';
       },
+      location: (val) => {
+        if (!val.trim()) return 'Location is required.';
+        if (val.trim().length < 2) return 'Location must be at least 2 characters.';
+        return '';
+      },
+      designation: (val) => {
+        if (!val.trim()) return ' Designation is required.';
+        if (val.trim().length < 2) return 'Designation must be at least 2 characters.';
+        return '';
+      },
       jobTitle: (val) => {
         if (!val.trim()) return 'Job title is required.';
         if (val.trim().length < 2) return 'Job title must be at least 2 characters.';
@@ -56,14 +91,14 @@ export default function MultiStepCoverLetterForm() {
         if (val.trim().length < 2) return 'Company name must be at least 2 characters.';
         return '';
       },
-      jobDescription: (val) => {
-        if (!val.trim()) return 'Job description is required.';
-        if (val.trim().length < 50) return 'Please provide a more detailed job description (minimum 50 characters).';
+      previousRole: (val) => {
+        if (!val.trim()) return 'Previous role is required.';
+        if (val.trim().length < 10) return 'Please provide more details about your previous role.';
         return '';
       },
-      currentRole: (val) => {
-        if (!val.trim()) return 'Current role is required.';
-        if (val.trim().length < 10) return 'Please provide more details about your current role.';
+      previousCompany: (val) => {
+        if (!val.trim()) return 'Previous company is required.';
+        if (val.trim().length < 2) return 'Previous company name must be at least 2 characters.';
         return '';
       },
       skills: (val) => {
@@ -75,12 +110,15 @@ export default function MultiStepCoverLetterForm() {
       achievements: (val) => {
         if (!val.trim()) return 'Achievements are required.';
         if (val.trim().length < 50) return 'Please provide more detailed achievements (minimum 50 characters).';
+        if (val.trim().length > 200) return 'Achievements must be concise (maximum 200 characters).';
         return '';
       }
+      
     };
 
     return validators[id] ? validators[id](value) : '';
   };
+
 
   const formatPhoneNumber = (value) => {
     const cleaned = value.replace(/\D/g, '');
@@ -114,11 +152,11 @@ export default function MultiStepCoverLetterForm() {
     }));
   };
 
-  const validateStep = () => {
+   const validateStep = () => {
     const stepFields = {
-      1: ['name', 'email', 'phone'],
-      2: ['jobTitle', 'company', 'jobDescription'],
-      3: ['currentRole', 'skills', 'achievements']
+      1: ['name', 'email', 'phone', 'location', 'designation'],
+      2: ['jobTitle', 'company', 'previousRole', 'previousCompany'],
+      3: ['skills', 'achievements']
     };
     const fieldsToValidate = stepFields[currentStep];
     const newErrors = {};
@@ -140,25 +178,47 @@ export default function MultiStepCoverLetterForm() {
     setCurrentStep(Math.max(currentStep - 1, 1));
   };
 
+  const [pdfData, setPdfData] = useState(null);
+  const [showPDF, setShowPDF] = useState(false);
+
+
   const handleGenerate = async () => {
     if (!validateStep()) return;
 
     setIsLoading(true);
     try {
-      const response = await fetch('/api/v1/generate-cover-letter/', {
+      const response = await fetch('http://127.0.0.1:8000/api/v1/generate-cover-letter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-      const data = await response.json();
-      setGeneratedContent(data);
+      
+      const pdfBlob = await response.blob();
+      setPdfData(pdfBlob);
       setIsLoading(false);
-      console.log('Cover letter generated:', data);
     } catch (error) {
       console.error('Error generating cover letter:', error);
       setIsLoading(false);
     }
   };
+
+const renderPDFButton = () => {
+    if (pdfData) {
+      return (
+        <div className="absolute bottom-4 right-4">
+          <Button
+            onClick={() => setShowPDF(true)}
+            className="bg-white text-black hover:bg-gray-200 transition-colors flex items-center gap-2"
+          >
+            <Eye className="h-4 w-4" />
+            View Cover Letter
+          </Button>
+        </div>
+      );
+    }
+    return null;
+  };
+
 
   const renderStep = () => {
     switch (currentStep) {
@@ -203,6 +263,28 @@ export default function MultiStepCoverLetterForm() {
                 />
                 {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
               </div>
+              <div className="space-y-2">
+                <label htmlFor="location" className="text-white text-sm">Location</label>
+                <Input
+                  id="location"
+                  placeholder="Enter your current location"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
+                  value={formData.location}
+                  onChange={handleInputChange}
+                />
+                {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="designation" className="text-white text-sm"> Designation</label>
+                <Input
+                  id="designation"
+                  placeholder="Enter your designation"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
+                  value={formData.designation}
+                  onChange={handleInputChange}
+                />
+                {errors.designation && <p className="text-red-500 text-sm">{errors.designation}</p>}
+              </div>
             </div>
             <div className="flex justify-end">
               <Button
@@ -243,17 +325,7 @@ export default function MultiStepCoverLetterForm() {
                 />
                 {errors.company && <p className="text-red-500 text-sm">{errors.company}</p>}
               </div>
-              <div className="space-y-2">
-                <label htmlFor="jobDescription" className="text-white text-sm">Job Description</label>
-                <Textarea
-                  id="jobDescription"
-                  placeholder="Enter the job description or key requirements"
-                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500 min-h-[100px]"
-                  value={formData.jobDescription}
-                  onChange={handleInputChange}
-                />
-                {errors.jobDescription && <p className="text-red-500 text-sm">{errors.jobDescription}</p>}
-              </div>
+           
             </div>
             <div className="flex justify-between">
               <Button
@@ -278,18 +350,30 @@ export default function MultiStepCoverLetterForm() {
         return (
           <div className="space-y-4">
             <h2 className="text-2xl font-bold text-white text-center">Your Experience</h2>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <label htmlFor="currentRole" className="text-white text-sm">Current Role</label>
-                <Textarea
-                  id="currentRole"
-                  placeholder="Describe your current role and responsibilities"
-                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500 min-h-[100px]"
-                  value={formData.currentRole}
+            <div className="space-y-2">
+                <label htmlFor="previousCompany" className="text-white text-sm">Previous Company</label>
+                <Input
+                  id="previousCompany"
+                  placeholder="Enter your previous company name"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500"
+                  value={formData.previousCompany}
                   onChange={handleInputChange}
                 />
-                {errors.currentRole && <p className="text-red-500 text-sm">{errors.currentRole}</p>}
+                {errors.previousCompany && <p className="text-red-500 text-sm">{errors.previousCompany}</p>}
               </div>
+            <div className="space-y-2">
+                <label htmlFor="previousRole" className="text-white text-sm">Previous Role</label>
+                <Textarea
+                  id="previousRole"
+                  placeholder="Describe your previous role and responsibilities"
+                  className="bg-gray-950 border-gray-700 text-white placeholder-gray-500 min-h-[100px]"
+                  value={formData.previousRole}
+                  onChange={handleInputChange}
+                />
+                {errors.previousRole && <p className="text-red-500 text-sm">{errors.previousRole}</p>}
+              </div>
+       
+            <div className="space-y-4">
               <div className="space-y-2">
                 <label htmlFor="skills" className="text-white text-sm">Key Skills</label>
                 <Input
@@ -365,18 +449,44 @@ export default function MultiStepCoverLetterForm() {
               </div>
               <p className="text-sm text-gray-500">Step {currentStep} of 3</p>
             </div>
+              <Button
+                onClick={handlePrefill}
+                className="bg-gray-800 text-white hover:bg-gray-700 transition-colors flex items-center gap-2"
+              >
+                <Wand2 className="h-4 w-4" />
+                Prefill for Testing
+              </Button>
           </div>
+          
           {isLoading ? (
-            <div className="p-6 md:p-10 space-y-6">
-              <BookLoaderComponent />
-            </div>
-          ) : (
-            <div className="bg-gradient-to-b from-gray-950 to-gray-900 rounded-lg border border-gray-700 p-6 md:p-10 space-y-6">
-              <form className="space-y-4">{renderStep()}</form>
-            </div>
-          )}
+  <div className="p-6 md:p-10 space-y-6">
+    <BookLoaderComponent />
+  </div>
+) : (
+  <div className="bg-gradient-to-b from-gray-950 to-gray-900 rounded-lg border border-gray-700 p-6 md:p-10 space-y-6 relative">
+    {pdfData ? (
+      <div className="flex flex-col items-center justify-center space-y-4 min-h-[400px]">
+        <div className="text-center space-y-2">
+          <FileText className="h-16 w-16 text-white mx-auto" />
+          <h3 className="text-xl font-semibold text-white">Cover Letter Generated!</h3>
+          <p className="text-gray-400">Your cover letter is ready to view</p>
+        </div>
+        <Button
+          onClick={() => setShowPDF(true)}
+          className="bg-white text-black hover:bg-gray-200 transition-colors flex items-center gap-2"
+        >
+          <Eye className="h-4 w-4" />
+          View Cover Letter
+        </Button>
+      </div>
+    ) : (
+      <form className="space-y-4">{renderStep()}</form>
+    )}
+  </div>
+)}
         </div>
       </div>
+      {showPDF && <PDFViewer pdfData={pdfData} onClose={() => setShowPDF(false)} />}
     </div>
   );
 }
