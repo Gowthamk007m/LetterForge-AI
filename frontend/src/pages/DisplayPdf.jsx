@@ -22,7 +22,6 @@ const PDFViewer = ({ pdfData, onClose }) => {
     document.body.removeChild(link);
   };
 
-  // Mobile Download View
   const MobileView = () => (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-gradient-to-b from-gray-500 to-gray-900 rounded-lg w-full max-w-sm p-6">
@@ -48,7 +47,6 @@ const PDFViewer = ({ pdfData, onClose }) => {
     </div>
   );
 
-  // Desktop PDF Viewer
   const DesktopView = () => (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex flex-col z-50">
       <div className="bg-gradient-to-b from-gray-500 to-gray-900 w-full h-full flex flex-col">
