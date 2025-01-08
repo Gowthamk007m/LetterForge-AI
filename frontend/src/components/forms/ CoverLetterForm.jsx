@@ -11,7 +11,8 @@ export default function MultiStepCoverLetterForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [generatedContent, setGeneratedContent] = useState(null);
-
+  const [pdfData, setPdfData] = useState(null);
+  const [showPDF, setShowPDF] = useState(false);
 
   const PREFILL_DATA = {
     name: 'John Smith',
@@ -178,8 +179,7 @@ export default function MultiStepCoverLetterForm() {
     setCurrentStep(Math.max(currentStep - 1, 1));
   };
 
-  const [pdfData, setPdfData] = useState(null);
-  const [showPDF, setShowPDF] = useState(false);
+
 
 
   const handleGenerate = async () => {
