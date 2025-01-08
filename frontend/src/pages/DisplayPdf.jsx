@@ -14,7 +14,7 @@ const PDFViewer = ({ pdfData, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg w-full max-w-4xl h-[90vh] flex flex-col">
+      <div className="bg-gradient-to-b from-gray-500 to-gray-900 rounded-lg w-full max-w-4xl h-[90vh] flex flex-col">
         <div className="p-4 border-b flex justify-between items-center">
           <h3 className="text-lg font-semibold">Cover Letter Preview</h3>
           <Button 
