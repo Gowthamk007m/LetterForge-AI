@@ -33,7 +33,7 @@ const ThemeCard = ({ id, title, selected, onClick, onPreview }) => (
     >
       <div className="aspect-[210/297] w-full bg-gray-800 rounded mb-3 overflow-hidden">
         <iframe
-          src={`/demos/${id}-preview.pdf#view=Fit&page=1`}
+          src={`/demo-templates/${id}-preview.pdf#view=Fit&page=1`}
           className="w-full h-full pointer-events-none"
           title={`${title} Thumbnail`}
         />
