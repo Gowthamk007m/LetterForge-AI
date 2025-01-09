@@ -2,55 +2,27 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Check, ChevronLeft, Eye, X } from "lucide-react";
 
-const PreviewModal = ({ theme, formData, onClose }) => (
+const PreviewModal = ({ theme, onClose }) => (
   <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4">
-    <div className="bg-gray-900 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto relative">
+    <div className="bg-gray-900 rounded-lg w-full max-h-[90vh] max-w-4xl overflow-hidden relative">
       <Button
         onClick={onClose}
-        className="absolute right-4 top-4 p-2 bg-gray-800 hover:bg-gray-700 rounded-full"
+        className="absolute right-4 top-4 p-2 bg-gray-800 hover:bg-gray-700 rounded-full z-10"
       >
         <X className="h-4 w-4" />
       </Button>
-      <div className="p-6">
-        <h3 className="text-xl font-bold text-white mb-4">Preview: {theme.title}</h3>
-        <div className="bg-white rounded-lg p-6 text-black">
-          {/* Preview content based on theme */}
-          <div className="space-y-4">
-            <div className={`space-y-2 ${theme.id === 'modern' ? 'border-l-4 border-blue-500 pl-4' : ''}`}>
-              <h1 className={`text-2xl font-bold ${theme.id === 'minimal' ? 'text-gray-800' : 'text-black'}`}>
-                {formData.name}
-              </h1>
-              <p className="text-gray-600">{formData.designation}</p>
-              <div className="flex gap-2 text-sm text-gray-500">
-                <span>{formData.email}</span>
-                <span>•</span>
-                <span>{formData.phone}</span>
-                <span>•</span>
-                <span>{formData.location}</span>
-              </div>
-            </div>
-            
-            <div className={`mt-6 ${theme.id === 'creative' ? 'bg-gray-50 p-4 rounded' : ''}`}>
-              <p className="text-gray-700">Dear Hiring Manager,</p>
-              <p className="mt-4 text-gray-700">
-                I am writing to express my strong interest in the {formData.jobTitle} position at {formData.company}...
-              </p>
-            </div>
-
-            <div className={`mt-6 ${theme.id === 'classic' ? 'border-t pt-4' : ''}`}>
-              <h2 className={`font-semibold ${theme.id === 'minimal' ? 'text-gray-700' : 'text-black'}`}>
-                Key Skills
-              </h2>
-              <p className="text-gray-700 mt-2">{formData.skills}</p>
-            </div>
-          </div>
-        </div>
+      <div className="h-[80vh] w-full">
+        <iframe
+          src={`/demos/${theme.id}-preview.pdf`}
+          className="w-full h-full"
+          title={`${theme.title} Preview`}
+        />
       </div>
     </div>
   </div>
 );
 
-const ThemeCard = ({ id, title, selected, onClick, onPreview, formData }) => (
+const ThemeCard = ({ id, title, selected, onClick, onPreview }) => (
   <div className="relative group">
     <div 
       onClick={() => onClick(id)}
@@ -59,11 +31,11 @@ const ThemeCard = ({ id, title, selected, onClick, onPreview, formData }) => (
         ${selected ? 'border-white bg-gray-800' : 'border-gray-700 bg-gray-900 hover:border-gray-500'}
       `}
     >
-      <div className="aspect-[210/297] w-full bg-gray-800 rounded mb-3">
-        <img 
-          src={`/api/placeholder/210/297`} 
-          alt={`Template ${id}`}
-          className="w-full h-full object-cover rounded"
+      <div className="aspect-[210/297] w-full bg-gray-800 rounded mb-3 overflow-hidden">
+        <iframe
+          src={`/demos/${id}-preview.pdf#view=Fit&page=1`}
+          className="w-full h-full pointer-events-none"
+          title={`${title} Thumbnail`}
         />
       </div>
       <p className="text-white text-center">{title}</p>
@@ -95,7 +67,8 @@ const ThemeSelection = ({
     { id: 'modern', title: 'Modern Professional' },
     { id: 'classic', title: 'Classic Elegant' },
     { id: 'creative', title: 'Creative Dynamic' },
-    { id: 'minimal', title: 'Minimal Clean' }
+    { id: 'minimal', title: 'Minimal Clean' },
+    { id: 'contemporary', title: 'Contemporary Bold' }
   ];
 
   const handleThemeSelect = (themeId) => {
@@ -121,10 +94,10 @@ const ThemeSelection = ({
           </div>
           
           <p className="text-gray-400">
-            Select a template that best represents your professional style. Preview each option to see how your cover letter will look.
+            Select a template that best represents your professional style. Click preview to see a full example of each design.
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             {templates.map((template) => (
               <ThemeCard
                 key={template.id}
@@ -133,7 +106,6 @@ const ThemeSelection = ({
                 selected={formData.theme === template.id}
                 onClick={handleThemeSelect}
                 onPreview={setPreviewTheme}
-                formData={formData}
               />
             ))}
           </div>
@@ -153,7 +125,6 @@ const ThemeSelection = ({
       {previewTheme && (
         <PreviewModal
           theme={previewTheme}
-          formData={formData}
           onClose={() => setPreviewTheme(null)}
         />
       )}
