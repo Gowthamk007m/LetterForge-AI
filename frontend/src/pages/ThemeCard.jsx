@@ -33,7 +33,7 @@ const ThemeCard = ({ id, title, selected, onClick, onPreview }) => (
     >
       <div className="aspect-[210/297] w-full bg-gray-800 rounded mb-3 overflow-hidden">
         <iframe
-          src={`/demo-templates/${id}-preview.pdf#view=Fit&page=1`}
+          src={`/demo-templates/${id}.pdf#view=Fit&page=1`}
           className="w-full h-full pointer-events-none"
           title={`${title} Thumbnail`}
         />
@@ -64,11 +64,11 @@ const ThemeSelection = ({
   const [previewTheme, setPreviewTheme] = useState(null);
   
   const templates = [
-    { id: 'modern', title: 'Modern Professional' },
-    { id: 'classic', title: 'Classic Elegant' },
-    { id: 'creative', title: 'Creative Dynamic' },
-    { id: 'minimal', title: 'Minimal Clean' },
-    { id: 'contemporary', title: 'Contemporary Bold' }
+    { id: 'Modern Professional', title: 'Modern Professional' },
+    { id: 'tech minimal', title: 'Tech Minimal' },
+    { id: 'Creative Professional', title: 'Creative Professional' },
+    { id: 'Minimalist Professional', title: 'Minimalist Professional' },
+    { id: 'Vintage Professional', title: 'Vintage Professional' }    
   ];
 
   const handleThemeSelect = (themeId) => {
