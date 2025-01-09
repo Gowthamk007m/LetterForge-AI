@@ -1,96 +1,89 @@
 import React from 'react';
-import { Card } from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Check, ChevronLeft } from "lucide-react";
 
-const ThemeCard = ({ selected, onClick, imageUrl, title, description }) => (
+const ThemeCard = ({ id, title, selected, onClick }) => (
   <div 
-    onClick={onClick}
-    className={`relative cursor-pointer rounded-lg overflow-hidden transition-all duration-200 ${
-      selected ? 'ring-2 ring-white scale-[1.02]' : 'hover:scale-[1.01]'
-    }`}
+    onClick={() => onClick(id)}
+    className={`
+      relative cursor-pointer rounded-lg border-2 p-4 transition-all
+      ${selected ? 'border-white bg-gray-800' : 'border-gray-700 bg-gray-900 hover:border-gray-500'}
+    `}
   >
-    <Card className="bg-gray-900 border-gray-800">
-      <div className="aspect-[8.5/11] w-full relative">
-        <img
-          src="/api/placeholder/200/260"
-          alt={`${title} theme preview`}
-          className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity"
-        />
-        {selected && (
-          <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-            <Check className="w-8 h-8 text-white" />
-          </div>
-        )}
+    <div className="aspect-[210/297] w-full bg-gray-800 rounded mb-3">
+      <img 
+        src={`/api/placeholder/210/297`} 
+        alt={`Template ${id}`}
+        className="w-full h-full object-cover rounded"
+      />
+    </div>
+    <p className="text-white text-center">{title}</p>
+    {selected && (
+      <div className="absolute -top-2 -right-2 bg-white rounded-full p-1">
+        <Check className="h-4 w-4 text-black" />
       </div>
-      <div className="p-3">
-        <h3 className="text-white font-medium">{title}</h3>
-        <p className="text-gray-400 text-sm">{description}</p>
-      </div>
-    </Card>
+    )}
   </div>
 );
 
-export default function PDFThemeSelector({ selectedTheme, onThemeSelect }) {
-  const themes = [
-    {
-      id: 1,
-      title: "Professional Classic",
-      description: "Traditional layout with a timeless appeal",
-    },
-    {
-      id: 2,
-      title: "Modern Minimal",
-      description: "Clean design with contemporary spacing",
-    },
-    {
-      id: 3,
-      title: "Creative Bold",
-      description: "Striking layout for creative industries",
-    },
-    {
-      id: 4,
-      title: "Executive Premium",
-      description: "Sophisticated design for senior positions",
-    },
-    {
-      id: 5,
-      title: "Tech Forward",
-      description: "Modern design for tech industry roles",
-    },
+const ThemeSelection = ({ 
+  formData, 
+  setFormData, 
+  onPrevStep, 
+  onGenerate, 
+  isLoading 
+}) => {
+  const templates = [
+    { id: 'modern', title: 'Modern Professional' },
+    { id: 'classic', title: 'Classic Elegant' },
+    { id: 'creative', title: 'Creative Dynamic' },
+    { id: 'minimal', title: 'Minimal Clean' }
   ];
 
+  const handleThemeSelect = (themeId) => {
+    setFormData(prev => ({ ...prev, theme: themeId }));
+  };
+
+  const handleGenerate = () => {
+    onGenerate(formData);
+  };
+
   return (
-    <div className="w-full space-y-4">
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-white">Select Your Cover Letter Theme</h2>
-        <p className="text-gray-400">Choose a design that matches your professional style</p>
-      </div>
-      
-      <RadioGroup
-        value={selectedTheme}
-        onValueChange={(value) => onThemeSelect(parseInt(value))}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-      >
-        {themes.map((theme) => (
-          <div key={theme.id} className="relative">
-            <RadioGroupItem
-              value={theme.id}
-              id={`theme-${theme.id}`}
-              className="sr-only"
-            />
-            <Label htmlFor={`theme-${theme.id}`}>
-              <ThemeCard
-                selected={selectedTheme === theme.id}
-                onClick={() => onThemeSelect(theme.id)}
-                title={theme.title}
-                description={theme.description}
-              />
-            </Label>
-          </div>
+    <div className="space-y-4">
+      <h2 className="text-2xl font-bold text-white text-center">Choose Your Template</h2>
+      <p className="text-gray-400 text-center mb-6">
+        Select a template that best represents your professional style
+      </p>
+      <div className="grid grid-cols-2 gap-4">
+        {templates.map((template) => (
+          <ThemeCard
+            key={template.id}
+            id={template.id}
+            title={template.title}
+            selected={formData.theme === template.id}
+            onClick={handleThemeSelect}
+          />
         ))}
-      </RadioGroup>
+      </div>
+      <div className="flex justify-between mt-6">
+        <Button
+          type="button"
+          onClick={onPrevStep}
+          className="bg-gray-800 text-white hover:bg-gray-700 transition-colors flex items-center"
+        >
+          <ChevronLeft className="mr-2" /> Previous
+        </Button>
+        <Button
+          type="button"
+          onClick={handleGenerate}
+          className="bg-white text-black hover:bg-gray-200 transition-colors flex items-center"
+          disabled={isLoading || !formData.theme}
+        >
+          Generate <Check className="ml-2" />
+        </Button>
+      </div>
     </div>
   );
-}
+};
+
+export default ThemeSelection;
