@@ -2,57 +2,80 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Check, ChevronLeft, Eye, X } from "lucide-react";
 
-const PreviewModal = ({ theme, onClose }) => (
-  <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4">
-    <div className="bg-gray-900 rounded-lg w-full max-h-[90vh] max-w-4xl overflow-hidden relative">
-      <Button
-        onClick={onClose}
-        className="absolute right-4 top-4 p-2 bg-gray-800 hover:bg-gray-700 rounded-full z-10"
-      >
-        <X className="h-4 w-4" />
-      </Button>
-      <div className="h-[80vh] w-full">
-        <iframe
-          src={`/demos/${theme.id}-preview.pdf`}
-          className="w-full h-full"
-          title={`${theme.title} Preview`}
-        />
-      </div>
-    </div>
-  </div>
-);
+const PreviewModal = ({ theme, onClose }) => {
+  // Prevent event propagation
+  const handleModalClick = (e) => {
+    e.stopPropagation();
+  };
 
-const ThemeCard = ({ id, title, selected, onClick, onPreview }) => (
-  <div className="relative group">
+  return (
     <div 
-      onClick={() => onClick(id)}
-      className={`
-        relative cursor-pointer rounded-lg border-2 p-4 transition-all
-        ${selected ? 'border-white bg-gray-800' : 'border-gray-700 bg-gray-900 hover:border-gray-500'}
-      `}
+      className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"
+      onClick={onClose}
     >
-      <div className="aspect-[210/297] w-full bg-gray-800 rounded mb-3 overflow-hidden">
-        <iframe
-          src={`/demo-templates/${id}.pdf#view=Fit&page=1`}
-          className="w-full h-full pointer-events-none"
-          title={`${title} Thumbnail`}
-        />
-      </div>
-      <p className="text-white text-center">{title}</p>
-      {selected && (
-        <div className="absolute -top-2 -right-2 bg-white rounded-full p-1">
-          <Check className="h-4 w-4 text-black" />
+      <div 
+        className="bg-gray-900 rounded-lg w-full max-h-[90vh] max-w-4xl overflow-hidden relative"
+        onClick={handleModalClick}
+      >
+        <Button
+          onClick={onClose}
+          className="absolute right-4 top-4 p-2 bg-gray-800 hover:bg-gray-700 rounded-full z-10"
+          type="button"
+        >
+          <X className="h-4 w-4" />
+        </Button>
+        <div className="h-[80vh] w-full">
+          <iframe
+            src={`/demos/${theme.id}-preview.pdf`}
+            className="w-full h-full"
+            title={`${theme.title} Preview`}
+          />
         </div>
-      )}
+      </div>
     </div>
-    <Button
-      onClick={() => onPreview({ id, title })}
-      className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-75 hover:bg-opacity-90 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2"
-    >
-      <Eye className="h-4 w-4" /> Preview
-    </Button>
-  </div>
-);
+  );
+};
+
+const ThemeCard = ({ id, title, selected, onClick, onPreview }) => {
+  const handlePreviewClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onPreview({ id, title });
+  };
+
+  return (
+    <div className="relative group">
+      <div 
+        onClick={() => onClick(id)}
+        className={`
+          relative cursor-pointer rounded-lg border-2 p-4 transition-all
+          ${selected ? 'border-white bg-gray-800' : 'border-gray-700 bg-gray-900 hover:border-gray-500'}
+        `}
+      >
+        <div className="aspect-[210/297] w-full bg-gray-800 rounded mb-3 overflow-hidden">
+          <iframe
+            src={`/demo-templates/${id}.pdf#view=Fit&page=1`}
+            className="w-full h-full pointer-events-none"
+            title={`${title} Thumbnail`}
+          />
+        </div>
+        <p className="text-white text-center">{title}</p>
+        {selected && (
+          <div className="absolute -top-2 -right-2 bg-white rounded-full p-1">
+            <Check className="h-4 w-4 text-black" />
+          </div>
+        )}
+      </div>
+      <Button
+        onClick={handlePreviewClick}
+        type="button"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-75 hover:bg-opacity-90 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2"
+      >
+        <Eye className="h-4 w-4" /> Preview
+      </Button>
+    </div>
+  );
+};
 
 const ThemeSelection = ({ 
   formData, 
@@ -75,18 +98,20 @@ const ThemeSelection = ({
     setFormData(prev => ({ ...prev, theme: themeId }));
   };
 
-  const handleGenerate = () => {
+  const handleGenerate = (e) => {
+    e.preventDefault();
     onGenerate(formData);
   };
 
   return (
     <div className="fixed inset-0 bg-black overflow-y-auto">
-      <div className="min-h-screen p-6 md:p-8 lg:p-12">
+      <form onSubmit={handleGenerate} className="min-h-screen p-6 md:p-8 lg:p-12">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="flex justify-between items-center">
             <h2 className="text-3xl font-bold text-white">Choose Your Template</h2>
             <Button
               onClick={onPrevStep}
+              type="button"
               className="bg-gray-800 text-white hover:bg-gray-700 transition-colors flex items-center"
             >
               <ChevronLeft className="mr-2" /> Back to Details
@@ -112,7 +137,7 @@ const ThemeSelection = ({
           
           <div className="flex justify-end pt-6">
             <Button
-              onClick={handleGenerate}
+              type="submit"
               className="bg-white text-black hover:bg-gray-200 transition-colors flex items-center px-8"
               disabled={isLoading || !formData.theme}
             >
@@ -120,7 +145,7 @@ const ThemeSelection = ({
             </Button>
           </div>
         </div>
-      </div>
+      </form>
       
       {previewTheme && (
         <PreviewModal

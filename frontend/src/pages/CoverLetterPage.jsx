@@ -1,12 +1,16 @@
-import CoverLetterForm from '@/components/forms/ CoverLetterForm'
-import React from 'react'
+import CoverLetterForm from '@/components/forms/CoverLetterForm';
+import React from 'react';
+import Layout from '@/components/ui/Layout'; // Assuming Layout is your layout component
 
 const CoverLetterPage = () => {
   return (
-    <div>
-      <CoverLetterForm/>
-    </div>
-  )
-}
+    <Layout>
+      <div className="cover-letter-page">
+        {/* Render CoverLetterForm without including Layout elements */}
+        <CoverLetterForm />
+      </div>
+    </Layout>
+  );
+};
 
-export default CoverLetterPage
+export default CoverLetterPage;
