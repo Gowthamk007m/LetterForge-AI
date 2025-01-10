@@ -4,7 +4,6 @@ import LoginPage from './pages/LoginPage'
 import Layout from './components/ui/Layout';
 import CoverLetterPage from './pages/CoverLetterPage'
 import { GoogleOAuthProvider } from '@react-oauth/google';
-// index.js or App.jsx
 import './index.css';
 import LandingPage from './pages/LandingPage';
 
