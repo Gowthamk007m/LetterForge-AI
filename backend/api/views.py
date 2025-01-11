@@ -117,6 +117,7 @@ class GenerateCoverLetterView(APIView):
             - Previous Company: {previos_company}
             - Skills: {', '.join(skills)}
             - Achievements: {', '.join(achievements)}
+            - Theme: {theme}
             """
 
             response = client.chat.completions.create(model="gpt-4o-mini",
