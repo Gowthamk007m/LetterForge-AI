@@ -101,6 +101,7 @@ class GenerateCoverLetterView(APIView):
         previos_company = request.data.get('previousCompany')  
         skills = request.data.get('skills')  
         achievements = request.data.get('achievements') 
+        theme = request.data.get('theme')
 
         try:
             prompt = f"""
