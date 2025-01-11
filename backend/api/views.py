@@ -47,7 +47,7 @@ def download_cover_letter(request, id):
     }
 
     def get_random_template():
-        return random.choice(list(all_templates.keys()))
+        return all_templates.keys('modern')
 
 
     html_string = render_to_string(all_templates[get_random_template()], context)
