@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Check, ChevronLeft, Eye, X } from "lucide-react";
 
@@ -37,6 +37,8 @@ const ImagePreviewModal = ({ theme, onClose }) => {
 
 const ThemeCard = ({ id, title, selected, onClick, onPreview }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const imageRef = useRef(null);
 
   const handlePreviewClick = (e) => {
     e.preventDefault();
@@ -44,11 +46,22 @@ const ThemeCard = ({ id, title, selected, onClick, onPreview }) => {
     onPreview({ id, title });
   };
 
+  const handleMouseMove = (e) => {
+    if (!imageRef.current) return;
+    
+    const rect = imageRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    setMousePosition({ x, y });
+  };
+
   return (
     <div 
       className="relative group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onMouseMove={handleMouseMove}
     >
       <div 
         onClick={() => onClick(id)}
@@ -57,7 +70,10 @@ const ThemeCard = ({ id, title, selected, onClick, onPreview }) => {
           ${selected ? 'border-white bg-gray-800' : 'border-gray-700 bg-gray-900 hover:border-gray-500'}
         `}
       >
-        <div className="aspect-[210/297] w-full bg-gray-800 rounded mb-3 overflow-hidden">
+        <div 
+          ref={imageRef}
+          className="aspect-[210/297] w-full bg-gray-800 rounded mb-3 overflow-hidden relative"
+        >
           <img
             src={`/demo-templates/${id}-thumb.jpg`}
             alt={title}
@@ -72,19 +88,26 @@ const ThemeCard = ({ id, title, selected, onClick, onPreview }) => {
         )}
       </div>
       
-      {/* Quick preview on hover */}
+      {/* Zoomed preview on hover */}
       {isHovered && (
-        <div className="fixed z-50 bg-gray-900 p-2 rounded-lg shadow-xl transform translate-x-full" style={{ 
+        <div className="fixed z-50 bg-gray-900 rounded-lg shadow-xl overflow-hidden" style={{ 
           left: '100%', 
           top: '0',
           width: '400px',
+          height: '600px',
           marginLeft: '20px'
         }}>
-          <img
-            src={`/demo-templates/${id}.jpg`}
-            alt={`${title} Preview`}
-            className="w-full rounded"
-          />
+          <div className="w-full h-full overflow-hidden">
+            <img
+              src={`/demo-templates/${id}.jpg`}
+              alt={`${title} Preview`}
+              className="w-[200%] h-[200%] object-cover"
+              style={{
+                transform: `translate(${-mousePosition.x}%, ${-mousePosition.y}%)`,
+                transition: 'transform 0.1s ease-out'
+              }}
+            />
+          </div>
         </div>
       )}
 
@@ -141,7 +164,7 @@ const ThemeSelection = ({
           </div>
           
           <p className="text-gray-400">
-            Select a template that best represents your professional style. Hover over a template to preview, or click the preview button for a full-size view.
+            Select a template that best represents your professional style. Hover over a template to see a zoomed preview.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
