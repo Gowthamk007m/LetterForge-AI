@@ -3,8 +3,30 @@ import { Button } from "@/components/ui/button";
 import { Check, ChevronLeft, Eye, X } from "lucide-react";
 
 const ImagePreviewModal = ({ theme, onClose }) => {
+  const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 });
+  const [showMagnifier, setShowMagnifier] = useState(false);
+  const imageRef = useRef(null);
+  const MAGNIFIER_SIZE = 200;
+  const ZOOM_LEVEL = 5;
+
   const handleModalClick = (e) => {
     e.stopPropagation();
+  };
+
+  const updateMagnifier = (e) => {
+    const image = imageRef.current;
+    if (!image) return;
+
+    const rect = image.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+      setMagnifierPosition({
+        x: x - MAGNIFIER_SIZE / 2,
+        y: y - MAGNIFIER_SIZE / 2
+      });
+    }
   };
 
   return (
@@ -23,12 +45,45 @@ const ImagePreviewModal = ({ theme, onClose }) => {
         >
           <X className="h-4 w-4" />
         </Button>
-        <div className="h-[80vh] w-full flex items-center justify-center">
+
+        <div 
+          ref={imageRef}
+          className="h-[80vh] w-full flex items-center justify-center relative cursor-zoom-in"
+          onMouseMove={updateMagnifier}
+          onMouseEnter={() => setShowMagnifier(true)}
+          onMouseLeave={() => setShowMagnifier(false)}
+        >
           <img
             src={`/demo-templates/${theme.id}.jpg`}
             alt={theme.title}
             className="max-w-full max-h-full object-contain"
           />
+          
+          {showMagnifier && (
+            <div
+              className="absolute pointer-events-none rounded-full border-2 border-white overflow-hidden"
+              style={{
+                width: `${MAGNIFIER_SIZE}px`,
+                height: `${MAGNIFIER_SIZE}px`,
+                left: `${magnifierPosition.x}px`,
+                top: `${magnifierPosition.y}px`,
+                boxShadow: '0 0 10px rgba(0,0,0,0.3)'
+              }}
+            >
+              <img
+                src={`/demo-templates/${theme.id}.jpg`}
+                alt={theme.title}
+                className="absolute"
+                style={{
+                  transform: `scale(${ZOOM_LEVEL})`,
+                  transformOrigin: `${(magnifierPosition.x + MAGNIFIER_SIZE / 2) * ZOOM_LEVEL}px ${(magnifierPosition.y + MAGNIFIER_SIZE / 2) * ZOOM_LEVEL}px`,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover'
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -36,33 +91,14 @@ const ImagePreviewModal = ({ theme, onClose }) => {
 };
 
 const ThemeCard = ({ id, title, selected, onClick, onPreview }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const imageRef = useRef(null);
-
   const handlePreviewClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
     onPreview({ id, title });
   };
 
-  const handleMouseMove = (e) => {
-    if (!imageRef.current) return;
-    
-    const rect = imageRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    
-    setMousePosition({ x, y });
-  };
-
   return (
-    <div 
-      className="relative group"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onMouseMove={handleMouseMove}
-    >
+    <div className="relative group">
       <div 
         onClick={() => onClick(id)}
         className={`
@@ -70,10 +106,7 @@ const ThemeCard = ({ id, title, selected, onClick, onPreview }) => {
           ${selected ? 'border-white bg-gray-800' : 'border-gray-700 bg-gray-900 hover:border-gray-500'}
         `}
       >
-        <div 
-          ref={imageRef}
-          className="aspect-[210/297] w-full bg-gray-800 rounded mb-3 overflow-hidden relative"
-        >
+        <div className="aspect-[210/297] w-full bg-gray-800 rounded mb-3 overflow-hidden">
           <img
             src={`/demo-templates/${id}-thumb.jpg`}
             alt={title}
@@ -87,29 +120,6 @@ const ThemeCard = ({ id, title, selected, onClick, onPreview }) => {
           </div>
         )}
       </div>
-      
-      {/* Zoomed preview on hover */}
-      {isHovered && (
-        <div className="fixed z-50 bg-gray-900 rounded-lg shadow-xl overflow-hidden" style={{ 
-          left: '100%', 
-          top: '0',
-          width: '400px',
-          height: '600px',
-          marginLeft: '20px'
-        }}>
-          <div className="w-full h-full overflow-hidden">
-            <img
-              src={`/demo-templates/${id}.jpg`}
-              alt={`${title} Preview`}
-              className="w-[200%] h-[200%] object-cover"
-              style={{
-                transform: `translate(${-mousePosition.x}%, ${-mousePosition.y}%)`,
-                transition: 'transform 0.1s ease-out'
-              }}
-            />
-          </div>
-        </div>
-      )}
 
       <Button
         onClick={handlePreviewClick}
@@ -164,7 +174,7 @@ const ThemeSelection = ({
           </div>
           
           <p className="text-gray-400">
-            Select a template that best represents your professional style. Hover over a template to see a zoomed preview.
+            Select a template that best represents your professional style. Click preview to see details.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
