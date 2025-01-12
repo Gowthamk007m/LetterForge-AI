@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Check, ChevronLeft, Eye, X } from "lucide-react";
 
-const PreviewModal = ({ theme, onClose }) => {
-  // Prevent event propagation
+const ImagePreviewModal = ({ theme, onClose }) => {
   const handleModalClick = (e) => {
     e.stopPropagation();
   };
@@ -14,7 +13,7 @@ const PreviewModal = ({ theme, onClose }) => {
       onClick={onClose}
     >
       <div 
-        className="bg-gray-900 rounded-lg w-full max-h-[90vh] max-w-4xl overflow-hidden relative"
+        className="bg-gray-900 rounded-lg w-full max-w-4xl overflow-hidden relative"
         onClick={handleModalClick}
       >
         <Button
@@ -24,11 +23,11 @@ const PreviewModal = ({ theme, onClose }) => {
         >
           <X className="h-4 w-4" />
         </Button>
-        <div className="h-[80vh] w-full">
-          <iframe
-            src={`/demos/${theme.id}-preview.pdf`}
-            className="w-full h-full"
-            title={`${theme.title} Preview`}
+        <div className="h-[80vh] w-full flex items-center justify-center">
+          <img
+            src={`/demos/${theme.id}.jpg`}
+            alt={theme.title}
+            className="max-w-full max-h-full object-contain"
           />
         </div>
       </div>
@@ -37,6 +36,8 @@ const PreviewModal = ({ theme, onClose }) => {
 };
 
 const ThemeCard = ({ id, title, selected, onClick, onPreview }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   const handlePreviewClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -44,7 +45,11 @@ const ThemeCard = ({ id, title, selected, onClick, onPreview }) => {
   };
 
   return (
-    <div className="relative group">
+    <div 
+      className="relative group"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div 
         onClick={() => onClick(id)}
         className={`
@@ -53,10 +58,10 @@ const ThemeCard = ({ id, title, selected, onClick, onPreview }) => {
         `}
       >
         <div className="aspect-[210/297] w-full bg-gray-800 rounded mb-3 overflow-hidden">
-          <iframe
-            src={`/demo-templates/${id}.pdf#view=Fit&page=1`}
-            className="w-full h-full pointer-events-none"
-            title={`${title} Thumbnail`}
+          <img
+            src={`/demo-templates/${id}-thumb.jpg`}
+            alt={title}
+            className="w-full h-full object-cover"
           />
         </div>
         <p className="text-white text-center">{title}</p>
@@ -66,6 +71,23 @@ const ThemeCard = ({ id, title, selected, onClick, onPreview }) => {
           </div>
         )}
       </div>
+      
+      {/* Quick preview on hover */}
+      {isHovered && (
+        <div className="fixed z-50 bg-gray-900 p-2 rounded-lg shadow-xl transform translate-x-full" style={{ 
+          left: '100%', 
+          top: '0',
+          width: '400px',
+          marginLeft: '20px'
+        }}>
+          <img
+            src={`/demo-templates/${id}.jpg`}
+            alt={`${title} Preview`}
+            className="w-full rounded"
+          />
+        </div>
+      )}
+
       <Button
         onClick={handlePreviewClick}
         type="button"
@@ -87,11 +109,11 @@ const ThemeSelection = ({
   const [previewTheme, setPreviewTheme] = useState(null);
   
   const templates = [
-    { id: 'Modern Professional', title: 'Modern Professional' },
-    { id: 'tech minimal', title: 'Tech Minimal' },
-    { id: 'Creative Professional', title: 'Creative Professional' },
-    { id: 'Minimalist Professional', title: 'Minimalist Professional' },
-    { id: 'Vintage Professional', title: 'Vintage Professional' }    
+    { id: 'Modern-Professional', title: 'Modern Professional' },
+    { id: 'Tech-Minimal', title: 'Tech Minimal' },
+    { id: 'Creative-Professional', title: 'Creative Professional' },
+    { id: 'Minimalist-Professional', title: 'Minimalist Professional' },
+    { id: 'Vintage-Professional', title: 'Vintage Professional' }    
   ];
 
   const handleThemeSelect = (themeId) => {
@@ -119,7 +141,7 @@ const ThemeSelection = ({
           </div>
           
           <p className="text-gray-400">
-            Select a template that best represents your professional style. Click preview to see a full example of each design.
+            Select a template that best represents your professional style. Hover over a template to preview, or click the preview button for a full-size view.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
@@ -148,7 +170,7 @@ const ThemeSelection = ({
       </form>
       
       {previewTheme && (
-        <PreviewModal
+        <ImagePreviewModal
           theme={previewTheme}
           onClose={() => setPreviewTheme(null)}
         />
