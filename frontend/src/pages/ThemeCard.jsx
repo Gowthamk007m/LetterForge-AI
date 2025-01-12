@@ -25,7 +25,7 @@ const ImagePreviewModal = ({ theme, onClose }) => {
         </Button>
         <div className="h-[80vh] w-full flex items-center justify-center">
           <img
-            src={`/demos/${theme.id}.jpg`}
+            src={`/demo-templates/${theme.id}.jpg`}
             alt={theme.title}
             className="max-w-full max-h-full object-contain"
           />
@@ -120,14 +120,14 @@ const ThemeSelection = ({
     setFormData(prev => ({ ...prev, theme: themeId }));
   };
 
-  const handleGenerate = (e) => {
+  const handleGenerateClick = (e) => {
     e.preventDefault();
     onGenerate(formData);
   };
 
   return (
     <div className="fixed inset-0 bg-black overflow-y-auto">
-      <form onSubmit={handleGenerate} className="min-h-screen p-6 md:p-8 lg:p-12">
+      <div className="min-h-screen p-6 md:p-8 lg:p-12">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="flex justify-between items-center">
             <h2 className="text-3xl font-bold text-white">Choose Your Template</h2>
@@ -159,7 +159,8 @@ const ThemeSelection = ({
           
           <div className="flex justify-end pt-6">
             <Button
-              type="submit"
+              onClick={handleGenerateClick}
+              type="button"
               className="bg-white text-black hover:bg-gray-200 transition-colors flex items-center px-8"
               disabled={isLoading || !formData.theme}
             >
@@ -167,7 +168,7 @@ const ThemeSelection = ({
             </Button>
           </div>
         </div>
-      </form>
+      </div>
       
       {previewTheme && (
         <ImagePreviewModal
