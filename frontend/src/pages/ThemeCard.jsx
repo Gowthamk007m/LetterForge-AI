@@ -64,13 +64,13 @@ const ImagePreviewModal = ({ theme, onClose }) => {
         >
           <img
             ref={sourceRef}
-            src={`/demo-templates/${theme.id}.jpg`}
+            src={`/demo-templates/${theme.id}.png`}
             alt={theme.title}
             className="max-w-full max-h-full object-contain"
           />
           <img
             ref={targetRef}
-            src={`/demo-templates/${theme.id}.jpg`}
+            src={`/demo-templates/${theme.id}.png`}
             alt={theme.title}
             className="absolute transition-opacity duration-200 max-w-none"
             style={{
@@ -105,7 +105,7 @@ const ThemeCard = ({ id, title, selected, onClick, onPreview }) => {
       >
         <div className="aspect-[210/297] w-full bg-gray-800 rounded mb-3 overflow-hidden">
           <img
-            src={`/demo-templates/${id}-thumb.jpg`}
+            src={`/demo-templates/${id}.png`}
             alt={title}
             className="w-full h-full object-cover"
           />
