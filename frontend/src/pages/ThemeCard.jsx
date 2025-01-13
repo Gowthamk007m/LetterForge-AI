@@ -3,30 +3,39 @@ import { Button } from "@/components/ui/button";
 import { Check, ChevronLeft, Eye, X } from "lucide-react";
 
 const ImagePreviewModal = ({ theme, onClose }) => {
-  const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 });
-  const [showMagnifier, setShowMagnifier] = useState(false);
-  const imageRef = useRef(null);
-  const MAGNIFIER_SIZE = 200;
-  const ZOOM_LEVEL = 5;
+  const sourceRef = useRef(null);
+  const targetRef = useRef(null);
+  const containerRef = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [offset, setOffset] = useState({ left: 0, top: 0 });
 
   const handleModalClick = (e) => {
     e.stopPropagation();
   };
 
-  const updateMagnifier = (e) => {
-    const image = imageRef.current;
-    if (!image) return;
+  const handleMouseMove = (e) => {
+    if (!sourceRef.current || !targetRef.current || !containerRef.current) return;
 
-    const rect = image.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const targetRect = targetRef.current.getBoundingClientRect();
+    const sourceRect = sourceRef.current.getBoundingClientRect();
+    const containerRect = containerRef.current.getBoundingClientRect();
 
-    if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
-      setMagnifierPosition({
-        x: x - MAGNIFIER_SIZE / 2,
-        y: y - MAGNIFIER_SIZE / 2
-      });
-    }
+    const xRatio = (targetRect.width - containerRect.width) / sourceRect.width;
+    const yRatio = (targetRect.height - containerRect.height) / sourceRect.height;
+
+    const left = Math.max(
+      Math.min(e.pageX - sourceRect.left, sourceRect.width),
+      0
+    );
+    const top = Math.max(
+      Math.min(e.pageY - sourceRect.top, sourceRect.height),
+      0
+    );
+
+    setOffset({
+      left: left * -xRatio,
+      top: top * -yRatio
+    });
   };
 
   return (
@@ -47,43 +56,31 @@ const ImagePreviewModal = ({ theme, onClose }) => {
         </Button>
 
         <div 
-          ref={imageRef}
-          className="h-[80vh] w-full flex items-center justify-center relative cursor-zoom-in"
-          onMouseMove={updateMagnifier}
-          onMouseEnter={() => setShowMagnifier(true)}
-          onMouseLeave={() => setShowMagnifier(false)}
+          ref={containerRef}
+          className="relative overflow-hidden h-[80vh] w-full flex items-center justify-center"
+          onMouseMove={handleMouseMove}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
           <img
+            ref={sourceRef}
             src={`/demo-templates/${theme.id}.jpg`}
             alt={theme.title}
             className="max-w-full max-h-full object-contain"
           />
-          
-          {showMagnifier && (
-            <div
-              className="absolute pointer-events-none rounded-full border-2 border-white overflow-hidden"
-              style={{
-                width: `${MAGNIFIER_SIZE}px`,
-                height: `${MAGNIFIER_SIZE}px`,
-                left: `${magnifierPosition.x}px`,
-                top: `${magnifierPosition.y}px`,
-                boxShadow: '0 0 10px rgba(0,0,0,0.3)'
-              }}
-            >
-              <img
-                src={`/demo-templates/${theme.id}.jpg`}
-                alt={theme.title}
-                className="absolute"
-                style={{
-                  transform: `scale(${ZOOM_LEVEL})`,
-                  transformOrigin: `${(magnifierPosition.x + MAGNIFIER_SIZE / 2) * ZOOM_LEVEL}px ${(magnifierPosition.y + MAGNIFIER_SIZE / 2) * ZOOM_LEVEL}px`,
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover'
-                }}
-              />
-            </div>
-          )}
+          <img
+            ref={targetRef}
+            src={`/demo-templates/${theme.id}.jpg`}
+            alt={theme.title}
+            className="absolute transition-opacity duration-200 max-w-none"
+            style={{
+              left: `${offset.left}px`,
+              top: `${offset.top}px`,
+              opacity: isHovered ? 1 : 0,
+              width: '200%',
+              height: '200%'
+            }}
+          />
         </div>
       </div>
     </div>
