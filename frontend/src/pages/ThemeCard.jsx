@@ -139,11 +139,11 @@ const ThemeSelection = ({
   const [previewTheme, setPreviewTheme] = useState(null);
   
   const templates = [
-    { id: 'Modern-Professional', title: 'Modern Professional' },
-    { id: 'Tech-Minimal', title: 'Tech Minimal' },
-    { id: 'Creative-Professional', title: 'Creative Professional' },
-    { id: 'Minimalist-Professional', title: 'Minimalist Professional' },
-    { id: 'Vintage-Professional', title: 'Vintage Professional' }    
+    { id: 'Modern-Professional', title: 'Modern & Professional' },
+    { id: 'Tech-Minimal', title: 'Sleek Tech Minimalist' },
+    { id: 'Creative-Professional', title: 'Creative & Dynamic' },
+    { id: 'Minimalist-Professional', title: 'Minimalist Elegance' },
+    { id: 'Vintage-Professional', title: 'Vintage Sophistication' }       
   ];
 
   const handleThemeSelect = (themeId) => {
@@ -156,7 +156,7 @@ const ThemeSelection = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black overflow-y-auto">
+    <div className="mt-9 fixed inset-0 bg-black overflow-auto lg:overflow-y-hidden">
       <div className="min-h-screen p-6 md:p-8 lg:p-12">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="flex justify-between items-center">
