@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar';
-import Footer from "@/components/ui/Footer";
+import Footer from "./Footer";
 const Layout = ({children}) => {
   return (
     <div className="flex flex-col min-h-screen text-gray-100">
