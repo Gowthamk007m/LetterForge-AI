@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { Check, ChevronLeft, Eye, X } from "lucide-react";
 
 const ImagePreviewModal = ({ theme, onClose }) => {
