@@ -1,4 +1,4 @@
-import CoverLetterForm from '@/components/forms/ CoverLetterForm'
+import CoverLetterForm from '../components/forms/ CoverLetterForm'
 import React from 'react'
 
 const CoverLetterPage = () => {
