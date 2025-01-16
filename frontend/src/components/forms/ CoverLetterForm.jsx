@@ -141,10 +141,12 @@ export default function MultiStepCoverLetterForm() {
     let formattedValue = value;
     
     if (id === 'phone') {
+      // Remove all non-digits
       const digits = value.replace(/\D/g, '');
-      formattedValue = digits.length <= 10 ? formatPhoneNumber(digits) : formData.phone;
+      // Allow editing by not restricting to previous value
+      formattedValue = digits.length <= 10 ? formatPhoneNumber(digits) : formatPhoneNumber(digits.slice(0, 10));
     }
-
+  
     setFormData(prev => ({
       ...prev,
       [id]: formattedValue
@@ -157,26 +159,29 @@ export default function MultiStepCoverLetterForm() {
     }));
   };
 
-   const validateStep = () => {
+  const validateStep = () => {
     const stepFields = {
       1: ['name', 'email', 'phone', 'location', 'designation'],
-      2: ['jobTitle', 'company', 'previousRole', 'previousCompany'],
-      3: ['skills', 'achievements'],
+      2: ['jobTitle', 'company'], // Remove previousRole and previousCompany from step 2
+      3: ['previousRole', 'previousCompany', 'skills', 'achievements'],
       4: ['theme']
     };
-    const fieldsToValidate = stepFields[currentStep];
-    const newErrors = {};
-    fieldsToValidate.forEach((field) => {
-      if (field === 'theme' && !formData.theme) {
-        newErrors.theme = 'Please select a template';
-      } else {
-        const error = validateField(field, formData[field]);
-        if (error) newErrors[field] = error;
-      }
-    });
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+      
+  const fieldsToValidate = stepFields[currentStep];
+  const newErrors = {};
+  
+  fieldsToValidate.forEach((field) => {
+    if (field === 'theme' && !formData.theme) {
+      newErrors.theme = 'Please select a template';
+    } else {
+      const error = validateField(field, formData[field]);
+      if (error) newErrors[field] = error;
+    }
+  });
+  
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
 
   const nextStep = () => {
     if (validateStep()) {
@@ -465,7 +470,7 @@ const renderPDFButton = () => {
                   ></div>
                 ))}
               </div>
-              <p className="text-sm text-gray-500">Step {currentStep} of 3</p>
+              <p className="text-sm text-gray-500">Step {currentStep} of 4</p>
             </div>
               <Button
                 onClick={handlePrefill}
