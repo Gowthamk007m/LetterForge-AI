@@ -16,12 +16,6 @@ export default function MultiStepCoverLetterForm() {
   const [pdfData, setPdfData] = useState(null);
   const [showPDF, setShowPDF] = useState(false);
 
-  const templates = [
-    { id: 'modern', title: 'Modern Professional' },
-    { id: 'classic', title: 'Classic Elegant' },
-    { id: 'creative', title: 'Creative Dynamic' },
-    { id: 'minimal', title: 'Minimal Clean' }
-  ];
 
   const PREFILL_DATA = {
     name: 'John Smith',
@@ -199,6 +193,7 @@ export default function MultiStepCoverLetterForm() {
 
   const handleGenerate = async () => {
     if (!validateStep()) return;
+    console.log(formData);
 
     setIsLoading(true);
     try {

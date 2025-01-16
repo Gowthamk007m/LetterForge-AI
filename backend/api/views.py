@@ -4,7 +4,7 @@ from backend.settings import OPENAI_API_KEY
 from rest_framework.views import APIView
 from django.shortcuts import redirect
 from .models import CoverLetterInput
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.http import JsonResponse
 from rest_framework import status
 from weasyprint import HTML,CSS
@@ -47,6 +47,9 @@ def download_cover_letter(request, id,theme):
     }
 
     selected_template = all_templates.get(theme)
+    if not selected_template:
+        raise Http404("Invalid theme specified.")
+
 
 
 
@@ -117,7 +120,6 @@ class GenerateCoverLetterView(APIView):
             - Previous Company: {previos_company}
             - Skills: {', '.join(skills)}
             - Achievements: {', '.join(achievements)}
-            - Theme: {theme}
             """
 
             response = client.chat.completions.create(model="gpt-4o-mini",
@@ -132,7 +134,7 @@ class GenerateCoverLetterView(APIView):
             if saved_cover_letter is None:
                 return Response({"error": "Failed to save the cover letter."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            return redirect('api:download_cover_letter', id=saved_cover_letter.id,select_theme=theme)
+            return redirect('api:download_cover_letter', id=saved_cover_letter.id,theme=theme)
         
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
