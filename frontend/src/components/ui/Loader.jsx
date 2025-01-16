@@ -1,16 +1,31 @@
 // components/Loader.jsx
 import React from 'react';
 import BookLoader from '../loaders/BookLoader';
+import SunspotLoader from '../loaders/SunspotLoader';
 
 export const BookLoaderComponent = () => {
   return (
     <>
-   <BookLoader   
-        background={"linear-gradient(135deg, #111827, #6b7280)"}
-        desktopSize={"150px"}
-        mobileSize={"80px"}
-        textColor={"white"}
-       />
+ <SunspotLoader
+        gradientColors={["#6366F1", "#E0E7FF"]}
+        shadowColor={"#3730A3"}
+        desktopSize={"128px"}
+        mobileSize={"100px"}
+      />
+       
+    </>
+  );
+};
+
+export const SunspotLoaderComponent = () => {
+  return (
+    <>
+      <SunspotLoader
+        gradientColors={["#6366F1", "#E0E7FF"]}
+        shadowColor={"#3730A3"}
+        desktopSize={"128px"}
+        mobileSize={"100px"}
+      />
     </>
   );
 };

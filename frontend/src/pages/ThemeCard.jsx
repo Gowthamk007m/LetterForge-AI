@@ -161,7 +161,6 @@ const ThemeSelection = ({
         <div className="max-w-7xl mx-auto space-y-4">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl mt-3 font-medium text-white lg:text-3xl">Choose Your Template</h2>
-  
           </div>
           
           <p className="text-gray-400">
