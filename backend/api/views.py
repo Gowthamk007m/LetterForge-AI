@@ -18,7 +18,7 @@ import json
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Create your views here.
-def download_cover_letter(request, id):
+def download_cover_letter(request, id,theme):
     cover_letter_data=CoverLetterInput.objects.get(id=id)
     skills_list = cover_letter_data.skills.split(", ")  
     achievements_list = cover_letter_data.achievements.split("\n")
@@ -39,18 +39,18 @@ def download_cover_letter(request, id):
     ''')
 
     all_templates = {
-        'creative-design': 'cover-letter-creative-design.html',
-        'modern': 'cover-letter-template-modern.html',
-        'vintage': 'cover-letter-vintage.html',
-        'minimalist': 'cover-letter-minimalist-professional.html',
-        'tech-minimal': 'cover-letter-tech-minimal.html'
+        'Creative-Professional': 'cover-letter-creative-design.html',
+        'Modern-Professional': 'cover-letter-template-modern.html',
+        'Vintage-Professional': 'cover-letter-vintage.html',
+        'Minimalist-Professional': 'cover-letter-minimalist-professional.html',
+        'Tech-Minimal': 'cover-letter-tech-minimal.html'
     }
 
-    def get_random_template():
-        return random.choice(list(all_templates.keys()))
+    selected_template = all_templates.get(theme)
 
 
-    html_string = render_to_string(all_templates[get_random_template()], context)
+
+    html_string = render_to_string(selected_template,context)
     html = HTML(string=html_string)
     pdf_content = html.write_pdf(stylesheets=[css])
     
@@ -132,7 +132,7 @@ class GenerateCoverLetterView(APIView):
             if saved_cover_letter is None:
                 return Response({"error": "Failed to save the cover letter."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            return redirect('api:download_cover_letter', id=saved_cover_letter.id)
+            return redirect('api:download_cover_letter', id=saved_cover_letter.id,select_theme=theme)
         
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
