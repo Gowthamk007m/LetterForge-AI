@@ -158,20 +158,14 @@ const ThemeSelection = ({
   return (
     <div className="mt-9 fixed inset-0 bg-black overflow-auto lg:overflow-y-hidden">
       <div className="min-h-screen p-6 md:p-8 lg:p-12">
-        <div className="max-w-7xl mx-auto space-y-8">
+        <div className="max-w-7xl mx-auto space-y-4">
           <div className="flex justify-between items-center">
-            <h2 className="text-3xl font-bold text-white">Choose Your Template</h2>
-            <Button
-              onClick={onPrevStep}
-              type="button"
-              className="bg-gray-800 text-white hover:bg-gray-700 transition-colors flex items-center"
-            >
-              <ChevronLeft className="mr-2" /> Back to Details
-            </Button>
+            <h2 className="text-2xl mt-3 font-medium text-white lg:text-3xl">Choose Your Template</h2>
+  
           </div>
           
           <p className="text-gray-400">
-            Select a template that best represents your professional style. Click preview to see details.
+            Select a template that best represents your professional style.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
@@ -186,17 +180,31 @@ const ThemeSelection = ({
               />
             ))}
           </div>
-          
-          <div className="flex justify-end pt-6">
+<div className='flex  justify-between gap-3 lg:flex-row'>
+
+            <div className="flex justify-center pt-3 lg:justify-end ">
+            <Button
+              onClick={onPrevStep}
+              type="button"
+              className="bg-gray-800 text-white hover:bg-gray-700 transition-colors flex items-center"
+            >
+              <ChevronLeft className="mr-2" /> Back to Details
+            </Button>
+          </div>
+
+
+          <div className="flex justify-center pt-3 lg:justify-end">
             <Button
               onClick={handleGenerateClick}
               type="button"
               className="bg-white text-black hover:bg-gray-200 transition-colors flex items-center px-8"
               disabled={isLoading || !formData.theme}
             >
-              Generate Cover Letter <Check className="ml-2" />
+              Generate  <Check className="ml-2" />
             </Button>
-          </div>
+            </div>
+</div>
+          
         </div>
       </div>
       
