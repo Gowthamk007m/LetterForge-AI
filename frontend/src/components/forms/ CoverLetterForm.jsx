@@ -128,10 +128,8 @@ export default function MultiStepCoverLetterForm() {
   const formatPhoneNumber = (value) => {
     const cleaned = value.replace(/\D/g, '');
     
-    // Remove +91 if present at start
     const numberWithoutCode = cleaned.startsWith('91') ? cleaned.slice(2) : cleaned;
     
-    // Match 10 digits after potential country code
     const match = numberWithoutCode.match(/^(\d{5})(\d{5})$/);
     return match ? `+91 ${match[1]} ${match[2]}` : value;
   };
@@ -141,9 +139,7 @@ export default function MultiStepCoverLetterForm() {
     let formattedValue = value;
     
     if (id === 'phone') {
-      // Remove all non-digits
       const digits = value.replace(/\D/g, '');
-      // Allow editing by not restricting to previous value
       formattedValue = digits.length <= 10 ? formatPhoneNumber(digits) : formatPhoneNumber(digits.slice(0, 10));
     }
   
@@ -162,7 +158,7 @@ export default function MultiStepCoverLetterForm() {
   const validateStep = () => {
     const stepFields = {
       1: ['name', 'email', 'phone', 'location', 'designation'],
-      2: ['jobTitle', 'company'], // Remove previousRole and previousCompany from step 2
+      2: ['jobTitle', 'company'], 
       3: ['previousRole', 'previousCompany', 'skills', 'achievements'],
       4: ['theme']
     };

@@ -1,10 +1,10 @@
 from django.template.loader import render_to_string
+from django.http import Http404, HttpResponse
 from rest_framework.response import Response
 from backend.settings import OPENAI_API_KEY
 from rest_framework.views import APIView
 from django.shortcuts import redirect
 from .models import CoverLetterInput
-from django.http import Http404, HttpResponse
 from django.http import JsonResponse
 from rest_framework import status
 from weasyprint import HTML,CSS
