@@ -1,10 +1,10 @@
 from django.template.loader import render_to_string
+from django.http import Http404, HttpResponse
 from rest_framework.response import Response
 from backend.settings import OPENAI_API_KEY
 from rest_framework.views import APIView
 from django.shortcuts import redirect
 from .models import CoverLetterInput
-from django.http import HttpResponse
 from django.http import JsonResponse
 from rest_framework import status
 from weasyprint import HTML,CSS
@@ -18,7 +18,7 @@ import json
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Create your views here.
-def download_cover_letter(request, id):
+def download_cover_letter(request, id,theme):
     cover_letter_data=CoverLetterInput.objects.get(id=id)
     skills_list = cover_letter_data.skills.split(", ")  
     achievements_list = cover_letter_data.achievements.split("\n")
@@ -39,18 +39,19 @@ def download_cover_letter(request, id):
     ''')
 
     all_templates = {
-        'creative-design': 'cover-letter-creative-design.html',
-        'modern': 'cover-letter-template-modern.html',
-        'vintage': 'cover-letter-vintage.html',
-        'minimalist': 'cover-letter-minimalist-professional.html',
-        'tech-minimal': 'cover-letter-tech-minimal.html'
+        'Creative-Professional': 'cover-letter-creative-design.html',
+        'Modern-Professional': 'cover-letter-template-modern.html',
+        'Vintage-Professional': 'cover-letter-vintage.html',
+        'Minimalist-Professional': 'cover-letter-minimalist-professional.html',
+        'Tech-Minimal': 'cover-letter-tech-minimal.html'
     }
 
-    def get_random_template():
-        return random.choice(list(all_templates.keys()))
+    selected_template = all_templates.get(theme)
+    if not selected_template:
+        raise Http404("Invalid theme specified.")
 
-
-    html_string = render_to_string(all_templates[get_random_template()], context)
+    
+    html_string = render_to_string(selected_template,context)
     html = HTML(string=html_string)
     pdf_content = html.write_pdf(stylesheets=[css])
     
@@ -101,6 +102,7 @@ class GenerateCoverLetterView(APIView):
         previos_company = request.data.get('previousCompany')  
         skills = request.data.get('skills')  
         achievements = request.data.get('achievements') 
+        theme = request.data.get('theme')
 
         try:
             prompt = f"""
@@ -120,7 +122,7 @@ class GenerateCoverLetterView(APIView):
 
             response = client.chat.completions.create(model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "You are an assistant skilled in writing professional cover letters. deliver your cover letter in JSON format with the following structure with following keys: make 'name','email','phone','location','desgination','job_title','company','introduction','skills','previousRole','previousCompany','achievements' also make introduction a sentance to 350 characters.also in a key ,outro, write a 200 characters sentance show case your approach to the company and work, also make the key acheivements a list of at achievments, complete the achievments to a full line each"},
+                {"role": "system", "content": "You are an assistant skilled in writing professional cover letters. deliver your cover letter in JSON format with the following structure with following keys: make 'name','email','phone','location','desgination','job_title','company','introduction','skills','previousRole','previousCompany','achievements' also make introduction a sentance to 300 characters.also in a key ,outro, write a 200 characters sentance show case your approach to the company and work, also make the key acheivements a list of at achievments, complete the achievments to a full line each"},
                 {"role": "user", "content": prompt}])
 
             cover_letter = response.choices[0].message.content
@@ -130,7 +132,7 @@ class GenerateCoverLetterView(APIView):
             if saved_cover_letter is None:
                 return Response({"error": "Failed to save the cover letter."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            return redirect('api:download_cover_letter', id=saved_cover_letter.id)
+            return redirect('api:download_cover_letter', id=saved_cover_letter.id,theme=theme)
         
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

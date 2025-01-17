@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+import { Textarea } from "../../components/ui/textarea";
 import { FileText, ChevronRight, ChevronLeft, Check,Wand2,Eye } from "lucide-react";
 import { BookLoaderComponent } from '../ui/Loader';
-import PDFViewer from '@/pages/DisplayPdf';
-
+import PDFViewer from '../../pages/DisplayPdf';
+import ThemeSelection from '../../pages/ThemeCard'; 
+import axiosInstance from '../../pages/axios';
 
 export default function MultiStepCoverLetterForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [generatedContent, setGeneratedContent] = useState(null);
-
+  const [pdfData, setPdfData] = useState(null);
+  const [showPDF, setShowPDF] = useState(false);
 
   const PREFILL_DATA = {
     name: 'John Smith',
@@ -26,7 +27,6 @@ export default function MultiStepCoverLetterForm() {
     skills: 'React, Node.js, AWS, Python, Team Leadership, Agile Methodologies',
     achievements: 'Successfully delivered 3 major projects ahead of schedule, reducing infrastructure costs by 30%. Implemented automated testing framework that improved code coverage from 65% to 95%.'
   };
-
 
   const handlePrefill = () => {
     setFormData(PREFILL_DATA);
@@ -44,10 +44,10 @@ export default function MultiStepCoverLetterForm() {
     previousRole: '',
     previousCompany: '',
     skills: '',
-    achievements: ''
+    achievements: '',
+    theme:''
   });
   const [errors, setErrors] = useState({});
-
 
   const validateField = (id, value) => {
     const validators = {
@@ -123,10 +123,8 @@ export default function MultiStepCoverLetterForm() {
   const formatPhoneNumber = (value) => {
     const cleaned = value.replace(/\D/g, '');
     
-    // Remove +91 if present at start
     const numberWithoutCode = cleaned.startsWith('91') ? cleaned.slice(2) : cleaned;
     
-    // Match 10 digits after potential country code
     const match = numberWithoutCode.match(/^(\d{5})(\d{5})$/);
     return match ? `+91 ${match[1]} ${match[2]}` : value;
   };
@@ -137,9 +135,9 @@ export default function MultiStepCoverLetterForm() {
     
     if (id === 'phone') {
       const digits = value.replace(/\D/g, '');
-      formattedValue = digits.length <= 10 ? formatPhoneNumber(digits) : formData.phone;
+      formattedValue = digits.length <= 10 ? formatPhoneNumber(digits) : formatPhoneNumber(digits.slice(0, 10));
     }
-
+  
     setFormData(prev => ({
       ...prev,
       [id]: formattedValue
@@ -152,25 +150,33 @@ export default function MultiStepCoverLetterForm() {
     }));
   };
 
-   const validateStep = () => {
+  const validateStep = () => {
     const stepFields = {
       1: ['name', 'email', 'phone', 'location', 'designation'],
-      2: ['jobTitle', 'company', 'previousRole', 'previousCompany'],
-      3: ['skills', 'achievements']
+      2: ['jobTitle', 'company'], 
+      3: ['previousRole', 'previousCompany', 'skills', 'achievements'],
+      4: ['theme']
     };
-    const fieldsToValidate = stepFields[currentStep];
-    const newErrors = {};
-    fieldsToValidate.forEach((field) => {
+      
+  const fieldsToValidate = stepFields[currentStep];
+  const newErrors = {};
+  
+  fieldsToValidate.forEach((field) => {
+    if (field === 'theme' && !formData.theme) {
+      newErrors.theme = 'Please select a template';
+    } else {
       const error = validateField(field, formData[field]);
       if (error) newErrors[field] = error;
-    });
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+    }
+  });
+  
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
 
   const nextStep = () => {
     if (validateStep()) {
-      setCurrentStep(Math.min(currentStep + 1, 3));
+      setCurrentStep(Math.min(currentStep + 1, 4));
     }
   };
 
@@ -178,16 +184,13 @@ export default function MultiStepCoverLetterForm() {
     setCurrentStep(Math.max(currentStep - 1, 1));
   };
 
-  const [pdfData, setPdfData] = useState(null);
-  const [showPDF, setShowPDF] = useState(false);
-
-
   const handleGenerate = async () => {
     if (!validateStep()) return;
+    console.log(formData);
 
     setIsLoading(true);
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/v1/generate-cover-letter', {
+      const response = await fetch('http://localhost:8000/api/v1/generate-cover-letter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -407,16 +410,24 @@ const renderPDFButton = () => {
               </Button>
               <Button
                 type="button"
-                onClick={handleGenerate}
+                onClick={nextStep}
                 className="bg-white text-black hover:bg-gray-200 transition-colors flex items-center"
-                disabled={isLoading}
               >
-                Generate <Check className="ml-2" />
+                Next Step <ChevronRight className="ml-2" />
               </Button>
             </div>
           </div>
         );
-
+        case 4:
+          return (
+            <ThemeSelection
+              formData={formData}
+              setFormData={setFormData}
+              onPrevStep={prevStep}
+              onGenerate={handleGenerate}
+              isLoading={isLoading}
+            />
+          );
       default:
         return null;
     }
@@ -447,7 +458,7 @@ const renderPDFButton = () => {
                   ></div>
                 ))}
               </div>
-              <p className="text-sm text-gray-500">Step {currentStep} of 3</p>
+              <p className="text-sm text-gray-500">Step {currentStep} of 4</p>
             </div>
               <Button
                 onClick={handlePrefill}
