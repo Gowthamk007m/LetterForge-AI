@@ -89,26 +89,32 @@ export default function LandingPage() {
 
       <section className="w-full py-12 md:py-24 lg:py-32 bg-black snap-start h-screen flex items-center">
         <div className="container px-4 md:px-6 mt-14">
-          <div className="grid gap-10 px-10 md:gap-16 md:grid-cols-2">
+          <div className="grid gap-10 px-10 md:gap-16 md:grid-cols-1">
             <div className="space-y-4 ">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
                 Land Your Dream Job Faster
               </h2>
               <p className="text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Our AI-powered tools help you create professional documents that
-                catch employers' attention and increase your chances of getting
-                hired.
-              </p>
+  Our AI-powered tools help you create professional documents that catch 
+  employers' attention and increase your chances of getting hired. With 
+  tailored suggestions and customizable templates, we ensure your resumes 
+  and cover letters stand out in a competitive job market. Whether you're 
+  starting your career or looking to advance, our platform provides the 
+  insights and guidance needed to showcase your skills, achievements, 
+  and potential effectively.
+</p>
+
               <Button className="inline-flex items-center bg-white text-black hover:bg-gray-200 transition-colors">
                 Try It Now
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
-            <div className="flex items-center justify-center">
+            {/* <div className="flex items-center justify-center">
               <div className="relative w-[300px] h-[300px] bg-gradient-to-r from-white to-gray-500 rounded-full flex items-center justify-center animate-pulse">
                 <Zap className="h-24 w-24 text-black" />
+                
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
