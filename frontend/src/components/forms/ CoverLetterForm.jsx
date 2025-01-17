@@ -6,16 +6,13 @@ import { FileText, ChevronRight, ChevronLeft, Check,Wand2,Eye } from "lucide-rea
 import { BookLoaderComponent } from '../ui/Loader';
 import PDFViewer from '../../pages/DisplayPdf';
 import ThemeSelection from '../../pages/ThemeCard'; 
-
-
-
+import axiosInstance from '../../pages/axios';
 
 export default function MultiStepCoverLetterForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [pdfData, setPdfData] = useState(null);
   const [showPDF, setShowPDF] = useState(false);
-
 
   const PREFILL_DATA = {
     name: 'John Smith',
@@ -30,7 +27,6 @@ export default function MultiStepCoverLetterForm() {
     skills: 'React, Node.js, AWS, Python, Team Leadership, Agile Methodologies',
     achievements: 'Successfully delivered 3 major projects ahead of schedule, reducing infrastructure costs by 30%. Implemented automated testing framework that improved code coverage from 65% to 95%.'
   };
-
 
   const handlePrefill = () => {
     setFormData(PREFILL_DATA);
@@ -52,7 +48,6 @@ export default function MultiStepCoverLetterForm() {
     theme:''
   });
   const [errors, setErrors] = useState({});
-
 
   const validateField = (id, value) => {
     const validators = {
@@ -195,7 +190,7 @@ export default function MultiStepCoverLetterForm() {
 
     setIsLoading(true);
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/v1/generate-cover-letter', {
+      const response = await fetch('http://localhost:8000/api/v1/generate-cover-letter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
