@@ -149,21 +149,23 @@ export default function MultiStepCoverLetterForm() {
     
     if (id === 'phone') {
       const digits = value.replace(/\D/g, '');
-      formattedValue = digits.length <= 10 ? formatPhoneNumber(digits) : formatPhoneNumber(digits.slice(0, 10));
+      // Allow for full number length including country code
+      const maxLength = digits.startsWith('91') ? 12 : 10;
+      formattedValue = formatPhoneNumber(digits.slice(0, maxLength));
     }
   
     setFormData(prev => ({
       ...prev,
       [id]: formattedValue
     }));
-
+  
     const error = validateField(id, formattedValue);
     setErrors(prev => ({
       ...prev,
       [id]: error
     }));
   };
-
+  
   const validateStep = () => {
     const stepFields = {
       1: ['name', 'email', 'phone', 'location', 'designation'],
