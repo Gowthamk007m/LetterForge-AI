@@ -66,7 +66,6 @@ export default function MultiStepCoverLetterForm() {
       phone: (val) => {
         if (!val.trim()) return 'Phone number is required.';
         const digits = val.replace(/\D/g, '');
-        // Remove +91 prefix if present before checking length
         const numberWithoutCode = digits.startsWith('91') ? digits.slice(2) : digits;
         if (numberWithoutCode.length !== 10) return 'Phone number must be 10 digits.';
         return '';
@@ -122,25 +121,12 @@ export default function MultiStepCoverLetterForm() {
 
 
   const formatPhoneNumber = (value) => {
-    // Remove all non-digit characters
     const cleaned = value.replace(/\D/g, '');
     
-    // Handle the case where input starts with "91"
     const numberWithoutCode = cleaned.startsWith('91') ? cleaned.slice(2) : cleaned;
     
-    // Only format if we have enough digits
-    if (numberWithoutCode.length > 0) {
-      // Format as: +91 XXXXX XXXXX
-      const firstPart = numberWithoutCode.slice(0, 5);
-      const secondPart = numberWithoutCode.slice(5);
-      
-      if (secondPart) {
-        return `+91 ${firstPart} ${secondPart}`;
-      }
-      return `+91 ${firstPart}`;
-    }
-    
-    return cleaned ? `+91 ${cleaned}` : '';
+    const match = numberWithoutCode.match(/^(\d{5})(\d{5})$/);
+    return match ? `+91 ${match[1]} ${match[2]}` : value;
   };
 
   const handleInputChange = (e) => {
@@ -149,23 +135,21 @@ export default function MultiStepCoverLetterForm() {
     
     if (id === 'phone') {
       const digits = value.replace(/\D/g, '');
-      // Allow for full number length including country code
-      const maxLength = digits.startsWith('91') ? 12 : 10;
-      formattedValue = formatPhoneNumber(digits.slice(0, maxLength));
+      formattedValue = digits.length <= 10 ? formatPhoneNumber(digits) : formatPhoneNumber(digits.slice(0, 10));
     }
   
     setFormData(prev => ({
       ...prev,
       [id]: formattedValue
     }));
-  
+
     const error = validateField(id, formattedValue);
     setErrors(prev => ({
       ...prev,
       [id]: error
     }));
   };
-  
+
   const validateStep = () => {
     const stepFields = {
       1: ['name', 'email', 'phone', 'location', 'designation'],
