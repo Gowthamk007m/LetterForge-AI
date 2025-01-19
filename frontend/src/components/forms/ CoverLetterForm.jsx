@@ -66,6 +66,7 @@ export default function MultiStepCoverLetterForm() {
       phone: (val) => {
         if (!val.trim()) return 'Phone number is required.';
         const digits = val.replace(/\D/g, '');
+        // Remove +91 prefix if present before checking length
         const numberWithoutCode = digits.startsWith('91') ? digits.slice(2) : digits;
         if (numberWithoutCode.length !== 10) return 'Phone number must be 10 digits.';
         return '';
