@@ -122,12 +122,25 @@ export default function MultiStepCoverLetterForm() {
 
 
   const formatPhoneNumber = (value) => {
+    // Remove all non-digit characters
     const cleaned = value.replace(/\D/g, '');
     
+    // Handle the case where input starts with "91"
     const numberWithoutCode = cleaned.startsWith('91') ? cleaned.slice(2) : cleaned;
     
-    const match = numberWithoutCode.match(/^(\d{5})(\d{5})$/);
-    return match ? `+91 ${match[1]} ${match[2]}` : value;
+    // Only format if we have enough digits
+    if (numberWithoutCode.length > 0) {
+      // Format as: +91 XXXXX XXXXX
+      const firstPart = numberWithoutCode.slice(0, 5);
+      const secondPart = numberWithoutCode.slice(5);
+      
+      if (secondPart) {
+        return `+91 ${firstPart} ${secondPart}`;
+      }
+      return `+91 ${firstPart}`;
+    }
+    
+    return cleaned ? `+91 ${cleaned}` : '';
   };
 
   const handleInputChange = (e) => {
