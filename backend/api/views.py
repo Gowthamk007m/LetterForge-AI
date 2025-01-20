@@ -43,7 +43,8 @@ def download_cover_letter(request, id,theme):
         'Modern-Professional': 'cover-letter-template-modern.html',
         'Vintage-Professional': 'cover-letter-vintage.html',
         'Minimalist-Professional': 'cover-letter-minimalist-professional.html',
-        'Tech-Minimal': 'cover-letter-tech-minimal.html'
+        'Tech-Minimal': 'cover-letter-tech-minimal.html',
+        'new': 'new.html'
     }
 
     selected_template = all_templates.get(theme)
