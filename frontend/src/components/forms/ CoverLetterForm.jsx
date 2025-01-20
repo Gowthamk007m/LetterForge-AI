@@ -49,6 +49,8 @@ export default function MultiStepCoverLetterForm() {
   });
   const [errors, setErrors] = useState({});
 
+    /** validation logic */
+
   const validateField = (id, value) => {
     const validators = {
       name: (val) => {
@@ -119,7 +121,7 @@ export default function MultiStepCoverLetterForm() {
     return validators[id] ? validators[id](value) : '';
   };
 
-
+/** format phone number */
   const formatPhoneNumber = (value) => {
     const cleaned = value.replace(/\D/g, '');
     
