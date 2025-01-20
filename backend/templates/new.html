@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Professional Cover Letter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2a4365;
+            --secondary-color: #48bb78;
+            --background-color: #f7fafc;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            line-height: 1.7;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .letter-wrapper {
+            max-width: 850px;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header-bar {
+            background-color: var(--primary-color);
+            height: 12px;
+            width: 100%;
+        }
+
+        .content {
+            padding: 3rem;
+        }
+
+        .personal-info {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .name-title h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .name-title h2 {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        .contact-details {
+            text-align: right;
+            font-size: 0.95rem;
+        }
+
+        .position-block {
+            background-color: var(--background-color);
+            padding: 1.5rem;
+            border-left: 4px solid var(--secondary-color);
+            margin: 1.5rem 0;
+        }
+
+        .skills-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: linear-gradient(to right, #f8fafc, #f1f5f9);
+            border-radius: 8px;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .skill-item {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .achievements {
+            margin: 1.5rem 0;
+        }
+
+        .achievement-item {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-item::before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .signature {
+            margin-top: 2.5rem;
+            border-top: 2px solid var(--border-color);
+            padding-top: 1.5rem;
+            text-align: right;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .personal-info {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .contact-details {
+                text-align: center;
+            }
+
+            .content {
+                padding: 2rem;
+            }
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .letter-wrapper {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="letter-wrapper">
+        <div class="header-bar"></div>
+        <div class="content">
+            <div class="personal-info">
+                <div class="name-title">
+                    <h1>{{cover_letter.name}}</h1>
+                    <h2>{{cover_letter.designation}}</h2>
+                </div>
+                <div class="contact-details">
+                    <p>{{cover_letter.email}}</p>
+                    <p>{{cover_letter.phone}}</p>
+                    <p>{{cover_letter.location}}</p>
+                </div>
+            </div>
+
+            <p>{{cover_letter.date}}</p>
+
+            <div class="position-block">
+                <h3>Position: {{cover_letter.jobTitle}}</h3>
+            </div>
+
+            <p>Dear Hiring Manager,</p>
+
+            <p>{{cover_letter.introduction}}</p>
+
+            <div class="skills-section">
+                <h3>Experience & Expertise</h3>
+                <p><strong>Previous Role:</strong> {{cover_letter.previousRole}} at {{cover_letter.previousCompany}}</p>
+                
+                <h4>Key Skills</h4>
+                <div class="skills-grid">
+                    {% for skill in skills_list %}
+                    <span class="skill-item">{{skill}}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="achievements">
+                    <h4>Key Accomplishments</h4>
+                    {% for achievement in achievements %}
+                    <div class="achievement-item">
+                        <p>{{achievement}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <p>{{cover_letter.outro}}</p>
+
+            <p>I appreciate your time and consideration. I look forward to discussing how my skills and experience align with your team's needs.</p>
+
+            <div class="signature">
+                <p>Best regards,</p>
+                <p>{{cover_letter.name}}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
