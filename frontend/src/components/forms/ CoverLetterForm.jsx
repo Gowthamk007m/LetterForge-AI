@@ -131,6 +131,7 @@ export default function MultiStepCoverLetterForm() {
     return match ? `+91 ${match[1]} ${match[2]}` : value;
   };
 
+/** handle input change */
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     let formattedValue = value;
@@ -152,6 +153,7 @@ export default function MultiStepCoverLetterForm() {
     }));
   };
 
+  /** validate step */
   const validateStep = () => {
     const stepFields = {
       1: ['name', 'email', 'phone', 'location', 'designation'],
