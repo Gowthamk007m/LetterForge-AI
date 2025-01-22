@@ -189,6 +189,7 @@ export default function MultiStepCoverLetterForm() {
     setCurrentStep(Math.max(currentStep - 1, 1));
   };
 
+  /** handle generate */
   const handleGenerate = async () => {
     if (!validateStep()) return;
     console.log(formData);
