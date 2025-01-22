@@ -127,7 +127,11 @@ class GenerateCoverLetterView(APIView):
                 {"role": "user", "content": prompt}])
 
             cover_letter = response.choices[0].message.content
+
+
             data = {"cover_letter": cover_letter}
+            print(data)
+
             saved_cover_letter = save_cover_letter(data)
 
             if saved_cover_letter is None:
