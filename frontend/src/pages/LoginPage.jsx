@@ -43,7 +43,6 @@ function LoginPage(props) { return (
                     onError={handleGoogleLoginFailure}
             />
             <FacebookLogin appId='1221914495661734' fields='name,email,picture' onSuccess={responseFacebook} />
-          {/* <LinkedIn clientId='86vwq0slixoekm'/> */}
           
         </div>
     );
