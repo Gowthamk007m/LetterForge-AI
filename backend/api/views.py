@@ -130,8 +130,6 @@ class GenerateCoverLetterView(APIView):
 
 
             data = {"cover_letter": cover_letter}
-            print(data)
-
             saved_cover_letter = save_cover_letter(data)
 
             if saved_cover_letter is None:
