@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
@@ -95,14 +94,15 @@ export default function LandingPage() {
                 Land Your Dream Job Faster
               </h2>
               <p className="text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-  Our AI-powered tools help you create professional documents that catch 
-  employers' attention and increase your chances of getting hired. With 
-  tailored suggestions and customizable templates, we ensure your resumes 
-  and cover letters stand out in a competitive job market. Whether you're 
-  starting your career or looking to advance, our platform provides the 
-  insights and guidance needed to showcase your skills, achievements, 
-  and potential effectively.
-</p>
+                Our AI-powered tools help you create professional documents that
+                catch employers' attention and increase your chances of getting
+                hired. With tailored suggestions and customizable templates, we
+                ensure your resumes and cover letters stand out in a competitive
+                job market. Whether you're starting your career or looking to
+                advance, our platform provides the insights and guidance needed
+                to showcase your skills, achievements, and potential
+                effectively.
+              </p>
 
               <Button className="inline-flex items-center bg-white text-black hover:bg-gray-200 transition-colors">
                 Try It Now

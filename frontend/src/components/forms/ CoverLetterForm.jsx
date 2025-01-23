@@ -28,6 +28,7 @@ export default function MultiStepCoverLetterForm() {
     achievements: 'Successfully delivered 3 major projects ahead of schedule, reducing infrastructure costs by 30%. Implemented automated testing framework that improved code coverage from 65% to 95%.'
   };
 
+  /** prefill data */
   const handlePrefill = () => {
     setFormData(PREFILL_DATA);
     setErrors({});
@@ -48,6 +49,8 @@ export default function MultiStepCoverLetterForm() {
     theme:''
   });
   const [errors, setErrors] = useState({});
+
+    /** validation logic */
 
   const validateField = (id, value) => {
     const validators = {
@@ -119,7 +122,7 @@ export default function MultiStepCoverLetterForm() {
     return validators[id] ? validators[id](value) : '';
   };
 
-
+/** format phone number */
   const formatPhoneNumber = (value) => {
     const cleaned = value.replace(/\D/g, '');
     
@@ -129,6 +132,7 @@ export default function MultiStepCoverLetterForm() {
     return match ? `+91 ${match[1]} ${match[2]}` : value;
   };
 
+/** handle input change */
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     let formattedValue = value;
@@ -150,6 +154,7 @@ export default function MultiStepCoverLetterForm() {
     }));
   };
 
+  /** validate step */
   const validateStep = () => {
     const stepFields = {
       1: ['name', 'email', 'phone', 'location', 'designation'],
@@ -184,6 +189,7 @@ export default function MultiStepCoverLetterForm() {
     setCurrentStep(Math.max(currentStep - 1, 1));
   };
 
+  /** handle generate */
   const handleGenerate = async () => {
     if (!validateStep()) return;
     console.log(formData);

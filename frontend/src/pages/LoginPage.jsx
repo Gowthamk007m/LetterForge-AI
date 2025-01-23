@@ -3,9 +3,6 @@ import axios from 'axios';
 import FacebookLogin from '@greatsumini/react-facebook-login';
 import { GoogleLogin } from '@react-oauth/google';
 import facebookLogin from './FaceAuth';
-// import LinkedInLogin from "./LinkedinAuth";
-// import { LinkedIn } from 'react-linkedin-login-oauth2';
-
 
 const responseFacebook = (res) => {
     console.log(res);
@@ -17,7 +14,6 @@ const handleGoogleLoginSuccess = async (response) => {
         const { credential } = response;
         console.log('Google ID Token:', credential);
 
-        // Send the ID token to your backend for verification
         const res = await axios.post('http://localhost:8000/accounts/api/login/google/', {
             token: credential,
         });
@@ -43,7 +39,6 @@ function LoginPage(props) { return (
                     onError={handleGoogleLoginFailure}
             />
             <FacebookLogin appId='1221914495661734' fields='name,email,picture' onSuccess={responseFacebook} />
-          {/* <LinkedIn clientId='86vwq0slixoekm'/> */}
           
         </div>
     );
