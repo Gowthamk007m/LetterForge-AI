@@ -1,30 +1,29 @@
-# Use the official Python image with version 3.12.3
 FROM python:3.12.3-slim
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Install system dependencies (if required, e.g., for database drivers)
+# Install required libraries
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     libpq-dev \
+    libcairo2 \
+    libglib2.0-0 \
+    libgtk-3-0 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the requirements file first to leverage Docker cache
-COPY requirements.txt .
-
-# Install Python dependencies
+# Copy requirements file and install dependencies
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code
+# Copy the .env file
+COPY .env ./
+
+# Copy the rest of your application code
 COPY . .
 
-# Expose the port Django will run on (default is 8000)
+# Expose the port
 EXPOSE 8000
 
-# Start the Django development server (use "gunicorn" for production)
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-
-# Run the app with Gunicorn
-# CMD ["gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]
+# Command to run your application
+CMD ["gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
