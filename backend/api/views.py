@@ -32,6 +32,8 @@ def download_cover_letter(request, id,theme):
             line-height: 1.5;
             word-wrap: break-word;
             page-break-inside: avoid;
+            page-break-after: avoid;
+            
         }
     ''')
 
