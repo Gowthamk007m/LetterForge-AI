@@ -10,10 +10,7 @@ from rest_framework import status
 from weasyprint import HTML,CSS
 from openai import OpenAI
 from datetime import date
-import random
 import json
-
-
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
