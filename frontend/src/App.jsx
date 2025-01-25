@@ -1,9 +1,9 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Layout from './components/ui/Layout';
 import CoverLetterPage from './pages/CoverLetterPage'
-import './index.css';
 import LandingPage from './pages/LandingPage';
+import Layout from './components/ui/Layout';
+import './index.css';
 
 const App = () => {
   return (
