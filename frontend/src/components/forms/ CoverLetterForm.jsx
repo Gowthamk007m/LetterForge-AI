@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
-import { FileText, ChevronRight, ChevronLeft, Check,Wand2,Eye } from "lucide-react";
+import { FileText, ChevronRight, ChevronLeft,Wand2,Eye } from "lucide-react";
 import { BookLoaderComponent } from '../ui/Loader';
 import PDFViewer from '../../pages/DisplayPdf';
 import ThemeSelection from '../../pages/ThemeCard'; 
-import axiosInstance from '../../pages/axios';
 
 export default function MultiStepCoverLetterForm() {
   const [currentStep, setCurrentStep] = useState(1);
