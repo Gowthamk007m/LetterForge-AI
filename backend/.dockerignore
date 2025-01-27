@@ -4,13 +4,15 @@ __pycache__/
 *.pyo
 
 # Ignore virtual environment
+env/
 venv/
+virtualenv/
 
 # Ignore logs
 *.log
 
 # Ignore environment files
-.env
+# .env
 
 # Ignore test files
 tests/

@@ -1,6 +1,4 @@
-// components/Loader.jsx
 import React from 'react';
-// import BookLoader from '../loaders/BookLoader';
 import SunspotLoader from '../loaders/SunspotLoader';
 
 export const BookLoaderComponent = () => {
