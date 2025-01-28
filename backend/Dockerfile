@@ -22,6 +22,9 @@ COPY .env ./
 # Copy the rest of your application code
 COPY . .
 
+
+RUN python manage.py collectstatic --noinput
+
 # Expose the port
 EXPOSE 8000
 
