@@ -157,3 +157,15 @@ REST_FRAMEWORK = {
 }
 
 
+# settings.py
+
+# URL prefix for static files
+STATIC_URL = '/static/'
+
+# Directory where collectstatic will store the files
+STATIC_ROOT = '/backend/staticfiles/'
+
+# Additional directories to find static files
+STATICFILES_DIRS = [
+    '/backend/static/',  # This should point to where your app's static files are
+]
