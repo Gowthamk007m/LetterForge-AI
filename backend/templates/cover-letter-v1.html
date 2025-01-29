@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Professional Cover Letter</title>
+
+</head>
+<body>
+    <div class="cover-letter-container">
+        <div class="header">
+            <div class="personal-info">
+                <h1>{{cover_letter.name}}</h1>
+            </div>
+            <div class="contact-details">
+                <p>{{cover_letter.email}}</p>
+                <p>{{cover_letter.phone}}</p>
+                <p>{{cover_letter.location}}</p>
+            </div>
+        </div>
+
+        <div class="letter-content">
+            <p>{{cover_letter.date}}</p>
+
+            <div class="job-info">
+                <h3>Application: {{cover_letter.jobTitle}}</h3>
+                <p>{{cover_letter.company}}</p>
+            </div>
+            <p>Dear Hiring Manager,</p>
+
+            <p>{{cover_letter.introduction}}</p>
+
+            <div class="professional-highlights">
+                <h3>Professional Highlights</h3>
+                <h4>Current Role</h4>
+                <p>{{cover_letter.previousRole}}</p>
+
+                <h4>Key Skills</h4>
+                <ul class="skills-list">
+                    {% for skill in skills_list %}
+                    <li>{{skill}}</li>
+                    {% endfor %}
+                </ul>
+
+                <h4>Notable Achievements</h4>
+                <ul class="achievements-list">
+                    {% for achievement in achievements %}
+                    <li>{{achievement}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <p>{{cover_letter.outro}}</p>
+
+            <p>Thank you for considering my application. I look forward to the opportunity to discuss how I can contribute to your team's success.</p>
+
+            <div class="signature">
+                <p>Sincerely,</p>
+                <p>{{cover_letter.name}}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
