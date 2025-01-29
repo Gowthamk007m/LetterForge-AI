@@ -4,184 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern Professional Cover Letter</title>
-    <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --background-light: #f4f6f7;
-            --text-color: #2d3436;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-light);
-            max-width: 850px;
-            margin: 0 auto;
-            padding: 30px 15px;
-        }
-
-        .cover-letter-container {
-            background-color: white;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            padding: 40px;
-            position: relative;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-
-        .personal-info h1 {
-            color: var(--primary-color);
-            font-size: 2.5em;
-            margin-bottom: 5px;
-        }
-
-        .contact-details {
-            text-align: right;
-            font-size: 0.9em;
-        }
-
-        .contact-details p {
-            margin: 3px 0;
-            color: var(--secondary-color);
-        }
-
-        .letter-content {
-            margin-bottom: 30px;
-        }
-
-        .job-info {
-            background-color: var(--background-light);
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--secondary-color);
-        }
-
-        .job-info h3 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .professional-highlights {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-
-        .professional-highlights h3 {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--secondary-color);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        .skills-list{
-            display: flex;
-            
-
-            flex-wrap: wrap;
-        }
-
-        .skills-list, .achievements-list {
-            list-style-type: none;
-        }
-
-        .skills-list li, .achievements-list li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 10px;
-        }
-
-        .skills-list li::before, .achievements-list li::before {
-            content: '•';
-            color: var(--secondary-color);
-            position: relative;
-            left: 0;
-        }
-
-        .signature {
-            text-align: right;
-            margin-top: 30px;
-            font-style: italic;
-        }
-
-        @media print {
-            body {
-                background-color: white;
-            }
-            .cover-letter-container {
-                box-shadow: none;
-            }
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
 </head>
-<body>
-    <div class="cover-letter-container">
-        <div class="header">
-            <div class="personal-info">
-                <h1>{{cover_letter.name}}</h1>
-            </div>
-            <div class="contact-details">
-                <p>{{cover_letter.email}}</p>
-                <p>{{cover_letter.phone}}</p>
-                <p>{{cover_letter.location}}</p>
-            </div>
-        </div>
-
-        <div class="letter-content">
-            <p>{{cover_letter.date}}</p>
-
-            <div class="job-info">
-                <h3>Application: {{cover_letter.jobTitle}}</h3>
-                <p>{{cover_letter.company}}</p>
-            </div>
-            <p>Dear Hiring Manager,</p>
-
-            <p>{{cover_letter.introduction}}</p>
-
-            <div class="professional-highlights">
-                <h3>Professional Highlights</h3>
-                <h4>Current Role</h4>
-                <p>{{cover_letter.previousRole}}</p>
-
-                <h4>Key Skills</h4>
-                <ul class="skills-list">
-                    {% for skill in skills_list %}
-                    <li>{{skill}}</li>
-                    {% endfor %}
-                </ul>
-
-                <h4>Notable Achievements</h4>
-                <ul class="achievements-list">
-                    {% for achievement in achievements %}
-                    <li>{{achievement}}</li>
-                    {% endfor %}
-                </ul>
+<body class="bg-gray-100 min-h-screen py-8 px-4">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg shadow-lg p-8 md:p-10">
+            <!-- Header Section -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-gray-700 pb-6 mb-8">
+                <div class="mb-4 md:mb-0">
+                    <h1 class="text-4xl font-bold text-gray-800">{{cover_letter.name}}</h1>
+                </div>
+                <div class="text-right">
+                    <p class="text-blue-600">{{cover_letter.email}}</p>
+                    <p class="text-blue-600">{{cover_letter.phone}}</p>
+                    <p class="text-blue-600">{{cover_letter.location}}</p>
+                </div>
             </div>
 
-            <p>{{cover_letter.outro}}</p>
+            <!-- Letter Content -->
+            <div class="space-y-6">
+                <p class="text-gray-600">{{cover_letter.date}}</p>
 
-            <p>Thank you for considering my application. I look forward to the opportunity to discuss how I can contribute to your team's success.</p>
+                <!-- Job Info Box -->
+                <div class="bg-gray-50 p-4 rounded-md border-l-4 border-blue-500">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Application: {{cover_letter.jobTitle}}</h3>
+                    <p class="text-gray-700">{{cover_letter.company}}</p>
+                </div>
 
-            <div class="signature">
-                <p>Sincerely,</p>
-                <p>{{cover_letter.name}}</p>
+                <p class="text-gray-800">Dear Hiring Manager,</p>
+
+                <p class="text-gray-700">{{cover_letter.introduction}}</p>
+
+                <!-- Professional Highlights Section -->
+                <div class="bg-gray-50 p-6 rounded-md space-y-4">
+                    <h3 class="text-xl font-semibold text-gray-800 pb-2 border-b-2 border-blue-500">Professional Highlights</h3>
+                    
+                    <div class="space-y-2">
+                        <h4 class="text-lg font-medium text-gray-800">Current Role</h4>
+                        <p class="text-gray-700">{{cover_letter.previousRole}}</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <h4 class="text-lg font-medium text-gray-800">Key Skills</h4>
+                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            {% for skill in skills_list %}
+                            <li class="text-gray-700 pl-4 relative before:content-['•'] before:absolute before:left-0 before:text-blue-500">{{skill}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="space-y-2">
+                        <h4 class="text-lg font-medium text-gray-800">Notable Achievements</h4>
+                        <ul class="space-y-2">
+                            {% for achievement in achievements %}
+                            <li class="text-gray-700 pl-4 relative before:content-['•'] before:absolute before:left-0 before:text-blue-500">{{achievement}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <p class="text-gray-700">{{cover_letter.outro}}</p>
+
+                <p class="text-gray-700">Thank you for considering my application. I look forward to the opportunity to discuss how I can contribute to your team's success.</p>
+
+                <!-- Signature -->
+                <div class="text-right italic mt-8">
+                    <p class="text-gray-800">Sincerely,</p>
+                    <p class="text-gray-800">{{cover_letter.name}}</p>
+                </div>
             </div>
         </div>
     </div>
