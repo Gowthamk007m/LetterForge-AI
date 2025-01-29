@@ -4,7 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern Professional Cover Letter</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-light: #f4f6f7;
+            --text-color: #2d3436;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-light);
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 30px 15px;
+        }
+
+        .cover-letter-container {
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .personal-info h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+
+        .contact-details {
+            text-align: right;
+            font-size: 0.9em;
+        }
+
+        .contact-details p {
+            margin: 3px 0;
+            color: var(--secondary-color);
+        }
+
+        .letter-content {
+            margin-bottom: 30px;
+        }
+
+        .job-info {
+            background-color: var(--background-light);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .job-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .professional-highlights {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .professional-highlights h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .skills-list{
+            display: flex;
+            
+
+            flex-wrap: wrap;
+        }
+
+        .skills-list, .achievements-list {
+            list-style-type: none;
+        }
+
+        .skills-list li, .achievements-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .skills-list li::before, .achievements-list li::before {
+            content: '•';
+            color: var(--secondary-color);
+            position: relative;
+            left: 0;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+            }
+            .cover-letter-container {
+                box-shadow: none;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="cover-letter-container">
