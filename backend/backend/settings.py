@@ -93,12 +93,12 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # },
-      'default': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': env('DB_NAME'),
         'USER': env('DB_USER'),
         'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST', default='127.0.0.1'),
+        'HOST': env('DB_HOST'), 
         'PORT': env('DB_PORT', default='5432'),
     }
 }
@@ -158,12 +158,11 @@ REST_FRAMEWORK = {
 
 
 # settings.py
-
-# URL prefix for static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# URL prefix for static files   
 STATIC_URL = '/static/'
 
 # Directory where collectstatic will store the files
-STATIC_ROOT = '/backend/staticfiles/'
 
 # Additional directories to find static files
 STATICFILES_DIRS = [
