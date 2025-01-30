@@ -38,13 +38,13 @@ def download_cover_letter(request, id,theme):
     ''')
 
     all_templates = {
-       
+        'v1': 'cover-letter-v1.html',
         'Creative-Professional': 'cover-letter-creative-design.html',
         'Modern-Professional': 'cover-letter-template-modern.html',
         'Vintage-Professional': 'cover-letter-vintage.html',
         'Minimalist-Professional': 'cover-letter-minimalist-professional.html',
         'Tech-Minimal': 'cover-letter-tech-minimal.html',
-       
+        'new': 'new.html'
     }
 
     selected_template = all_templates.get(theme)
