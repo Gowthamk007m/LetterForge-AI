@@ -138,10 +138,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -157,14 +156,11 @@ REST_FRAMEWORK = {
 }
 
 
+STATIC_URL = 'static/'
 # settings.py
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # URL prefix for static files   
-STATIC_URL = '/static/'
 
 # Directory where collectstatic will store the files
 
 # Additional directories to find static files
-STATICFILES_DIRS = [
-    '/backend/static/',  # This should point to where your app's static files are
-]

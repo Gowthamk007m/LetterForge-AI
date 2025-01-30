@@ -2,31 +2,31 @@ version: "3.9"
 
 services:
   web:
-    build: .  # Your Django Dockerfile
+    build: .
     ports:
       - "8000:8000"
     depends_on:
-      - db
-    environment:
-      - POSTGRES_HOST=db
-      - POSTGRES_NAME=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - SECRET_KEY=${DJANGO_SECRET_KEY} # Important!
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
     volumes:
-      - static_volume:/app/staticfiles # For static files persistence
+      - static_volume:/app/staticfiles
 
-  db:
-    image: postgres:15-alpine # Use a specific version
-    ports:
-      - "5432:5432" # Expose only if needed for external access (not recommended for production)
-    environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data # Persist database data
+db:
+  image: postgres:15-alpine
+  ports:
+    - "5432:5432"
+  environment:
+    - POSTGRES_DB=${DB_NAME}
+    - POSTGRES_USER=${DB_USER}
+    - POSTGRES_PASSWORD=${DB_PASSWORD}
+  healthcheck:
+    test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME} || exit 1"]
+    interval: 30s
+    timeout: 10s
+    retries: 5
 
 volumes:
-  postgres_data:  # Named volume for PostgreSQL data
-  static_volume: # Named volume for static files
+  postgres_data:
+  static_volume:
