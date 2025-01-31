@@ -27,6 +27,7 @@ export default function MultiStepCoverLetterForm() {
     achievements: 'Successfully delivered 3 major projects ahead of schedule, reducing infrastructure costs by 30%. Implemented automated testing framework that improved code coverage from 65% to 95%.'
   };
 
+
   /** prefill data */
   const handlePrefill = () => {
     setFormData(PREFILL_DATA);
