@@ -94,12 +94,12 @@ DATABASES = {
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # },
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "letterforge",
-    'USER': "postgres",
-    'PASSWORD': "",  # Replace with the actual password
-    'HOST': "letterforge.c70iaks0wl6o.ap-south-1.rds.amazonaws.com",
-    'PORT': "5432",
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
