@@ -22,5 +22,16 @@ axiosInstance.interceptors.request.use(
     }
 );
 
+// Add a response interceptor (optional)
+axiosInstance.interceptors.response.use(
+    (response) => {
+        // Any status code within the range of 2xx
+        return response.data;
+    },
+    (error) => {
+        // Any status codes outside the range of 2xx
+        return Promise.reject(error);
+    }
+);
 
 export default axiosInstance;
