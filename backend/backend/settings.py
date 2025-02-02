@@ -32,9 +32,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('DJANGO_SECRET_KEY') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 
 # OpenAI API Key
 OPENAI_API_KEY = env('OPENAI_API_KEY')
@@ -89,10 +89,6 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # },
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'letterforge',
@@ -156,11 +152,16 @@ REST_FRAMEWORK = {
 }
 
 
-STATIC_URL = 'static/'
-# settings.py
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # URL prefix for static files   
-
+STATIC_URL = 'static/'
 # Directory where collectstatic will store the files
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-# Additional directories to find static files
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = [
+    "authorization",
+    "content-type",
+    "x-csrftoken",
+    "x-requested-with",
+]
