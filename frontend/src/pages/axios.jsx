@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://127.0.0.1:8000/api/';
+const baseURL = 'http://localhost:8000/api/v1';
 
 const axiosInstance = axios.create({
     baseURL: baseURL,
@@ -11,14 +11,27 @@ const axiosInstance = axios.create({
     },
 });
 
-axiosInstance.interceptors.request.use(config => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
+// Add a request interceptor (optional)
+axiosInstance.interceptors.request.use(
+    (config) => {
+        // Add any request modifications here
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
     }
-    return config;
-}, error => {
-    return Promise.reject(error);
-});
+);
+
+// Add a response interceptor (optional)
+axiosInstance.interceptors.response.use(
+    (response) => {
+        // Any status code within the range of 2xx
+        return response.data;
+    },
+    (error) => {
+        // Any status codes outside the range of 2xx
+        return Promise.reject(error);
+    }
+);
 
 export default axiosInstance;

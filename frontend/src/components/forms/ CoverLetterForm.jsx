@@ -6,6 +6,7 @@ import { FileText, ChevronRight, ChevronLeft,Wand2,Eye } from "lucide-react";
 import { BookLoaderComponent } from '../ui/Loader';
 import PDFViewer from '../../pages/DisplayPdf';
 import ThemeSelection from '../../pages/ThemeCard'; 
+import axiosInstance from '../../pages/axios';
 
 export default function MultiStepCoverLetterForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -26,6 +27,7 @@ export default function MultiStepCoverLetterForm() {
     skills: 'React, Node.js, AWS, Python, Team Leadership, Agile Methodologies',
     achievements: 'Successfully delivered 3 major projects ahead of schedule, reducing infrastructure costs by 30%. Implemented automated testing framework that improved code coverage from 65% to 95%.'
   };
+
 
   /** prefill data */
   const handlePrefill = () => {
