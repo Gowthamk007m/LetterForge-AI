@@ -109,12 +109,7 @@ export default function LandingPage() {
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
-            {/* <div className="flex items-center justify-center">
-              <div className="relative w-[300px] h-[300px] bg-gradient-to-r from-white to-gray-500 rounded-full flex items-center justify-center animate-pulse">
-                <Zap className="h-24 w-24 text-black" />
-                
-              </div>
-            </div> */}
+       
           </div>
         </div>
       </section>

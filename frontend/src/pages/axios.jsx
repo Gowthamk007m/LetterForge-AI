@@ -11,10 +11,8 @@ const axiosInstance = axios.create({
     },
 });
 
-// Add a request interceptor (optional)
 axiosInstance.interceptors.request.use(
     (config) => {
-        // Add any request modifications here
         return config;
     },
     (error) => {
@@ -22,14 +20,11 @@ axiosInstance.interceptors.request.use(
     }
 );
 
-// Add a response interceptor (optional)
 axiosInstance.interceptors.response.use(
     (response) => {
-        // Any status code within the range of 2xx
         return response.data;
     },
     (error) => {
-        // Any status codes outside the range of 2xx
         return Promise.reject(error);
     }
 );
