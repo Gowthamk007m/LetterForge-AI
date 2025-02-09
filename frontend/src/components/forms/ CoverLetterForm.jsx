@@ -196,7 +196,7 @@ export default function MultiStepCoverLetterForm() {
 
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/api/v1/generate-cover-letter', {
+      const response = await fetch('https://gowtham007.pythonanywhere.com/api/v1/generate-cover-letter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
