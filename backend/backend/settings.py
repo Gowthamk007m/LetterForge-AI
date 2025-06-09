@@ -39,6 +39,9 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split("
 # OpenAI API Key
 OPENAI_API_KEY = env('OPENAI_API_KEY')
 
+# GEMINI API Key
+GEMINI_API_KEY = env('GEMINI_API_KEY')
+
 # Application definition
 
 INSTALLED_APPS = [
