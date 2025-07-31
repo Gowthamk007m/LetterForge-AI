@@ -41,6 +41,7 @@ OPENAI_API_KEY = env('OPENAI_API_KEY')
 
 # GEMINI API Key
 GEMINI_API_KEY = env('GEMINI_API_KEY')
+print(GEMINI_API_KEY)
 
 # Application definition
 

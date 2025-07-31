@@ -13,12 +13,9 @@ from openai import OpenAI
 from datetime import date
 import json
 import google.generativeai as genai 
+from google import genai
+from google.genai import types
 
-
-# client = OpenAI(api_key=OPENAI_API_KEY)
-
-genai.configure(api_key=GEMINI_API_KEY) # type: ignore
-# Create your views here.
 def download_cover_letter(request, id,theme):
     cover_letter_data=CoverLetterInput.objects.get(id=id)
     skills_list = cover_letter_data.skills.split(", ")  
@@ -94,6 +91,66 @@ def save_cover_letter(ai_data):
         return None
 
 
+
+class GenerateCoverLetterView(APIView):
+    def post(self, request):
+       
+        name = request.data.get('name')  
+        email = request.data.get('email')  
+        phone = request.data.get('phone')  
+        location = request.data.get('location')
+        designation = request.data.get('designation')
+        job_title = request.data.get('jobTitle')  
+        company_name = request.data.get('company') 
+        previos_role = request.data.get('previousRole') 
+        previos_company = request.data.get('previousCompany')  
+        skills = request.data.get('skills')  
+        achievements = request.data.get('achievements') 
+        theme = request.data.get('theme')
+
+        try:
+            prompt = f"""
+            Now, use the following details to generate the cover letter:
+            - Name: {name}
+            - Email: {email}
+            - Phone: {phone}
+            - location: {location}
+            - designation: {designation}
+            - Job Title: {job_title}
+            - Company: {company_name}
+            - previous Role: {previos_role}
+            - Previous Company: {previos_company}
+            - Skills: {', '.join(skills)}
+            - Achievements: {', '.join(achievements)}
+            """
+
+
+
+            client = genai.Client(api_key=GEMINI_API_KEY)
+
+            response = client.models.generate_content(
+                model="gemini-2.0-flash",
+                config=types.GenerateContentConfig(
+                    system_instruction="You are an assistant skilled in writing professional cover letters. deliver your cover letter in JSON format with the following structure with following keys: make 'name','email','phone','location','desgination','job_title','company','introduction','skills','previousRole','previousCompany','achievements' also make introduction a sentance to 300 characters.also in a key ,outro, write a 200 characters sentance show case your approach to the company and work, also make the key acheivements a list of at achievments, complete the achievments to a full line each"),
+                contents=prompt
+            )
+
+            cover_letter = response.text
+
+            data = {"cover_letter": cover_letter}
+            
+            saved_cover_letter = save_cover_letter(data)
+
+            if saved_cover_letter is None:
+                return Response({"error": "Failed to save the cover letter."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+            return redirect('api:download_cover_letter', id=saved_cover_letter.id, theme=theme)
+        
+        except Exception as e:
+            import traceback
+            print(traceback.format_exc())  # For full traceback in logs
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
 # class GenerateCoverLetterView(APIView):
 #     def post(self, request):
 #         print("here again")
@@ -148,67 +205,3 @@ def save_cover_letter(ai_data):
 #             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
-
-class GenerateCoverLetterView(APIView):
-    def post(self, request):
-       
-        name = request.data.get('name')  
-        email = request.data.get('email')  
-        phone = request.data.get('phone')  
-        location = request.data.get('location')
-        designation = request.data.get('designation')
-        job_title = request.data.get('jobTitle')  
-        company_name = request.data.get('company') 
-        previos_role = request.data.get('previousRole') 
-        previos_company = request.data.get('previousCompany')  
-        skills = request.data.get('skills')  
-        achievements = request.data.get('achievements') 
-        theme = request.data.get('theme')
-
-        try:
-            prompt = f"""
-            Now, use the following details to generate the cover letter:
-            - Name: {name}
-            - Email: {email}
-            - Phone: {phone}
-            - location: {location}
-            - designation: {designation}
-            - Job Title: {job_title}
-            - Company: {company_name}
-            - previous Role: {previos_role}
-            - Previous Company: {previos_company}
-            - Skills: {', '.join(skills)}
-            - Achievements: {', '.join(achievements)}
-            """
-
-            from google import genai
-            from google.genai import types
-
-            client = genai.Client(api_key="AIzaSyATE9MHNquvFiJ7WJEk9aXh3KKDFEcwy4U")
-            print("here again",GEMINI_API_KEY)
-
-
-            response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                config=types.GenerateContentConfig(
-                    system_instruction="You are an assistant skilled in writing professional cover letters. deliver your cover letter in JSON format with the following structure with following keys: make 'name','email','phone','location','desgination','job_title','company','introduction','skills','previousRole','previousCompany','achievements' also make introduction a sentance to 300 characters.also in a key ,outro, write a 200 characters sentance show case your approach to the company and work, also make the key acheivements a list of at achievments, complete the achievments to a full line each"),
-                contents=prompt
-            )
-
-            cover_letter = response.text
-
-            data = {"cover_letter": cover_letter}
-            print("here again",data)
-            
-            saved_cover_letter = save_cover_letter(data)
-
-            if saved_cover_letter is None:
-                return Response({"error": "Failed to save the cover letter."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-            return redirect('api:download_cover_letter', id=saved_cover_letter.id, theme=theme)
-        
-        except Exception as e:
-            import traceback
-            print(traceback.format_exc())  # For full traceback in logs
-            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
