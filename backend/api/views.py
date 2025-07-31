@@ -15,9 +15,9 @@ import json
 import google.generativeai as genai 
 
 
-client = OpenAI(api_key=OPENAI_API_KEY)
+# client = OpenAI(api_key=OPENAI_API_KEY)
 
-genai.configure(api_key=GEMINI_API_KEY)
+genai.configure(api_key=GEMINI_API_KEY) # type: ignore
 # Create your views here.
 def download_cover_letter(request, id,theme):
     cover_letter_data=CoverLetterInput.objects.get(id=id)
@@ -80,7 +80,7 @@ def save_cover_letter(ai_data):
             jobTitle=json_data.get('job_title'),
             company=json_data.get('company'),
             introduction=json_data.get('introduction'),
-            skills=", ".join(json_data.get('skills', [])),
+            skills=json_data.get('skills', []),
             previousRole=json_data.get('previousRole'),
             previousCompany=json_data.get('previousCompany'),
             achievements="\n".join(json_data.get('achievements', [])), 
@@ -199,6 +199,8 @@ class GenerateCoverLetterView(APIView):
             cover_letter = response.text
 
             data = {"cover_letter": cover_letter}
+            print("here again",data)
+            
             saved_cover_letter = save_cover_letter(data)
 
             if saved_cover_letter is None:
