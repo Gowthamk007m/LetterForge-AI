@@ -9,10 +9,8 @@ from .models import CoverLetterInput
 from django.http import JsonResponse
 from rest_framework import status
 from weasyprint import HTML,CSS
-from openai import OpenAI
 from datetime import date
 import json
-import google.generativeai as genai 
 from google import genai
 from google.genai import types
 
@@ -129,9 +127,9 @@ class GenerateCoverLetterView(APIView):
             client = genai.Client(api_key=GEMINI_API_KEY)
 
             response = client.models.generate_content(
-                model="gemini-2.0-flash",
+                model="gemini-3-flash-preview",
                 config=types.GenerateContentConfig(
-                    system_instruction="You are an assistant skilled in writing professional cover letters. deliver your cover letter in JSON format with the following structure with following keys: make 'name','email','phone','location','desgination','job_title','company','introduction','skills','previousRole','previousCompany','achievements' also make introduction a sentance to 300 characters.also in a key ,outro, write a 200 characters sentance show case your approach to the company and work, also make the key acheivements a list of at achievments, complete the achievments to a full line each"),
+                    system_instruction="You are an assistant skilled in writing professional cover letters. deliver your cover letter in JSON format with the following structure with following keys: make 'name','email','phone','location','designation','job_title','company','introduction','skills','previousRole','previousCompany','achievements' also make introduction a sentance to 300 characters.also in a key ,outro, write a 200 characters sentance show case your approach to the company and work, also make the key acheivements a list of at achievments, complete the achievments to a full line each"),
                 contents=prompt
             )
 
