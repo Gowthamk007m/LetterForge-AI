@@ -50,7 +50,18 @@ export default function LandingPage() {
             Our AI Tools
           </h2>
           <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3">
-            <Link to="/cover-letter">
+          
+            <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-4 lg:p-6   bg-gradient-to-b from-[#2b2549] to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
+              <Briefcase className="h-12 w-12 text-white" />
+              <h3 className="text-lg lg:text-xl font-bold text-white">
+                JobDesc Wizard
+              </h3>
+              {/* <p className="text-center text-gray-400">
+                Creates detailed and attractive job descriptions for any role.
+              </p> */}
+              <p className="text-center text-gray-400">Coming soon ...</p>
+            </div>
+              <Link to="/cover-letter">
               <div className="flex flex-col items-center  space-y-0 lg:space-y-3 p-4 lg:p-6 bg-gradient-to-b from-[#2b2575] to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
                 <FileText className="h-12 w-12 text-white" />
                 <h3 className="text-lg lg:text-xl font-bold text-white">
@@ -62,16 +73,6 @@ export default function LandingPage() {
                 </p>
               </div>
             </Link>
-            <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-4 lg:p-6   bg-gradient-to-b from-[#2b2549] to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
-              <Briefcase className="h-12 w-12 text-white" />
-              <h3 className="text-lg lg:text-xl font-bold text-white">
-                JobDesc Wizard
-              </h3>
-              {/* <p className="text-center text-gray-400">
-                Creates detailed and attractive job descriptions for any role.
-              </p> */}
-              <p className="text-center text-gray-400">Coming soon ...</p>
-            </div>
             <div className="flex flex-col items-center space-y-0 lg:space-y-3 p-4 lg:p-6   bg-gradient-to-b from-[#4f709a] to-black rounded-lg border border-gray-700 transition-transform hover:scale-105 hover:shadow-lg hover:shadow-gray-100/20">
               <PenTool className="h-12 w-12 text-white" />
               <h3 className="text-lg lg:text-xl font-bold text-white">
